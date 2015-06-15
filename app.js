@@ -14,9 +14,12 @@ app.use(express.static(__dirname + '/public'));
 //bundle the main client side app
 app.get('/editor.js', browserify('./client/editor/main.js'));
 
-//static routes
+//app routes
 app.get('/', function(req, res){
     res.render('index');
+});
+app.get('/puzzles', function(req, res){
+    res.render('puzzles');
 });
 app.get('/editor', function(req, res){
     res.render('editor');

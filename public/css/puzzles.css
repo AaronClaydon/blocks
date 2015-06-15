@@ -1,0 +1,49 @@
+.middle-box {
+    width: 600px;
+    height: 300px;
+    margin: 100px auto;
+
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+.top {
+    height: 50%;
+    border-bottom: 1px solid rgb(247, 247, 247);
+}
+
+.info-box {
+    width: 200px;
+    height: 100%;
+    float: left;
+    background-color: rgb(247, 247, 247);
+}
+.content-box {
+    float: left;
+    padding-left: 15px;
+    width: 400px;
+    position: relative;
+    height: 100%;
+}
+.content-box .buttons {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.bottom {
+    height: 50%;
+}
+ul.list {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    width: 200px;
+    float: left;
+    border-right: 1px solid rgb(247, 247, 247);
+    list-style: none;
+    padding: 4px 0;
+}
+.list > li {
+    padding: 4px 10px;
+    border-bottom: 1px solid gray;
+}

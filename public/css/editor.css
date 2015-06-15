@@ -1,0 +1,62 @@
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+a {
+    cursor: pointer;
+}
+
+.navbar {
+    border-radius: 0;
+    border: 0;
+    background-color: #6685B5;
+}
+
+.navbar .navbar-brand {
+    color: white;
+    font-weight: 800;
+}
+
+.navbar-default .navbar-nav>li>a, .navbar-default .navbar-text {
+    color: rgb(237, 237, 237);
+}
+.navbar-default .navbar-nav>li:hover {
+    background-color: #2D4D80;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    padding: 60px 0 10px 10px;
+}
+
+.main .left-panels {
+    width: 15%;
+    height: 100%;
+    float: left;
+}
+.main .left-panels .panel-container {
+    height: 50%;
+    margin: 0;
+}
+.main .left-panels .panel-container.top {
+    padding-bottom: 10px;
+}
+.main .left-panels .panel {
+    height: 100%;
+}
+.main .main-panels {
+    width: 85%;
+    height: 100%;
+    float: left;
+    padding-left: 10px;
+}
+.main .main-panels .panel-container {
+    width: 50%;
+    height: 100%;
+    float: left;
+    padding-right: 10px;
+}
+.main .main-panels .panel {
+    height: 100%;
+}
