@@ -5,15 +5,25 @@ executor = {};
 executor.run = function(application) {
     var stack = {};
 
-    for (var i = 0; i < application.length; i++) {
-        var segment = application[i];
+    try {
+        for (var i = 0; i < application.length; i++) {
+            var segment = application[i];
 
-        executor.parse(stack, segment);
+            executor.parse(stack, segment);
+        }
+    } catch (e) {
+        console.log('ERROR: ' + e);
     }
+
+    console.log('END');
 };
 
 executor.parse = function(stack, segment) {
     var block = blocks.loaded[segment.identifier];
+
+    if(block === undefined) {
+        throw 'Unknown block type ' + segment.identifier;
+    }
 
     console.log('stepping in to ' + segment.identifier, stack);
     var value = block.execute(executor, stack, segment);

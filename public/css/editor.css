@@ -63,3 +63,24 @@ a {
 .main .main-panels .panel {
     height: 100%;
 }
+.panel-heading {
+    position: relative;
+}
+.panel-heading .btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    height: 100%;
+    border-radius: 0;
+    border-top-right-radius: 4px;
+    background: #0788B8;
+    color: white;
+}
+.panel-heading .btn:hover {
+    background: #0A7EA9;
+}
+
+.panel-body {
+    padding: 0px;
+}
