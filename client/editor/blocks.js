@@ -3,6 +3,8 @@ var blocks = {};
 blocks.loaded = {
     'variables/set': require('./blocks/variables/set'),
     'variables/get': require('./blocks/variables/get'),
+    'variables/print': require('./blocks/variables/print'),
+    'maths/number': require('./blocks/maths/number'),
     'logic/boolean': require('./blocks/logic/boolean')
 };
 
@@ -12,7 +14,7 @@ blocks.categories = function() {
     for(var iden in blocks.loaded) {
         var block = blocks.loaded[iden];
 
-        if(cats[block.category] == undefined) {
+        if(cats[block.category] === undefined) {
             cats[block.category] = [];
         }
 
@@ -20,6 +22,6 @@ blocks.categories = function() {
     }
 
     return cats;
-}
+};
 
 module.exports = blocks;

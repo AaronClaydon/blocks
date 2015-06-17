@@ -1,0 +1,25 @@
+[
+    {
+        "identifier": "variables/set",
+        "state": {
+            "name": "test123",
+            "value": {
+                "identifier": "maths/number",
+                "state": {
+                    "value": 123
+                }
+            }
+        }
+    },
+    {
+        "identifier": "variables/print",
+        "state": {
+            "value": {
+                "identifier": "variables/get",
+                "state": {
+                    "name": "test123"
+                }
+            }
+        }
+    }
+]

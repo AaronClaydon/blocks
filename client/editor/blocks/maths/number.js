@@ -1,10 +1,10 @@
 var block = {};
 
-block.identifier = 'Get';
-block.category = 'variables';
+block.identifier = 'Number';
+block.category = 'maths';
 
 block.execute = function(executor, stack, segment) {
-    return stack[segment.state.name];
-}
+    return segment.state.value;
+};
 
 module.exports = block;

@@ -7,7 +7,7 @@ module.exports.init = function(id, categories) {
     for(var title in categories) {
         html += '<strong>' + title + '</strong><br/>';
 
-        category = categories[title];
+        var category = categories[title];
         category.forEach(function(block) {
             html += '- ' + block.identifier + '<br/>';
         });
@@ -16,4 +16,4 @@ module.exports.init = function(id, categories) {
     }
 
     $(id).html(html);
-}
+};

@@ -1,10 +1,12 @@
 var block = {};
 
-block.identifier = 'Get';
+block.identifier = 'Print';
 block.category = 'variables';
 
 block.execute = function(executor, stack, segment) {
-    return stack[segment.state.name];
-}
+    var value = executor.parse(stack, segment.state.value);
+
+    console.log('PRINT', value);
+};
 
 module.exports = block;
