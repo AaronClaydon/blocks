@@ -3,8 +3,8 @@ var block = {};
 block.identifier = 'Print';
 block.category = 'variables';
 
-block.execute = function(executor, stack, segment) {
-    var value = executor.parse(stack, segment.state.value);
+block.execute = function(executor, stack, state) {
+    var value = executor.parse(stack, state.value);
 
     console.log('PRINT ' + value);
 };

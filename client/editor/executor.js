@@ -26,7 +26,7 @@ executor.parse = function(stack, segment) {
     }
 
     console.log('stepping in to ' + segment.identifier, stack);
-    var value = block.execute(executor, stack, segment);
+    var value = block.execute(executor, stack, segment.state);
     console.log('stepping out of ' + segment.identifier, stack);
 
     return value;

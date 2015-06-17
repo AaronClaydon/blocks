@@ -5,6 +5,7 @@ blocks.loaded = {
     'variables/get': require('./blocks/variables/get'),
     'variables/print': require('./blocks/variables/print'),
     'maths/number': require('./blocks/maths/number'),
+    'maths/operator': require('./blocks/maths/operator'),
     'logic/boolean': require('./blocks/logic/boolean')
 };
 

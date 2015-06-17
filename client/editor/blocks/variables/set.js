@@ -4,10 +4,10 @@ var block = {};
 block.identifier = 'Set';
 block.category = 'variables';
 
-block.execute = function(executor, stack, segment) {
-    var value = executor.parse(stack, segment.state.value);
+block.execute = function(executor, stack, state) {
+    var value = executor.parse(stack, state.value);
 
-    stack[segment.state.name] = value;
+    stack[state.name] = value;
 };
 
 module.exports = block;

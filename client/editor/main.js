@@ -9,7 +9,7 @@ console.log = function(value) {
 };
 
 $.getJSON('/puzzles/test01.json', function(data) {
-    $("#application").text(JSON.stringify(data));
+    $("#application").html('<pre>' + JSON.stringify(data, null, 2) + '</pre>');
     executor.run(data);
 });
 

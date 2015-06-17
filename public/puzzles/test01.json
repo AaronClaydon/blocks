@@ -4,9 +4,23 @@
         "state": {
             "name": "test123",
             "value": {
-                "identifier": "maths/number",
+                "identifier": "maths/operator",
                 "state": {
-                    "value": 123
+                    "operator": "add",
+                    "values": [
+                        {
+                            "identifier": "maths/number",
+                            "state": {
+                                "value": 123
+                            }
+                        },
+                        {
+                            "identifier": "maths/number",
+                            "state": {
+                                "value": 17
+                            }
+                        }
+                    ]
                 }
             }
         }
