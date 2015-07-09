@@ -9,7 +9,7 @@ module.exports.init = function(id, categories) {
 
         var category = categories[title];
         category.forEach(function(block) {
-            html += '- ' + block.identifier + '<br/>';
+            html += '- ' + block.name + '<br/>';
         });
 
         html += '<br/>';

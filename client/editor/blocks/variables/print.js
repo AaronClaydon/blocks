@@ -1,6 +1,6 @@
 var block = {};
 
-block.identifier = 'Print';
+block.name = 'Print';
 block.category = 'variables';
 
 block.execute = function(executor, stack, state) {

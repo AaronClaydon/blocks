@@ -30,6 +30,6 @@ executor.parse = function(stack, segment) {
     console.log('stepping out of ' + segment.identifier, stack);
 
     return value;
-}
+};
 
 module.exports = executor;

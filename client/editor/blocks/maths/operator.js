@@ -1,6 +1,6 @@
 var block = {};
 
-block.identifier = 'Operator';
+block.name = 'Operator';
 block.category = 'maths';
 
 block.execute = function(executor, stack, state) {

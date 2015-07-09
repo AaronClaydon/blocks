@@ -1,7 +1,6 @@
 var block = {};
-//var executor = require('../../executor');
 
-block.identifier = 'Set';
+block.name = 'Set';
 block.category = 'variables';
 
 block.execute = function(executor, stack, state) {
