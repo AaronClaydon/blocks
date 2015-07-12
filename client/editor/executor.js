@@ -15,7 +15,7 @@ executor.run = function(application) {
         console.log('ERROR: ' + e);
     }
 
-    console.log('END');
+    //console.log('END');
 };
 
 executor.parse = function(stack, segment) {
@@ -25,9 +25,9 @@ executor.parse = function(stack, segment) {
         throw 'Unknown block type ' + segment.identifier;
     }
 
-    console.log('stepping in to ' + segment.identifier, stack);
+    //console.log('stepping in to ' + segment.identifier, stack);
     var value = block.execute(executor, stack, segment.state);
-    console.log('stepping out of ' + segment.identifier, stack);
+    //console.log('stepping out of ' + segment.identifier, stack);
 
     return value;
 };
