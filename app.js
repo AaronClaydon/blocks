@@ -1,4 +1,3 @@
-var browserify = require('browserify-middleware');
 var express = require('express');
 var exphbs = require('express-handlebars');
 var app = express();
@@ -10,9 +9,6 @@ app.set('view engine', '.hbs');
 
 //static files
 app.use(express.static(__dirname + '/public'));
-
-//bundle the main client side app
-app.get('/editor.js', browserify('./client/editor/main.js'));
 
 //app routes
 app.get('/', function(req, res){

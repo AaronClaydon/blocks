@@ -8,7 +8,6 @@
     "email": "aclaydon1@sheffield.ac.uk"
   },
   "dependencies": {
-    "browserify-middleware": "^5.0.2",
     "express": "^4.12.4",
     "express-handlebars": "^2.0.1",
     "jquery": "^2.1.4"
