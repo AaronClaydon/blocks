@@ -34,7 +34,7 @@ a {
 .main .main-panels {
     box-sizing: border-box;
     width: 100%;
-    height: 80%;
+    height: 75%;
 }
 .main .main-panels .panel-container {
     box-sizing: border-box;
@@ -47,7 +47,7 @@ a {
     height: 100%;
 }
 .main .output-panel {
-    height: 20%;
+    height: 25%;
     padding-top: 10px;
 }
 .main .output-panel .panel-container {
