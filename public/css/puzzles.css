@@ -1,5 +1,5 @@
 .middle-box {
-    width: 600px;
+    width: 800px;
     height: 300px;
     margin: 100px auto;
 
@@ -22,7 +22,7 @@
     box-sizing: border-box;
     float: left;
     padding-left: 15px;
-    width: 400px;
+    width: 600px;
     position: relative;
     height: 100%;
 }
