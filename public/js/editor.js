@@ -40,4 +40,22 @@ $(document).ready(function() {
             alert(e);
         }
     });
+
+    $("#output-btn-clear").click(function() {
+        $("#output").html('');
+    });
+
+    //not to be kept - for testing only
+    window.alert = function(text) {
+        $("#output").append(text + '<br />');
+        var height = $("#output")[0].scrollHeight;
+        $("#output").scrollTop(height);
+    };
+
+    function outputResize() {
+        var newHeight = $("#output-panel").height() - 35;
+        $("#output").css('max-height', newHeight);
+    }
+    window.addEventListener('resize', outputResize, false);
+    outputResize();
 });

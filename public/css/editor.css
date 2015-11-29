@@ -31,27 +31,10 @@ a {
     padding: 60px 0 10px 10px;
 }
 
-.main .left-panels {
-    width: 15%;
-    height: 100%;
-    float: left;
-}
-.main .left-panels .panel-container {
-    height: 50%;
-    margin: 0;
-}
-.main .left-panels .panel-container.top {
-    padding-bottom: 10px;
-}
-.main .left-panels .panel {
-    height: 100%;
-}
 .main .main-panels {
     box-sizing: border-box;
     width: 100%;
-    height: 100%;
-    float: left;
-    padding-left: 10px;
+    height: 80%;
 }
 .main .main-panels .panel-container {
     box-sizing: border-box;
@@ -62,6 +45,22 @@ a {
 }
 .main .main-panels .panel {
     height: 100%;
+}
+.main .output-panel {
+    height: 20%;
+    padding-top: 10px;
+}
+.main .output-panel .panel-container {
+    height: 100%;
+    padding-right: 10px;
+}
+.main .output-panel .panel {
+    height: 100%;
+}
+.main .output-panel .panel-body {
+    max-height: 20px;
+    overflow-y: scroll;
+    padding: 5px;
 }
 .panel-heading {
     position: relative;
