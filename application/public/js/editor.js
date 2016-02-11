@@ -27,7 +27,7 @@ function createWorkspace(area, workspace, toolbox) {
 
 $(document).ready(function() {
     window.appWorkspace = createWorkspace('application-panel', 'application-blockly', 'application-toolbox');
-    var testsWorkspace = createWorkspace('testing-panel', 'testing-blockly', 'testing-toolbox');
+    window.testsWorkspace = createWorkspace('testing-panel', 'testing-blockly', 'testing-toolbox');
 
     Blockly.Xml.domToWorkspace(appWorkspace, document.getElementById('startBlocks'));
     Blockly.Xml.domToWorkspace(testsWorkspace, document.getElementById('startBlocks_test1'));
