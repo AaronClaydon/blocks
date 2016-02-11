@@ -12,5 +12,5 @@ Blockly.Blocks['assert'] = {
 
 Blockly.JavaScript['assert'] = function(block) {
     var argument0 = Blockly.JavaScript.valueToCode(block, 'ASSERT_SUCCESS_VALUE', Blockly.JavaScript.ORDER_NONE) || '\'\'';
-    return 'window.alert("ASSERT: " + (' + argument0 + '));\n';
+    return 'assert(' + argument0 + ');\n';
 };

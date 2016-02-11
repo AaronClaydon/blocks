@@ -9,6 +9,10 @@ VisualBlocks.currentWorkspace.tests = [];
 
 VisualBlocks.currentTest = 0;
 
+VisualBlocks.testExecution = [];
+VisualBlocks.testExecution.currentTest = 0;
+VisualBlocks.testExecution.results = [];
+
 //end of test stuff
 
 function createWorkspace(area, workspace, toolbox) {
@@ -101,8 +105,9 @@ function loadTest(id) {
 }
 
 function runTest(id) {
+    VisualBlocks.testExecution.currentTest = id;
+
     test = VisualBlocks.currentWorkspace.tests[id];
-    writeToOutput('<strong>' + test.name + '</strong>');
 
     //Compile the application code
     var appCode = Blockly.JavaScript.workspaceToCode(VisualBlocks.appWorkspace);
@@ -118,11 +123,53 @@ function runTest(id) {
     //console.log(appCode);
     //console.log(testCode);
 
-    try {
-        eval(mergedCode);
-    } catch (e) {
-        alert(e);
+    var jsInterpreter = new Interpreter(mergedCode, interpreterJSAPI);
+    jsInterpreter.run();
+
+    var testResult = VisualBlocks.testExecution.results[id];
+    var output = '<strong>' + test.name + '</strong>: ';
+
+    if(testResult === undefined) {
+        output += '<span class="bg-danger">NOTHING ASSERTED</span>';
+    } else if(testResult) {
+        output += '<span class="bg-success">SUCCESS</span>';
+    } else {
+        output += '<span class="bg-danger">FAILED</span>';
     }
+
+    writeToOutput(output);
+}
+
+function resetTestExecutionData() {
+    VisualBlocks.testExecution = [];
+    VisualBlocks.testExecution.currentTest = 0;
+    VisualBlocks.testExecution.results = [];
+}
+
+function interpreterJSAPI(interpreter, scope) {
+    //Add an API function for the alert() block.
+    var alertWrapper = function(text) {
+        text = text ? text.toString() : '';
+        return interpreter.createPrimitive(writeToOutput(text));
+    };
+    interpreter.setProperty(scope, 'alert', interpreter.createNativeFunction(alertWrapper));
+
+    //Add an API function for the prompt() block.
+    var promptWrapper = function(text) {
+        text = text ? text.toString() : '';
+        return interpreter.createPrimitive(prompt(text));
+    };
+    interpreter.setProperty(scope, 'prompt', interpreter.createNativeFunction(promptWrapper));
+
+    //Add an API function for the assert block
+    var assertWrapper = function(value) {
+        return interpreter.createPrimitive(setTestAssertResult(value));
+    };
+    interpreter.setProperty(scope, 'assert', interpreter.createNativeFunction(assertWrapper));
+}
+
+function setTestAssertResult(value) {
+    VisualBlocks.testExecution.results[VisualBlocks.testExecution.currentTest] = value.data;
 }
 
 $(document).ready(function() {
@@ -134,18 +181,21 @@ $(document).ready(function() {
     $("#application-btn-run").click(function() {
         var appCode = Blockly.JavaScript.workspaceToCode(VisualBlocks.appWorkspace);
 
-        try {
-            eval(appCode);
-        } catch (e) {
-            alert(e);
-        }
+        var jsInterpreter = new Interpreter(appCode, interpreterJSAPI);
+        jsInterpreter.run();
     });
 
     $("#testing-btn-run").click(function() {
+        updateWorkspaceTest();
+        resetTestExecutionData();
+
         runTest(VisualBlocks.currentTest);
     });
 
     $("#testing-btn-run-all").click(function() {
+        updateWorkspaceTest();
+        resetTestExecutionData();
+
         for (var i = 0; i < VisualBlocks.currentWorkspace.tests.length; i++) {
             runTest(i);
         }
