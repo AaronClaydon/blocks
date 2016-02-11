@@ -1,1 +1,3 @@
-node_modules/
+application/node_modules/
+
+blockly_build/blockly/*_compressed.js
