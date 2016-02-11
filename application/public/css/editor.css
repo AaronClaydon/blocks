@@ -46,6 +46,9 @@ a {
 .main .main-panels .panel {
     height: 100%;
 }
+.main .main-panels .panel .dropdown-toggle:hover {
+    cursor: pointer;
+}
 .main .output-panel {
     height: 25%;
     padding-top: 10px;
@@ -65,7 +68,7 @@ a {
 .panel-heading {
     position: relative;
 }
-.panel-heading .btn {
+.panel-heading .btn-run {
     position: absolute;
     top: 0;
     right: 0;

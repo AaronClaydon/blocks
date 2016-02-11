@@ -35,7 +35,7 @@
         <div class="panel-container" id="application-panel">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <button class="btn btn-default" id="application-btn-run">Run</button>
+                    <button class="btn btn-default btn-run" id="application-btn-run">Run</button>
                     <h3 class="panel-title">Application</h3>
                 </div>
                 <div class="panel-body" id="application-blockly" style="position: absolute"></div>
@@ -45,8 +45,26 @@
         <div class="panel-container" id ="testing-panel">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <button class="btn btn-default" id="testing-btn-run">Run</button>
-                    <h3 class="panel-title">Tests</h3>
+                    <button class="btn btn-default btn-run" id="testing-btn-run">Run</button>
+
+                    <div class="dropdown">
+                        <h3 class="panel-title dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Tests: Test 1
+                            <span class="caret"></span>
+                        </h3>
+
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li class="dropdown-header">Your Tests</li>
+                            <li><a href="#">Test 1</a></li>
+                            <li><a href="#">Test 2</a></li>
+                            <li><a href="#">Test 3</a></li>
+                            <li><a href="#">Test 4</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Manage</li>
+                            <li><a href="#">Add new test</a></li>
+                            <li><a href="#">Edit tests</a></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="panel-body" id="testing-blockly" style="position: absolute"></div>
             </div>
@@ -57,7 +75,7 @@
         <div class="panel-container" id="output-panel">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <button class="btn btn-default" id="output-btn-clear">Clear</button>
+                    <button class="btn btn-default btn-run" id="output-btn-clear">Clear</button>
                     <h3 class="panel-title">Output</h3>
                 </div>
                 <div class="panel-body" id="output">
