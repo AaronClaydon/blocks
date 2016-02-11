@@ -26,13 +26,24 @@ function createWorkspace(area, workspace, toolbox) {
 }
 
 $(document).ready(function() {
-    var appWorkspace = createWorkspace('application-panel', 'application-blockly', 'application-toolbox');
+    window.appWorkspace = createWorkspace('application-panel', 'application-blockly', 'application-toolbox');
     var testsWorkspace = createWorkspace('testing-panel', 'testing-blockly', 'testing-toolbox');
 
     Blockly.Xml.domToWorkspace(appWorkspace, document.getElementById('startBlocks'));
+    Blockly.Xml.domToWorkspace(testsWorkspace, document.getElementById('startBlocks_test1'));
 
     $("#application-btn-run").click(function() {
         var code = Blockly.JavaScript.workspaceToCode(appWorkspace);
+
+        try {
+            eval(code);
+        } catch (e) {
+            alert(e);
+        }
+    });
+
+    $("#testing-btn-run").click(function() {
+        var code = Blockly.JavaScript.workspaceToCode(testsWorkspace);
 
         try {
             eval(code);
