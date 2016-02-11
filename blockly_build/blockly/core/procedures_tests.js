@@ -47,7 +47,7 @@ Blockly.TestProcedures.NAME_TYPE = 'PROCEDURE-TESTS';
  *     list, and return value boolean.
  */
 Blockly.TestProcedures.allProcedures = function(root) {
-  var blocks = window.appWorkspace.getAllBlocks();
+  var blocks = VisualBlocks.appWorkspace.getAllBlocks();;
   var proceduresReturn = [];
   var proceduresNoReturn = [];
   for (var i = 0; i < blocks.length; i++) {
@@ -112,7 +112,7 @@ Blockly.TestProcedures.findLegalName = function(name, block) {
  * @return {boolean} True if the name is legal.
  */
 Blockly.TestProcedures.isLegalName = function(name, workspace, opt_exclude) {
-  var blocks = window.appWorkspace.getAllBlocks();
+  var blocks = VisualBlocks.appWorkspace.getAllBlocks();;
   // Iterate through every block and check the name.
   for (var i = 0; i < blocks.length; i++) {
     if (blocks[i] == opt_exclude) {
@@ -141,7 +141,7 @@ Blockly.TestProcedures.rename = function(text) {
   // Ensure two identically-named procedures don't exist.
   text = Blockly.TestProcedures.findLegalName(text, this.sourceBlock_);
   // Rename any callers.
-  var blocks = this.sourceBlock_.window.appWorkspace.getAllBlocks();
+  var blocks = this.sourceBlock_.VisualBlocks.appWorkspace.getAllBlocks();;
   for (var i = 0; i < blocks.length; i++) {
     if (blocks[i].renameProcedure) {
       blocks[i].renameProcedure(this.text_, text);
@@ -196,7 +196,7 @@ Blockly.TestProcedures.flyoutCategory = function(workspace) {
  */
 Blockly.TestProcedures.getCallers = function(name, workspace) {
   var callers = [];
-  var blocks = window.appWorkspace.getAllBlocks();
+  var blocks = VisualBlocks.appWorkspace.getAllBlocks();;
   // Iterate through every block and check the name.
   for (var i = 0; i < blocks.length; i++) {
     if (blocks[i].getProcedureCall) {
@@ -246,7 +246,7 @@ Blockly.TestProcedures.mutateCallers = function(name, workspace,
  * @return {Blockly.Block} The procedure definition block, or null not found.
  */
 Blockly.TestProcedures.getDefinition = function(name, workspace) {
-  var blocks = window.appWorkspace.getAllBlocks();
+  var blocks = VisualBlocks.appWorkspace.getAllBlocks();;
   for (var i = 0; i < blocks.length; i++) {
     if (blocks[i].getProcedureDef) {
       var tuple = blocks[i].getProcedureDef();
