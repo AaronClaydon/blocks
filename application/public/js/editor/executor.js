@@ -42,14 +42,11 @@ function Executor() {
 
         //Compile the test code
         var testDom = Blockly.Xml.textToDom(test.testCode);
-        var runningTestWorkspace = Blockly.inject('running-test-workspace', {});
+        var runningTestWorkspace = new Blockly.Workspace();
         Blockly.Xml.domToWorkspace(runningTestWorkspace, testDom);
         var testCode = Blockly.JavaScript.workspaceToCode(runningTestWorkspace);
 
         var mergedCode = appCode + testCode;
-
-        //console.log(appCode);
-        //console.log(testCode);
 
         var jsInterpreter = new Interpreter(mergedCode, interpreterJSAPI);
         jsInterpreter.run();
