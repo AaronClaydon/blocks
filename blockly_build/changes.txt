@@ -1,15 +1,11 @@
 These files are different from the blockly library
 
-core/blockly.js - Add dependencies
-                - "goog.require('Blockly.TestProcedures');"
+core/procedures.js - all 'root/workspace.getAllBlocks()' calls have additional block afterwards
+                   - "if(workspace.options.workspaceType == 'testing-blockly') {
+                          blocks = VisualBlocks._workspaces.appWorkspace.getAllBlocks();
+                      }"
+                   - Display procedure definition blocks if "workspace.options.workspaceType != 'testing-blockly'"
 
-core/flyout.js - Add test categories flyout code
-               - "else if (xmlList == Blockly.TestProcedures.NAME_TYPE) {
-                 // Special category for test procedures.
-                 xmlList =
-                     Blockly.TestProcedures.flyoutCategory(this.workspace_.targetWorkspace);
-               }" Line 376
-
-core/procedures_tests.js - Copied from procedures.js, get procedures data from other workspace
-                         - root/workspace.getAllBlocks() changed to window.appWorkspace.getAllBlocks();
-                         - Remove procedure definition blocks
+core/inject.js - add custom option
+               - in parseOptions Function
+               - add "workspaceType: options['workspaceType']" to return

@@ -373,10 +373,6 @@ Blockly.Flyout.prototype.show = function(xmlList) {
     // Special category for procedures.
     xmlList =
         Blockly.Procedures.flyoutCategory(this.workspace_.targetWorkspace);
-  } else if (xmlList == Blockly.TestProcedures.NAME_TYPE) {
-    // Special category for test procedures.
-    xmlList =
-        Blockly.TestProcedures.flyoutCategory(this.workspace_.targetWorkspace);
   }
 
   var margin = this.CORNER_RADIUS;

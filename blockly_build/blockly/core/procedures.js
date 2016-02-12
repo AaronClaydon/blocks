@@ -48,6 +48,9 @@ Blockly.Procedures.NAME_TYPE = 'PROCEDURE';
  */
 Blockly.Procedures.allProcedures = function(root) {
   var blocks = root.getAllBlocks();
+  if(root.options.workspaceType == 'testing-blockly') {
+      blocks = VisualBlocks._workspaces.appWorkspace.getAllBlocks();
+  }
   var proceduresReturn = [];
   var proceduresNoReturn = [];
   for (var i = 0; i < blocks.length; i++) {
@@ -113,6 +116,9 @@ Blockly.Procedures.findLegalName = function(name, block) {
  */
 Blockly.Procedures.isLegalName = function(name, workspace, opt_exclude) {
   var blocks = workspace.getAllBlocks();
+  if(workspace.options.workspaceType == 'testing-blockly') {
+      blocks = VisualBlocks._workspaces.appWorkspace.getAllBlocks();
+  }
   // Iterate through every block and check the name.
   for (var i = 0; i < blocks.length; i++) {
     if (blocks[i] == opt_exclude) {
@@ -142,6 +148,9 @@ Blockly.Procedures.rename = function(text) {
   text = Blockly.Procedures.findLegalName(text, this.sourceBlock_);
   // Rename any callers.
   var blocks = this.sourceBlock_.workspace.getAllBlocks();
+  if(this.sourceBlock_.workspace.options.workspaceType == 'testing-blockly') {
+      blocks = VisualBlocks._workspaces.appWorkspace.getAllBlocks();
+  }
   for (var i = 0; i < blocks.length; i++) {
     if (blocks[i].renameProcedure) {
       blocks[i].renameProcedure(this.text_, text);
@@ -157,30 +166,32 @@ Blockly.Procedures.rename = function(text) {
  */
 Blockly.Procedures.flyoutCategory = function(workspace) {
   var xmlList = [];
-  if (Blockly.Blocks['procedures_defnoreturn']) {
-    // <block type="procedures_defnoreturn" gap="16"></block>
-    var block = goog.dom.createDom('block');
-    block.setAttribute('type', 'procedures_defnoreturn');
-    block.setAttribute('gap', 16);
-    xmlList.push(block);
-  }
-  if (Blockly.Blocks['procedures_defreturn']) {
-    // <block type="procedures_defreturn" gap="16"></block>
-    var block = goog.dom.createDom('block');
-    block.setAttribute('type', 'procedures_defreturn');
-    block.setAttribute('gap', 16);
-    xmlList.push(block);
-  }
-  if (Blockly.Blocks['procedures_ifreturn']) {
-    // <block type="procedures_ifreturn" gap="16"></block>
-    var block = goog.dom.createDom('block');
-    block.setAttribute('type', 'procedures_ifreturn');
-    block.setAttribute('gap', 16);
-    xmlList.push(block);
-  }
-  if (xmlList.length) {
-    // Add slightly larger gap between system blocks and user calls.
-    xmlList[xmlList.length - 1].setAttribute('gap', 24);
+  if(workspace.options.workspaceType != 'testing-blockly') {
+      if (Blockly.Blocks['procedures_defnoreturn']) {
+        // <block type="procedures_defnoreturn" gap="16"></block>
+        var block = goog.dom.createDom('block');
+        block.setAttribute('type', 'procedures_defnoreturn');
+        block.setAttribute('gap', 16);
+        xmlList.push(block);
+      }
+      if (Blockly.Blocks['procedures_defreturn']) {
+        // <block type="procedures_defreturn" gap="16"></block>
+        var block = goog.dom.createDom('block');
+        block.setAttribute('type', 'procedures_defreturn');
+        block.setAttribute('gap', 16);
+        xmlList.push(block);
+      }
+      if (Blockly.Blocks['procedures_ifreturn']) {
+        // <block type="procedures_ifreturn" gap="16"></block>
+        var block = goog.dom.createDom('block');
+        block.setAttribute('type', 'procedures_ifreturn');
+        block.setAttribute('gap', 16);
+        xmlList.push(block);
+      }
+      if (xmlList.length) {
+        // Add slightly larger gap between system blocks and user calls.
+        xmlList[xmlList.length - 1].setAttribute('gap', 24);
+      }
   }
 
   function populateProcedures(procedureList, templateName) {
@@ -222,6 +233,9 @@ Blockly.Procedures.flyoutCategory = function(workspace) {
 Blockly.Procedures.getCallers = function(name, workspace) {
   var callers = [];
   var blocks = workspace.getAllBlocks();
+  if(workspace.options.workspaceType == 'testing-blockly') {
+      blocks = VisualBlocks._workspaces.appWorkspace.getAllBlocks();
+  }
   // Iterate through every block and check the name.
   for (var i = 0; i < blocks.length; i++) {
     if (blocks[i].getProcedureCall) {
@@ -272,6 +286,9 @@ Blockly.Procedures.mutateCallers = function(name, workspace,
  */
 Blockly.Procedures.getDefinition = function(name, workspace) {
   var blocks = workspace.getAllBlocks();
+  if(workspace.options.workspaceType == 'testing-blockly') {
+      blocks = VisualBlocks._workspaces.appWorkspace.getAllBlocks();
+  }
   for (var i = 0; i < blocks.length; i++) {
     if (blocks[i].getProcedureDef) {
       var tuple = blocks[i].getProcedureDef();

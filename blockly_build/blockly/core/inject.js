@@ -205,7 +205,8 @@ Blockly.parseOptions_ = function(options) {
     gridOptions: gridOptions,
     zoomOptions: zoomOptions,
     enableRealtime: enableRealtime,
-    realtimeOptions: realtimeOptions
+    realtimeOptions: realtimeOptions,
+    workspaceType: options['workspaceType']
   };
 };
 

@@ -2,7 +2,7 @@ function WorkSpaces() {
     function createWorkspace(area, workspace, toolbox) {
         var blocklyArea = document.getElementById(area);
         var blocklyDiv = document.getElementById(workspace);
-        var workspace = Blockly.inject(blocklyDiv, {toolbox: document.getElementById(toolbox)});
+        var workspace = Blockly.inject(blocklyDiv, {toolbox: document.getElementById(toolbox), workspaceType: workspace});
         var onresize = function(e) {
             // Compute the absolute coordinates and dimensions of blocklyArea.
             var element = blocklyArea;
