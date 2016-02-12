@@ -16,9 +16,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a id="header-new-btn">New</a></li>
-                <li><a id="header-save-btn">Save</a></li>
-                <li><a id="header-load-btn">Load</a></li>
+                <li><a data-toggle="modal" data-target="#modal-new">New</a></li>
+                <li><a data-toggle="modal" data-target="#modal-save">Save</a></li>
+                <li><a data-toggle="modal" data-target="#modal-load">Load</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -36,7 +36,9 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <button class="btn btn-default btn-run" id="application-btn-run">Run</button>
-                    <h3 class="panel-title">Application</h3>
+                    <h3 class="panel-title">
+                        Application / <span id="application-current-name"></span>
+                    </h3>
                 </div>
                 <div class="panel-body" id="application-blockly" style="position: absolute"></div>
             </div>
@@ -49,7 +51,7 @@
 
                     <div class="dropdown">
                         <h3 class="panel-title dropdown-toggle" id="testing-dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            Tests: <span id="testing-current-name"></span>
+                            Tests / <span id="testing-current-name"></span>
                             <span class="caret"></span>
                         </h3>
 
@@ -85,8 +87,78 @@
     </div>
 </div>
 
+<!-- Hidden workspace used for compiling a test -->
 <div id="running-test-workspace" style="width: 0; height: 0; display: hidden;"></div>
+<!-- Hidden file input for openning a local file -->
+<input type="file" id="header-load-fileInput" accept=".vbpuz" style="display: none;"/>
 
+<!-- New Puzzle Modal -->
+<div class="modal fade" id="modal-new" tabindex="-1" role="dialog" aria-labelledby="New Puzzle">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">New Puzzle</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to create a new Puzzle, any unsaved changes to the current Puzzle will be lost.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="modal-new-btn">Create New</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Save Puzzle Modal -->
+<div class="modal fade" id="modal-save" tabindex="-1" role="dialog" aria-labelledby="Save Puzzle">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Save Puzzle</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputSaveName" class="col-sm-3 control-label">Puzzle Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="inputSavePuzzleName">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="modal-save-locally-btn">Save locally</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="modal-save-publish-btn">Publish online</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Load Puzzle Modal -->
+<div class="modal fade" id="modal-load" tabindex="-1" role="dialog" aria-labelledby="Load Puzzle">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Load Puzzle</h4>
+            </div>
+            <div class="modal-body">
+                Puzzles can be loaded from your computer or you can browse the user published puzzles
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="modal-load-locally-btn">Load locally</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="modal-load-publish-btn">View published</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Application Blockly Toolbox -->
 <xml id="application-toolbox" style="display: none">
     <category name="Logic">
         <category name="If">
@@ -204,6 +276,7 @@
     </category>
 </xml>
 
+<!-- Tests Blockly Toolbox -->
 <xml id="testing-toolbox" style="display: none">
     <category name="Logic">
         <category name="If">
@@ -343,6 +416,7 @@
 <script src="/js/blockly/msg_en.js"></script>
 <script src="/js/blockly/javascript_compressed.js"></script>
 <script src="/js/acorn_interpreter.js"></script>
+<script src="/js/filesaver.min.js"></script>
 
 <script src="/js/editor/puzzles.js"></script>
 <script src="/js/editor/executor.js"></script>

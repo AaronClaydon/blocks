@@ -70,6 +70,8 @@ function Executor() {
     }
 
     this.executeAllTests = function() {
+        //Spacing break line is not needed if output is empty
+        VisualBlocks.output.lineBreakIfEmpty();
         VisualBlocks.output.writeLine('<strong>Running all tests</strong>');
 
         for (var i = 0; i < VisualBlocks.currentPuzzle.tests.length; i++) {
@@ -85,7 +87,6 @@ function Executor() {
         } else {
             VisualBlocks.output.writeLine('<strong>' + numPassed + ' out of ' + numTests + ' tests passed</strong>');
         }
-        VisualBlocks.output.writeLine();
     }
 
     this.resetTestExecutionData = function() {
