@@ -22,7 +22,8 @@ function PuzzlesManager() {
         VisualBlocks.ui.updateTestSelectionDropdown();
 
         //Load the first test
-        VisualBlocks.puzzlesManager.loadTest(0);
+        firstTestID = Object.keys(VisualBlocks.currentPuzzle.tests)[0];
+        VisualBlocks.puzzlesManager.loadTest(firstTestID);
     }
 
     //Load a puzzle from a remote file
@@ -31,9 +32,6 @@ function PuzzlesManager() {
         $.getJSON(filename, function(data) {
             VisualBlocks.output.writeLine('Loaded remote puzzle ' + data.name + ' from ' + filename);
             VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle(data));
-
-            //Testing DELETE ME
-            $("#testing-dropdown-edit").click();
         });
     }
 
@@ -58,15 +56,19 @@ function PuzzlesManager() {
 
     //Add a new empty test to the puzzle
     this.newTest = function(name) {
-        return VisualBlocks.currentPuzzle.tests.push({
+        uid = Blockly.genUid();
+
+        VisualBlocks.currentPuzzle.tests[uid] = {
             'name': name,
             'testCode': '<xml xmlns="http://www.w3.org/1999/xhtml"></xml>'
-        });
+        };
+
+        return uid;
     }
 
     //Deletes a given test
     this.deleteTest = function(id) {
-        VisualBlocks.currentPuzzle.tests.splice(id, 1);
+        delete VisualBlocks.currentPuzzle.tests[id];
     }
 }
 
@@ -79,8 +81,8 @@ function Puzzle(content) {
     this.name = content.name || 'New Puzzle';
     //this.puzzle = false;
     this.applicationCode = content.applicationCode || '<xml xmlns="http://www.w3.org/1999/xhtml"></xml>';
-    this.tests = content.tests || [{
+    this.tests = content.tests || {'defaul1': {
         'name': 'Test 1',
         'testCode': '<xml xmlns="http://www.w3.org/1999/xhtml"></xml>'
-    }];
+    }};
 }

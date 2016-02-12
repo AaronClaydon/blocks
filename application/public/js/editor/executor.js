@@ -88,12 +88,12 @@ function Executor() {
         VisualBlocks.output.lineBreakIfEmpty();
         VisualBlocks.output.writeLine('<strong>Running all tests</strong>');
 
-        for (var i = 0; i < VisualBlocks.currentPuzzle.tests.length; i++) {
-            VisualBlocks.executor.executeTest(i);
+        for (var testID in VisualBlocks.currentPuzzle.tests) {
+            VisualBlocks.executor.executeTest(testID);
         }
 
         numPassed = VisualBlocks.executor.testExecution.numPassed;
-        numTests = VisualBlocks.currentPuzzle.tests.length;
+        numTests = Object.keys(VisualBlocks.currentPuzzle.tests).length;
         if(numPassed == 0) {
             VisualBlocks.output.writeLine('<strong>All tests failed</strong>');
         } else if(numPassed == numTests) {
@@ -106,8 +106,8 @@ function Executor() {
     //Set the default test results
     this.resetTestExecutionData = function() {
         VisualBlocks.executor.testExecution = [];
-        VisualBlocks.executor.testExecution.currentTest = 0;
-        VisualBlocks.executor.testExecution.results = [];
+        VisualBlocks.executor.testExecution.currentTest = 'default';
+        VisualBlocks.executor.testExecution.results = {};
         VisualBlocks.executor.testExecution.numPassed = 0;
     }
 }

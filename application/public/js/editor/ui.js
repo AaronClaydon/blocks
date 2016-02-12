@@ -13,6 +13,7 @@ function UI() {
         //New puzzle modal button
         $("#modal-new-btn").click(function() {
             VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle());
+            VisualBlocks.output.clear();
         });
 
         //Save puzzle locally modal button
@@ -122,7 +123,7 @@ function UI() {
             $("#modal-tests-new").modal('show');
 
             //Create a default test name
-            $("#input-tests-new-name").val('Test ' + (VisualBlocks.currentPuzzle.tests.length + 1));
+            $("#input-tests-new-name").val('Test ' + (Object.keys(VisualBlocks.currentPuzzle.tests).length + 1));
         });
 
         //Create new test modal add button
@@ -138,7 +139,7 @@ function UI() {
                 $("#modal-tests-new").modal('hide');
 
                 //Load the newly created test
-                VisualBlocks.puzzlesManager.loadTest(testNumber - 1);
+                VisualBlocks.puzzlesManager.loadTest(testNumber);
             }
         });
         //Create new test modal cancel button
@@ -153,21 +154,30 @@ function UI() {
             //Generate the list of tests
             function generateTestsList() {
                 html = '';
-                for (var i = 0; i < VisualBlocks.currentPuzzle.tests.length; i++) {
-                    test = VisualBlocks.currentPuzzle.tests[i];
+                for (var testID in VisualBlocks.currentPuzzle.tests) {
+                    test = VisualBlocks.currentPuzzle.tests[testID];
 
                     name = test.name;
-                    lastRun = VisualBlocks.ui.formatTestResult(VisualBlocks.executor.testExecution.results[i]);
+                    lastRun = VisualBlocks.ui.formatTestResult(VisualBlocks.executor.testExecution.results[testID]);
 
                     html += '<tr><td>' + name + '</td>';
                     html += '<td>' + lastRun + '</td>';
-                    html += '<td> <button type="button" class="btn btn-danger btn-xs" data-id="' + i + '">Delete</button></td></tr>';
+                    html += '<td><button type="button" class="btn btn-info btn-xs btn-edit" data-id="' + testID + '">Rename</button> ';
+
+                    var deleteDisabled = '';
+                    //Only enable delete button if there are more than one test
+                    if(Object.keys(VisualBlocks.currentPuzzle.tests).length === 1) {
+                        deleteDisabled = 'disabled';
+                    }
+                    html += '<button type="button" class="btn btn-danger btn-xs btn-delete" data-id="' + testID + '" ' + deleteDisabled + '>Delete</button>';
+
+                    html += '</td></tr>';
                 }
 
                 $("#modal-tests-edit-list").html(html);
 
                 //Create the event bindings for pressing the delete button
-                $("#modal-tests-edit-list button").click(function() {
+                $("#modal-tests-edit-list .btn-delete").click(function() {
                     id = $(this).attr('data-id');
 
                     VisualBlocks.puzzlesManager.deleteTest(id);
@@ -177,7 +187,7 @@ function UI() {
 
                     //If we just deleted are currently opened test we open another one
                     if(id == VisualBlocks.ui.currentTest) {
-                        VisualBlocks.puzzlesManager.loadTest(0);
+                        VisualBlocks.puzzlesManager.loadTest(Object.keys(VisualBlocks.currentPuzzle.tests)[0]);
                     }
                 });
             }
@@ -212,10 +222,10 @@ function UI() {
         menuItemsHTML = "";
 
         //Go through all tests and create a list item link for it
-        for (var i = 0; i < VisualBlocks.currentPuzzle.tests.length; i++) {
-            test = VisualBlocks.currentPuzzle.tests[i];
+        for (var testID in VisualBlocks.currentPuzzle.tests) {
+            test = VisualBlocks.currentPuzzle.tests[testID];
 
-            menuItemsHTML += '<li><a href="#" data-id="' + i + '">' + test.name + '</a></li>';
+            menuItemsHTML += '<li><a href="#" data-id="' + testID + '">' + test.name + '</a></li>';
         }
 
         $("#testing-select-menu").html(menuItemsHTML);
