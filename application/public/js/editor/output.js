@@ -8,6 +8,7 @@ function Output(dom) {
     };
 
     this.writeLine = function(text) {
+        text = text || '';
         this.write(text + '<br />');
     }
 

@@ -34,9 +34,7 @@ function UI() {
             VisualBlocks.puzzlesManager.updateCurrentTest();
             VisualBlocks.executor.resetTestExecutionData();
 
-            for (var i = 0; i < VisualBlocks.currentPuzzle.tests.length; i++) {
-                VisualBlocks.executor.executeTest(i);
-            }
+            VisualBlocks.executor.executeAllTests();
         });
 
         //Clear output button

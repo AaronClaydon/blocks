@@ -55,11 +55,12 @@ function Executor() {
         jsInterpreter.run();
 
         var testResult = VisualBlocks.executor.testExecution.results[id];
-        var output = '<strong>' + test.name + '</strong>: ';
+        var output = test.name + ': ';
 
         if(testResult === undefined) {
             output += '<span class="bg-danger">NOTHING ASSERTED</span>';
         } else if(testResult) {
+            VisualBlocks.executor.testExecution.numPassed += 1; //Add to count of num tests passed
             output += '<span class="bg-success">SUCCESS</span>';
         } else {
             output += '<span class="bg-danger">FAILED</span>';
@@ -68,9 +69,29 @@ function Executor() {
         VisualBlocks.output.writeLine(output);
     }
 
+    this.executeAllTests = function() {
+        VisualBlocks.output.writeLine('<strong>Running all tests</strong>');
+
+        for (var i = 0; i < VisualBlocks.currentPuzzle.tests.length; i++) {
+            VisualBlocks.executor.executeTest(i);
+        }
+
+        numPassed = VisualBlocks.executor.testExecution.numPassed;
+        numTests = VisualBlocks.executor.testExecution.results.length;
+        if(numPassed == 0) {
+            VisualBlocks.output.writeLine('<strong>All tests failed</strong>');
+        } else if(numPassed == numTests) {
+            VisualBlocks.output.writeLine('<strong>All tests passed</strong>');
+        } else {
+            VisualBlocks.output.writeLine('<strong>' + numPassed + ' out of ' + numTests + ' tests passed</strong>');
+        }
+        VisualBlocks.output.writeLine();
+    }
+
     this.resetTestExecutionData = function() {
         VisualBlocks.executor.testExecution = [];
         VisualBlocks.executor.testExecution.currentTest = 0;
         VisualBlocks.executor.testExecution.results = [];
+        VisualBlocks.executor.testExecution.numPassed = 0;
     }
 }

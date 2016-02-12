@@ -9,8 +9,6 @@ $(document).ready(function() {
     VisualBlocks.ui.init();
 
     VisualBlocks.puzzlesManager = new PuzzlesManager();
-    //Load a default blank puzzle
-    //VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle());
-    //Load puzzle from file
-    VisualBlocks.puzzlesManager.loadPuzzleFromFile('/puzzles/test1.json');
+    //VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle()); //Load a default blank puzzle
+    VisualBlocks.puzzlesManager.loadPuzzleFromFile('/puzzles/test1.json'); //Load puzzle from file
 });
