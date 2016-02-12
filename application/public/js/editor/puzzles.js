@@ -1,5 +1,16 @@
+/*
+** Visual Blocks Testing Environment
+** Aaron Claydon
+**
+** editor/assert.js
+**
+** Manages the currently loaded puzzle
+*/
+
 function PuzzlesManager() {
+    //Load a puzzle object as the current puzzle
     this.loadPuzzle = function(puzzle) {
+        //Set it as current
         VisualBlocks.currentPuzzle = puzzle;
 
         //Load the application code
@@ -14,13 +25,16 @@ function PuzzlesManager() {
         VisualBlocks.puzzlesManager.loadTest(0);
     }
 
+    //Load a puzzle from a remote file
     this.loadPuzzleFromFile = function(filename) {
+        //Request the JSON object of the puzzle
         $.getJSON(filename, function(data) {
             VisualBlocks.output.writeLine('Loaded remote puzzle ' + data.name + ' from ' + filename);
             VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle(data));
         });
     }
 
+    //Load a given test into the test editor panel
     this.loadTest = function(id) {
         test = VisualBlocks.currentPuzzle.tests[id];
 
@@ -34,8 +48,8 @@ function PuzzlesManager() {
         VisualBlocks._workspaces.loadTest(test.testCode);
     };
 
+    //Update the current puzzle with any changes to the current test
     this.updateCurrentTest = function() {
-        //Update the current puzzle with any changes to the current test
         VisualBlocks.currentPuzzle.tests[VisualBlocks.ui.currentTest].testCode = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(VisualBlocks._workspaces.testWorkspace));
     }
 }

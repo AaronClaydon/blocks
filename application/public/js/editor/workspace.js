@@ -1,8 +1,20 @@
+/*
+** Visual Blocks Testing Environment
+** Aaron Claydon
+**
+** editor/workspace.js
+**
+** Manages and provides and interface for the Blockly workspaces
+*/
+
 function WorkSpaces() {
+    //Create and inject a workspace into the UI
     function createWorkspace(area, workspace, toolbox) {
         var blocklyArea = document.getElementById(area);
         var blocklyDiv = document.getElementById(workspace);
         var workspace = Blockly.inject(blocklyDiv, {toolbox: document.getElementById(toolbox), workspaceType: workspace});
+
+        //Resize the Blockly workspace to fill the browser window
         var onresize = function(e) {
             // Compute the absolute coordinates and dimensions of blocklyArea.
             var element = blocklyArea;
@@ -26,6 +38,7 @@ function WorkSpaces() {
         return workspace;
     }
 
+    //Generates toolboxes and creates the two workspaces
     this.init = function() {
         this.generateToolboxes();
 
@@ -49,11 +62,13 @@ function WorkSpaces() {
         $('body').append('<xml id="blockly-testing-toolbox" style="display: none">' + testToolbox + '</xml>');
     };
 
+    //Load given code into the application workspace
     this.loadApplication = function(code) {
         this.appWorkspace.clear();
         Blockly.Xml.domToWorkspace(this.appWorkspace, Blockly.Xml.textToDom(code));
     };
 
+    //Load given code into the test workspace
     this.loadTest = function(code) {
         this.testWorkspace.clear();
         Blockly.Xml.domToWorkspace(this.testWorkspace, Blockly.Xml.textToDom(code));

@@ -1,4 +1,15 @@
+/*
+** Visual Blocks Testing Environment
+** Aaron Claydon
+**
+** editor/executor.js
+**
+** Handles the compiling and interpreting of applications and tests
+** Displays application output and test results in output panel
+*/
+
 function Executor() {
+    //Provides an API to allow compiled block code to interact with the editor
     function interpreterJSAPI(interpreter, scope) {
         //Add an API function for the alert() block.
         var alertWrapper = function(text) {
@@ -21,17 +32,22 @@ function Executor() {
         interpreter.setProperty(scope, 'assert', interpreter.createNativeFunction(assertWrapper));
     }
 
+    //API function that allows tests to set their result
     function setTestAssertResult(value, check_if) {
         VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest] = (value.data == check_if);
     }
 
+    //Executes the users application code
     this.executeApplication = function() {
+        //Compile to JavaScript
         var appCode = Blockly.JavaScript.workspaceToCode(VisualBlocks._workspaces.appWorkspace);
 
+        //Run through JavaScript Interpreter with our API
         var jsInterpreter = new Interpreter(appCode, interpreterJSAPI);
         jsInterpreter.run();
     }
 
+    //Compile and interpret a given test
     this.executeTest = function(id) {
         VisualBlocks.executor.testExecution.currentTest = id;
 
@@ -46,12 +62,17 @@ function Executor() {
         Blockly.Xml.domToWorkspace(runningTestWorkspace, testDom);
         var testCode = Blockly.JavaScript.workspaceToCode(runningTestWorkspace);
 
+        //Merge application and test code so test can reference it
         var mergedCode = appCode + testCode;
 
+        //Run through JavaScript Interpreter with our API
         var jsInterpreter = new Interpreter(mergedCode, interpreterJSAPI);
         jsInterpreter.run();
 
+        //Get the result from the test
         var testResult = VisualBlocks.executor.testExecution.results[id];
+
+        //Format output for test result
         var output = test.name + ': ';
 
         if(testResult === undefined) {
@@ -66,6 +87,7 @@ function Executor() {
         VisualBlocks.output.writeLine(output);
     }
 
+    //Execute all tests in the puzzle
     this.executeAllTests = function() {
         //Spacing break line is not needed if output is empty
         VisualBlocks.output.lineBreakIfEmpty();
@@ -86,6 +108,7 @@ function Executor() {
         }
     }
 
+    //Set the default test results
     this.resetTestExecutionData = function() {
         VisualBlocks.executor.testExecution = [];
         VisualBlocks.executor.testExecution.currentTest = 0;

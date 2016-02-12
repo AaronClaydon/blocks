@@ -1,3 +1,12 @@
+/*
+** Visual Blocks Testing Environment
+** Aaron Claydon
+**
+** editor/ui.js
+**
+** Manages dynamic UI elements
+*/
+
 function UI() {
     //Scale the UI and set window resize events
     this.init = function() {
@@ -8,9 +17,11 @@ function UI() {
 
         //Save puzzle locally modal button
         $("#modal-save-locally-btn").click(function() {
+            //Check if user suports the file reading api's
             if (window.File && window.FileReader && window.FileList && window.Blob) {
                 var encodedPuzzle = JSON.stringify(VisualBlocks.currentPuzzle, null, 4);
 
+                //Create a file of the encoded puzzle and save it
                 var blob = new Blob([encodedPuzzle], {type: "application/json;charset=utf-8"});
                 var fileName = VisualBlocks.currentPuzzle.name + '.vbpuz';
                 saveAs(blob, fileName);
@@ -28,7 +39,9 @@ function UI() {
 
         //Load puzzle locally modal button
         $("#modal-load-locally-btn").click(function() {
+            //Check if the user supports the file reading api's
             if (window.File && window.FileReader && window.FileList && window.Blob) {
+                //Simulate click on file input element to open the load dialog
                 $("#header-load-fileInput").click();
             } else {
                 alert('Sorry your browser does not support loading files from your computer');
@@ -52,7 +65,7 @@ function UI() {
 
             fileReader.onload = function(e) {
                 console.log(e);
-                var contents = e.target.result;
+                var contents = e.target.result; //File contents
 
                 try {
                     //Hide the load puzzle modal
@@ -116,7 +129,7 @@ function UI() {
     //Update puzzle name in places where it is displayed
     this.updatePuzzleName = function() {
         var name = VisualBlocks.currentPuzzle.name;
-        
+
         $("#application-current-name").text(name);
         $("#inputSavePuzzleName").val(name);
     };
@@ -129,9 +142,9 @@ function UI() {
 
     //Update the tests panel selection dropdown
     this.updateTestSelectionDropdown = function () {
-        //Generate the tests menu
         menuItemsHTML = "";
 
+        //Go through all tests and create a list item link for it
         for (var i = 0; i < VisualBlocks.currentPuzzle.tests.length; i++) {
             test = VisualBlocks.currentPuzzle.tests[i];
 
@@ -140,6 +153,7 @@ function UI() {
 
         $("#testing-select-menu").html(menuItemsHTML);
 
+        //Create the event bindings for clicking on a test name in the dropdown
         $("#testing-select-menu a").click(function() {
             id = $(this).attr('data-id');
 

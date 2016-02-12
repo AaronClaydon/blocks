@@ -1,3 +1,13 @@
+/*
+** Visual Blocks Testing Environment
+** Aaron Claydon
+**
+** editor/custom_blocks/assert.js
+**
+** Google Blockly custom block for assertions
+*/
+
+//Block definition
 Blockly.Blocks['assert'] = {
     init: function() {
         this.setColour(10);
@@ -14,6 +24,7 @@ Blockly.Blocks['assert'] = {
     }
 };
 
+//Block JavaScript code compiler
 Blockly.JavaScript['assert'] = function(block) {
     var value = Blockly.JavaScript.valueToCode(block, 'ASSERT_SUCCESS_VALUE', Blockly.JavaScript.ORDER_NONE);
     var check_if = Blockly.JavaScript.valueToCode(block, 'ASSERT_SUCCESS_IF', Blockly.JavaScript.ORDER_NONE);
