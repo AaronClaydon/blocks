@@ -1,5 +1,5 @@
 function PuzzlesManager() {
-    function loadPuzzle(puzzle) {
+    this.loadPuzzle = function(puzzle) {
         VisualBlocks.currentPuzzle = puzzle;
 
         //Load the application code
@@ -12,9 +12,9 @@ function PuzzlesManager() {
         VisualBlocks.puzzlesManager.loadTest(0);
     }
 
-    function loadPuzzleFromFile(filename) {
+    this.loadPuzzleFromFile = function(filename) {
         $.getJSON(filename, function(data) {
-            loadPuzzle(new Puzzle(data));
+            VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle(data));
         });
     }
 
@@ -35,15 +35,13 @@ function PuzzlesManager() {
         //Update the current puzzle with any changes to the current test
         VisualBlocks.currentPuzzle.tests[VisualBlocks.currentPuzzle.currentTest].testCode = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(VisualBlocks._workspaces.testWorkspace));
     }
-
-    //Load a default blank puzzle
-    //loadPuzzle(new Puzzle());
-
-    //Load puzzle from file
-    loadPuzzleFromFile('/puzzles/test1.json');
 }
 
 function Puzzle(content) {
+    //allow default values if not loading from file
+    if(content === undefined) {
+        content = {};
+    }
     this.name = content.name || 'default';
     //this.puzzle = false;
     this.applicationCode = content.applicationCode || '<xml xmlns="http://www.w3.org/1999/xhtml"></xml>';

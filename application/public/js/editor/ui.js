@@ -1,6 +1,21 @@
 function UI() {
     //Scale the UI and set window resize events
     this.init = function() {
+        //New puzzle header button
+        $("#header-new-btn").click(function() {
+            VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle());
+        });
+
+        //Save puzzle header button
+        $("#header-save-btn").click(function() {
+            alert('Not implemented');
+        });
+
+        //Load puzzle header button
+        $("#header-load-btn").click(function() {
+            alert('Not implemented');
+        });
+
         //Application code run button
         $("#application-btn-run").click(function() {
             VisualBlocks.executor.executeApplication();
