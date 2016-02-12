@@ -17,6 +17,7 @@ $(document).ready(function() {
 
     //Block compiler and interpreter
     VisualBlocks.executor = new Executor();
+    VisualBlocks.executor.resetTestExecutionData();
 
     //Output panel
     VisualBlocks.output = new Output($("#output"));

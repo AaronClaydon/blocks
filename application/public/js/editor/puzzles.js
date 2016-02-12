@@ -31,6 +31,9 @@ function PuzzlesManager() {
         $.getJSON(filename, function(data) {
             VisualBlocks.output.writeLine('Loaded remote puzzle ' + data.name + ' from ' + filename);
             VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle(data));
+
+            //Testing DELETE ME
+            $("#testing-dropdown-edit").click();
         });
     }
 
@@ -51,6 +54,19 @@ function PuzzlesManager() {
     //Update the current puzzle with any changes to the current test
     this.updateCurrentTest = function() {
         VisualBlocks.currentPuzzle.tests[VisualBlocks.ui.currentTest].testCode = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(VisualBlocks._workspaces.testWorkspace));
+    }
+
+    //Add a new empty test to the puzzle
+    this.newTest = function(name) {
+        return VisualBlocks.currentPuzzle.tests.push({
+            'name': name,
+            'testCode': '<xml xmlns="http://www.w3.org/1999/xhtml"></xml>'
+        });
+    }
+
+    //Deletes a given test
+    this.deleteTest = function(id) {
+        VisualBlocks.currentPuzzle.tests.splice(id, 1);
     }
 }
 

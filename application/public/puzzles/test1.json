@@ -6,6 +6,10 @@
 
     "tests": [
         {
+            "name": "Tklsdfksriple Test 1",
+            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"assert\" x=\"0\" y=\"0\"><value name=\"ASSERT_SUCCESS_VALUE\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"procedures_callreturn\"><mutation name=\"triple\"><arg name=\"x\"></arg></mutation><value name=\"ARG0\"><block type=\"math_number\"><field name=\"NUM\">15</field></block></value></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">45</field></block></value></block></value><value name=\"ASSERT_SUCCESS_IF\"><block type=\"logic_boolean\"><field name=\"BOOL\">FALSE</field></block></value></block></xml>"
+        },
+        {
             "name": "Double Test 1",
             "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"assert\" x=\"0\" y=\"0\"><value name=\"ASSERT_SUCCESS_VALUE\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"procedures_callreturn\"><mutation name=\"double\"><arg name=\"x\"></arg></mutation><value name=\"ARG0\"><block type=\"math_number\"><field name=\"NUM\">15</field></block></value></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">30</field></block></value></block></value><value name=\"ASSERT_SUCCESS_IF\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value></block></xml>"
         },

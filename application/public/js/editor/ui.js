@@ -117,6 +117,73 @@ function UI() {
             VisualBlocks.ui.updatePuzzleName();
         });
 
+        //Dropdown new test button
+        $("#testing-dropdown-new").click(function() {
+            $("#modal-tests-new").modal('show');
+
+            //Create a default test name
+            $("#input-tests-new-name").val('Test ' + (VisualBlocks.currentPuzzle.tests.length + 1));
+        });
+
+        //Create new test modal add button
+        $("#modal-tests-new-btn").click(function() {
+            var name = $("#input-tests-new-name").val();
+
+            //Validate the input to see if its empty
+            if(!name.trim()) {
+                alert('Please enter a test name');
+            } else {
+                testNumber = VisualBlocks.puzzlesManager.newTest(name);
+                VisualBlocks.ui.updateTestSelectionDropdown();
+                $("#modal-tests-new").modal('hide');
+
+                //Load the newly created test
+                VisualBlocks.puzzlesManager.loadTest(testNumber - 1);
+            }
+        });
+        //Create new test modal cancel button
+        $("#modal-tests-new-cancel-btn").click(function() {
+            $("#input-tests-new-name").val('');
+        });
+
+        //Dropdown edit tests button
+        $("#testing-dropdown-edit").click(function() {
+            $("#modal-tests-edit").modal('show');
+
+            //Generate the list of tests
+            function generateTestsList() {
+                html = '';
+                for (var i = 0; i < VisualBlocks.currentPuzzle.tests.length; i++) {
+                    test = VisualBlocks.currentPuzzle.tests[i];
+
+                    name = test.name;
+                    lastRun = VisualBlocks.ui.formatTestResult(VisualBlocks.executor.testExecution.results[i]);
+
+                    html += '<tr><td>' + name + '</td>';
+                    html += '<td>' + lastRun + '</td>';
+                    html += '<td> <button type="button" class="btn btn-danger btn-xs" data-id="' + i + '">Delete</button></td></tr>';
+                }
+
+                $("#modal-tests-edit-list").html(html);
+
+                //Create the event bindings for pressing the delete button
+                $("#modal-tests-edit-list button").click(function() {
+                    id = $(this).attr('data-id');
+
+                    VisualBlocks.puzzlesManager.deleteTest(id);
+
+                    VisualBlocks.ui.updateTestSelectionDropdown();
+                    generateTestsList();
+
+                    //If we just deleted are currently opened test we open another one
+                    if(id == VisualBlocks.ui.currentTest) {
+                        VisualBlocks.puzzlesManager.loadTest(0);
+                    }
+                });
+            }
+            generateTestsList();
+        });
+
         //Resize the output panel to users window size
         function outputResize() {
             var newHeight = $("#output-panel").height() - 35;
@@ -157,7 +224,7 @@ function UI() {
         $("#testing-select-menu a").click(function() {
             id = $(this).attr('data-id');
 
-            $("#testing-dropdownMenu").dropdown('toggle')
+            $("#testing-dropdownMenu").dropdown('toggle');
 
             //Update the current workspace with any changes to the current test
             VisualBlocks.puzzlesManager.updateCurrentTest();
@@ -166,4 +233,17 @@ function UI() {
             return false;
         });
     };
+
+    //Formats the test result
+    this.formatTestResult = function(testResult) {
+        if(testResult === undefined) {
+            output = '<span class="bg-danger">NOTHING ASSERTED</span>';
+        } else if(testResult) {
+            output = '<span class="bg-success">SUCCESS</span>';
+        } else {
+            output = '<span class="bg-danger">FAILED</span>';
+        }
+
+        return output;
+    }
 }
