@@ -2,6 +2,8 @@ $(document).ready(function() {
     window.VisualBlocks = [];
 
     VisualBlocks._workspaces = new WorkSpaces();
+    VisualBlocks._workspaces.init();
+
     VisualBlocks.executor = new Executor();
     VisualBlocks.output = new Output($("#output"));
 
