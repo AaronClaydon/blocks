@@ -321,7 +321,20 @@
     </category>
     <sep></sep>
     <category name="Testing">
-        <block type="assert"></block>
+        <block type="assert">
+            <value name="ASSERT_SUCCESS_IF">
+                <block type="logic_boolean">
+                    <field name="BOOL">TRUE</field>
+                </block>
+            </value>
+        </block>
+        <block type="assert">
+            <value name="ASSERT_SUCCESS_IF">
+                <block type="logic_boolean">
+                    <field name="BOOL">FALSE</field>
+                </block>
+            </value>
+        </block>
     </category>
 </xml>
 

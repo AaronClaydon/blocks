@@ -162,14 +162,14 @@ function interpreterJSAPI(interpreter, scope) {
     interpreter.setProperty(scope, 'prompt', interpreter.createNativeFunction(promptWrapper));
 
     //Add an API function for the assert block
-    var assertWrapper = function(value) {
-        return interpreter.createPrimitive(setTestAssertResult(value));
+    var assertWrapper = function(value, check_if) {
+        return interpreter.createPrimitive(setTestAssertResult(value, check_if));
     };
     interpreter.setProperty(scope, 'assert', interpreter.createNativeFunction(assertWrapper));
 }
 
-function setTestAssertResult(value) {
-    VisualBlocks.testExecution.results[VisualBlocks.testExecution.currentTest] = value.data;
+function setTestAssertResult(value, check_if) {
+    VisualBlocks.testExecution.results[VisualBlocks.testExecution.currentTest] = (value.data == check_if);
 }
 
 $(document).ready(function() {
