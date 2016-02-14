@@ -48,6 +48,16 @@ function Executor() {
             return interpreter.createPrimitive(testGetNextOutput());
         }));
 
+        //Add an API function for checking if any outputs left
+        interpreter.setProperty(scope, 'getIfOutputsLeft', interpreter.createNativeFunction(function() {
+            return interpreter.createPrimitive(testGetIfOutputsLeft());
+        }));
+
+        //Add an API function for checking if any prompts left
+        interpreter.setProperty(scope, 'getIfPromptsMissed', interpreter.createNativeFunction(function() {
+            return interpreter.createPrimitive(testGetIfPromptsMissed());
+        }));
+
         //TESTING: CONSOLELOG
         interpreter.setProperty(scope, 'consolelog', interpreter.createNativeFunction(function(value) {
             return interpreter.createPrimitive(console.log("FROMTEST: " + value.data));
@@ -62,8 +72,6 @@ function Executor() {
     }
     //Function that handles the prompt block in tests
     function testFunctionPrompt(text) {
-        //TODO: Check if nothing left
-
         //Get the next value from the stack
         promptSimulatorValueBlock = VisualBlocks.executor.testExecution.promptSimulators[0];
 
@@ -81,8 +89,6 @@ function Executor() {
 
     //Function that handles getting the next output from the application
     function testGetNextOutput() {
-        //TODO: Check if nothing left
-
         //Get the next value from the stack
         var output = VisualBlocks.executor.testExecution.alerts.output[0];
 
@@ -90,6 +96,16 @@ function Executor() {
         VisualBlocks.executor.testExecution.alerts.output.splice(0, 1);
 
         return output;
+    }
+
+    //Function that handles checks if there are any outputs left
+    function testGetIfOutputsLeft() {
+        return (VisualBlocks.executor.testExecution.alerts.output.length > 0);
+    }
+
+    //Function that handles checks if any prompts were missed and not handled
+    function testGetIfPromptsMissed() {
+        console.log('NI: testGetIfPromptsMissed');
     }
 
     //API function that allows tests to set their result
