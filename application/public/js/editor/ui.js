@@ -97,6 +97,8 @@ function UI() {
             VisualBlocks.executor.resetTestExecutionData();
 
             VisualBlocks.executor.executeTest(VisualBlocks.ui.currentTest);
+
+            VisualBlocks.ui.outputTestResults();
         });
 
         //Test run all button
@@ -105,6 +107,8 @@ function UI() {
             VisualBlocks.executor.resetTestExecutionData();
 
             VisualBlocks.executor.executeAllTests();
+
+            VisualBlocks.ui.outputTestResults();
         });
 
         //Clear output button
@@ -256,4 +260,42 @@ function UI() {
 
         return output;
     }
+
+    //Format and display the test results in the output panel
+    this.outputTestResults = function() {
+        //Spacing break line is not needed if output is empty
+        VisualBlocks.output.lineBreakIfEmpty();
+        VisualBlocks.output.writeLine('<strong>Running all tests</strong>');
+
+        //Generate the results table
+        output = '<table class="testing-results-table">';
+
+        for (var testID in VisualBlocks.currentPuzzle.tests) {
+            test = VisualBlocks.currentPuzzle.tests[testID];
+
+            //Get the result from the test
+            var testResult = VisualBlocks.executor.testExecution.results[testID];
+
+            //Format output for test result
+            output += '<tr><td>' + test.name + '</td><td>' + VisualBlocks.ui.formatTestResult(testResult) + '</td></tr>';
+
+            if(testResult) {
+                VisualBlocks.executor.testExecution.numPassed += 1; //Add to count of num tests passed
+            }
+        }
+
+        output += '</table>';
+        VisualBlocks.output.write(output);
+
+        //Display success message
+        numPassed = VisualBlocks.executor.testExecution.numPassed;
+        numTests = Object.keys(VisualBlocks.currentPuzzle.tests).length;
+        if(numPassed == 0) {
+            VisualBlocks.output.writeLine('<strong>All tests failed</strong>');
+        } else if(numPassed == numTests) {
+            VisualBlocks.output.writeLine('<strong>All tests passed</strong>');
+        } else {
+            VisualBlocks.output.writeLine('<strong>' + numPassed + ' out of ' + numTests + ' tests passed</strong>');
+        }
+    };
 }

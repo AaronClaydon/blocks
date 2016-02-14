@@ -90,9 +90,9 @@ a {
     padding: 0px;
 }
 
-
-pre {
-    background-color: transparent;
-    border: 0;
-    padding: 0;
+.testing-results-table td {
+    padding-bottom: 4px;
+}
+.testing-results-table td:nth-child(1) {
+    padding-right: 20px;
 }

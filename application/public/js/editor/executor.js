@@ -68,38 +68,12 @@ function Executor() {
         //Run through JavaScript Interpreter with our API
         var jsInterpreter = new Interpreter(mergedCode, interpreterJSAPI);
         jsInterpreter.run();
-
-        //Get the result from the test
-        var testResult = VisualBlocks.executor.testExecution.results[id];
-
-        //Format output for test result
-        var output = test.name + ': ' + VisualBlocks.ui.formatTestResult(testResult);
-
-        if(testResult) {
-            VisualBlocks.executor.testExecution.numPassed += 1; //Add to count of num tests passed
-        }
-
-        VisualBlocks.output.writeLine(output);
     }
 
     //Execute all tests in the puzzle
     this.executeAllTests = function() {
-        //Spacing break line is not needed if output is empty
-        VisualBlocks.output.lineBreakIfEmpty();
-        VisualBlocks.output.writeLine('<strong>Running all tests</strong>');
-
         for (var testID in VisualBlocks.currentPuzzle.tests) {
             VisualBlocks.executor.executeTest(testID);
-        }
-
-        numPassed = VisualBlocks.executor.testExecution.numPassed;
-        numTests = Object.keys(VisualBlocks.currentPuzzle.tests).length;
-        if(numPassed == 0) {
-            VisualBlocks.output.writeLine('<strong>All tests failed</strong>');
-        } else if(numPassed == numTests) {
-            VisualBlocks.output.writeLine('<strong>All tests passed</strong>');
-        } else {
-            VisualBlocks.output.writeLine('<strong>' + numPassed + ' out of ' + numTests + ' tests passed</strong>');
         }
     }
 
