@@ -8,6 +8,64 @@
 */
 
 function UI() {
+    function showEditTestsList() {
+        $("#modal-tests-edit-list").modal('show');
+
+        //Generate the list of tests
+        function generateTestsList() {
+            html = '';
+            for (var testID in VisualBlocks.currentPuzzle.tests) {
+                test = VisualBlocks.currentPuzzle.tests[testID];
+
+                name = test.name;
+                lastRun = VisualBlocks.ui.formatTestResult(VisualBlocks.executor.testExecution.results[testID]);
+
+                html += '<tr><td>' + name + '</td>';
+                html += '<td>' + lastRun + '</td>';
+                html += '<td><button type="button" class="btn btn-info btn-xs btn-edit" data-id="' + testID + '">Rename</button> ';
+
+                var deleteDisabled = '';
+                //Only enable delete button if there are more than one test
+                if(Object.keys(VisualBlocks.currentPuzzle.tests).length === 1) {
+                    deleteDisabled = 'disabled';
+                }
+                html += '<button type="button" class="btn btn-danger btn-xs btn-delete" data-id="' + testID + '" ' + deleteDisabled + '>Delete</button>';
+
+                html += '</td></tr>';
+            }
+
+            $("#modal-tests-edit-tests-list").html(html);
+
+            //Create the event bindings for pressing the delete button
+            $("#modal-tests-edit-list .btn-delete").click(function() {
+                id = $(this).attr('data-id');
+
+                VisualBlocks.puzzlesManager.deleteTest(id);
+
+                VisualBlocks.ui.updateTestSelectionDropdown();
+                generateTestsList();
+
+                //If we just deleted are currently opened test we open another one
+                if(id == VisualBlocks.ui.currentTest) {
+                    VisualBlocks.puzzlesManager.loadTest(Object.keys(VisualBlocks.currentPuzzle.tests)[0]);
+                }
+            });
+
+            //Create the event bindings for pressing the edit button
+            $("#modal-tests-edit-list .btn-edit").click(function() {
+                id = $(this).attr('data-id');
+                test = VisualBlocks.currentPuzzle.tests[id];
+
+                $("#input-tests-edit-id").val(id);
+                $("#input-tests-edit-name").val(test.name);
+
+                $("#modal-tests-edit-list").modal('hide');
+                $("#modal-tests-edit").modal('show');
+            });
+        }
+        generateTestsList();
+    }
+
     //Scale the UI and set window resize events
     this.init = function() {
         //New puzzle modal button
@@ -151,51 +209,33 @@ function UI() {
             $("#input-tests-new-name").val('');
         });
 
+        //Canceling edit test window brings back the edit list
+        $("#modal-tests-edit-cancel-btn").click(function() {
+            $("#modal-tests-edit-list").modal('show');
+        });
+
+        //Edit test submit button
+        $("#modal-tests-edit-btn").click(function() {
+            id = $("#input-tests-edit-id").val();
+            name = $("#input-tests-edit-name").val();
+
+            //Validate the input to see if its empty
+            if(!name.trim()) {
+                alert('Please enter a test name');
+            } else {
+                VisualBlocks.currentPuzzle.tests[id].name = name;
+
+                VisualBlocks.ui.updateTestPanelName();
+
+                $("#modal-tests-edit").modal('hide');
+
+                showEditTestsList();
+            }
+        });
+
         //Dropdown edit tests button
         $("#testing-dropdown-edit").click(function() {
-            $("#modal-tests-edit").modal('show');
-
-            //Generate the list of tests
-            function generateTestsList() {
-                html = '';
-                for (var testID in VisualBlocks.currentPuzzle.tests) {
-                    test = VisualBlocks.currentPuzzle.tests[testID];
-
-                    name = test.name;
-                    lastRun = VisualBlocks.ui.formatTestResult(VisualBlocks.executor.testExecution.results[testID]);
-
-                    html += '<tr><td>' + name + '</td>';
-                    html += '<td>' + lastRun + '</td>';
-                    html += '<td><button type="button" class="btn btn-info btn-xs btn-edit" data-id="' + testID + '">Rename</button> ';
-
-                    var deleteDisabled = '';
-                    //Only enable delete button if there are more than one test
-                    if(Object.keys(VisualBlocks.currentPuzzle.tests).length === 1) {
-                        deleteDisabled = 'disabled';
-                    }
-                    html += '<button type="button" class="btn btn-danger btn-xs btn-delete" data-id="' + testID + '" ' + deleteDisabled + '>Delete</button>';
-
-                    html += '</td></tr>';
-                }
-
-                $("#modal-tests-edit-list").html(html);
-
-                //Create the event bindings for pressing the delete button
-                $("#modal-tests-edit-list .btn-delete").click(function() {
-                    id = $(this).attr('data-id');
-
-                    VisualBlocks.puzzlesManager.deleteTest(id);
-
-                    VisualBlocks.ui.updateTestSelectionDropdown();
-                    generateTestsList();
-
-                    //If we just deleted are currently opened test we open another one
-                    if(id == VisualBlocks.ui.currentTest) {
-                        VisualBlocks.puzzlesManager.loadTest(Object.keys(VisualBlocks.currentPuzzle.tests)[0]);
-                    }
-                });
-            }
-            generateTestsList();
+            showEditTestsList();
         });
 
         //Resize the output panel to users window size
