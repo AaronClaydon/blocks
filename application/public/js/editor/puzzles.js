@@ -49,6 +49,10 @@ function PuzzlesManager() {
         VisualBlocks._workspaces.loadTest(test.testCode);
     };
 
+    this.updateCurrentApplication = function() {
+        VisualBlocks.currentPuzzle.applicationCode = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(VisualBlocks._workspaces.appWorkspace));
+    }
+
     //Update the current puzzle with any changes to the current test
     this.updateCurrentTest = function() {
         VisualBlocks.currentPuzzle.tests[VisualBlocks.ui.currentTest].testCode = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(VisualBlocks._workspaces.testWorkspace));

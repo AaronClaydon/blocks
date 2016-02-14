@@ -9,27 +9,86 @@
 */
 
 function Executor() {
-    //Provides an API to allow compiled block code to interact with the editor
-    function interpreterJSAPI(interpreter, scope) {
+    //Provides an API to allow compiled application block code to interact with the editor
+    function interpreterApplicationJSAPI(interpreter, scope) {
         //Add an API function for the alert() block.
-        var alertWrapper = function(text) {
+        interpreter.setProperty(scope, 'alert', interpreter.createNativeFunction(function(text) {
             text = text ? text.toString() : '';
             return interpreter.createPrimitive(VisualBlocks.output.writeLine(text));
-        };
-        interpreter.setProperty(scope, 'alert', interpreter.createNativeFunction(alertWrapper));
+        }));
 
         //Add an API function for the prompt() block.
-        var promptWrapper = function(text) {
+        interpreter.setProperty(scope, 'prompt', interpreter.createNativeFunction(function(text) {
             text = text ? text.toString() : '';
             return interpreter.createPrimitive(prompt(text));
-        };
-        interpreter.setProperty(scope, 'prompt', interpreter.createNativeFunction(promptWrapper));
+        }));
+    }
+
+    //Provides an API to allow compiled test block code to interact with the editor
+    function interpreterTestJSAPI(interpreter, scope) {
+        //Add an API function for the alert() block.
+        interpreter.setProperty(scope, 'alert', interpreter.createNativeFunction(function(text) {
+            text = text ? text.toString() : '';
+            return interpreter.createPrimitive(testFunctionAlert(text));
+        }));
+
+        //Add an API function for the prompt() block.
+        interpreter.setProperty(scope, 'prompt', interpreter.createNativeFunction(function(text) {
+            text = text ? text.toString() : '';
+            return interpreter.createPrimitive(testFunctionPrompt(text));
+        }));
 
         //Add an API function for the assert block
-        var assertWrapper = function(value, check_if) {
+        interpreter.setProperty(scope, 'assert', interpreter.createNativeFunction(function(value, check_if) {
             return interpreter.createPrimitive(setTestAssertResult(value, check_if));
-        };
-        interpreter.setProperty(scope, 'assert', interpreter.createNativeFunction(assertWrapper));
+        }));
+
+        //Add an API function for getting the next print output
+        interpreter.setProperty(scope, 'getNextOutput', interpreter.createNativeFunction(function() {
+            return interpreter.createPrimitive(testGetNextOutput());
+        }));
+
+        //TESTING: CONSOLELOG
+        interpreter.setProperty(scope, 'consolelog', interpreter.createNativeFunction(function(value) {
+            return interpreter.createPrimitive(console.log("FROMTEST: " + value.data));
+        }));
+    }
+
+    //Function that handles the alert block in tests
+    function testFunctionAlert(text) {
+        //push alert text into the stack for retrieval
+        VisualBlocks.executor.testExecution.alerts.output.push(text);
+    }
+    //Function that handles the prompt block in tests
+    function testFunctionPrompt(text) {
+        //TODO: Check if nothing left
+
+        //Get the next value from the stack
+        promptSimulatorValueBlock = VisualBlocks.executor.testExecution.promptSimulators[0];
+
+        //Delete this value from the stack
+        VisualBlocks.executor.testExecution.promptSimulators.splice(0, 1);
+
+        //Compile the prompt simulator value block to JavaScript
+        promptSimulatorValueBlockCode = Blockly.JavaScript.blockToCode(promptSimulatorValueBlock)[0];
+
+        //Execute the prompt simulator value code and set it as the return
+        var promptSimulatorValue = eval(promptSimulatorValueBlockCode);
+        console.log("PROMPT: " + text + ' | given ' + promptSimulatorValue);
+        return promptSimulatorValue;
+    }
+
+    //Function that handles getting the next output from the application
+    function testGetNextOutput() {
+        //TODO: Check if nothing left
+
+        //Get the next value from the stack
+        var output = VisualBlocks.executor.testExecution.alerts.output[0];
+
+        //Delete this value from the stack
+        VisualBlocks.executor.testExecution.alerts.output.splice(0, 1);
+
+        return output;
     }
 
     //API function that allows tests to set their result
@@ -43,7 +102,7 @@ function Executor() {
         var appCode = Blockly.JavaScript.workspaceToCode(VisualBlocks._workspaces.appWorkspace);
 
         //Run through JavaScript Interpreter with our API
-        var jsInterpreter = new Interpreter(appCode, interpreterJSAPI);
+        var jsInterpreter = new Interpreter(appCode, interpreterApplicationJSAPI);
         jsInterpreter.run();
     }
 
@@ -65,8 +124,19 @@ function Executor() {
         //Merge application and test code so test can reference it
         var mergedCode = appCode + testCode;
 
+        //Get all the set prompt simulator blocks
+        var testBlocks = VisualBlocks._workspaces.testWorkspace.getAllBlocks();
+        for (var i = 0; i < testBlocks.length; i++) {
+            block = testBlocks[i];
+
+            if(block.type == 'simulate_input') {
+                inputBlock = block.getChildren()[0];
+                VisualBlocks.executor.testExecution.promptSimulators.push(inputBlock);
+            }
+        }
+
         //Run through JavaScript Interpreter with our API
-        var jsInterpreter = new Interpreter(mergedCode, interpreterJSAPI);
+        var jsInterpreter = new Interpreter(mergedCode, interpreterTestJSAPI);
         jsInterpreter.run();
     }
 
@@ -82,6 +152,14 @@ function Executor() {
         VisualBlocks.executor.testExecution = [];
         VisualBlocks.executor.testExecution.currentTest = 'default';
         VisualBlocks.executor.testExecution.results = {};
+
+        //Stack of all prompt simulator blocks
+        VisualBlocks.executor.testExecution.promptSimulators = [];
+
+        //Stack of alert data
+        VisualBlocks.executor.testExecution.alerts = {};
+        VisualBlocks.executor.testExecution.alerts.output = [];
+
         VisualBlocks.executor.testExecution.numPassed = 0;
     }
 }

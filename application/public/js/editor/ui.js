@@ -76,6 +76,9 @@ function UI() {
 
         //Save puzzle locally modal button
         $("#modal-save-locally-btn").click(function() {
+            VisualBlocks.puzzlesManager.updateCurrentApplication();
+            VisualBlocks.puzzlesManager.updateCurrentTest();
+
             //Check if user suports the file reading api's
             if (window.File && window.FileReader && window.FileList && window.Blob) {
                 var encodedPuzzle = JSON.stringify(VisualBlocks.currentPuzzle, null, 4);
