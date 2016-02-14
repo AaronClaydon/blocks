@@ -4,7 +4,7 @@
     "tests": {
         "defaul1": {
             "name": "Test 1",
-            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"simulate_input\" x=\"9\" y=\"11\"></block><block type=\"math_number\" x=\"163\" y=\"31\"><field name=\"NUM\">10</field></block><block type=\"math_number\" x=\"146\" y=\"101\"><field name=\"NUM\">50</field></block></xml>"
+            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"simulate_input\" x=\"9\" y=\"11\"><field name=\"TYPE\">NUMBER</field></block><block type=\"math_number\" x=\"163\" y=\"31\"><field name=\"NUM\">10</field></block><block type=\"math_number\" x=\"146\" y=\"101\"><field name=\"NUM\">50</field></block></xml>"
         }
     }
 }

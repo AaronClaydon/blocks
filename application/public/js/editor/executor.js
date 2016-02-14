@@ -57,6 +57,7 @@ function Executor() {
     //Function that handles the alert block in tests
     function testFunctionAlert(text) {
         //push alert text into the stack for retrieval
+        console.log("PRINT: " + text);
         VisualBlocks.executor.testExecution.alerts.output.push(text);
     }
     //Function that handles the prompt block in tests
