@@ -124,13 +124,16 @@ function Executor() {
         //Merge application and test code so test can reference it
         var mergedCode = appCode + testCode;
 
-        //Get all the set prompt simulator blocks
+        //Get all the set prompt simulator blocks, in order of definition
         var testBlocks = VisualBlocks._workspaces.testWorkspace.getAllBlocks();
         for (var i = 0; i < testBlocks.length; i++) {
             block = testBlocks[i];
 
             if(block.type == 'simulate_input') {
-                inputBlock = block.getChildren()[0];
+                //Get the input block
+                inputBlock = block.inputList[0].connection.targetBlock();
+
+                //Push onto the prompt simulator stack
                 VisualBlocks.executor.testExecution.promptSimulators.push(inputBlock);
             }
         }

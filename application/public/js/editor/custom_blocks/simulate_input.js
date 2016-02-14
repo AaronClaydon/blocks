@@ -11,7 +11,7 @@
 Blockly.Blocks['simulate_input'] = {
     init: function() {
         this.setColour(10);
-        this.appendValueInput('ASSERT_SUCCESS_VALUE')
+        this.appendValueInput('SIMULATE_INPUT')
             .setCheck('Number')
             .appendField('set prompt input');
         this.setPreviousStatement(true);
