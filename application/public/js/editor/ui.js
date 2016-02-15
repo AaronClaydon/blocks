@@ -182,14 +182,6 @@ function UI() {
             VisualBlocks.ui.updatePuzzleName();
         });
 
-        //Dropdown new test button
-        $("#testing-dropdown-new").click(function() {
-            $("#modal-tests-new").modal('show');
-
-            //Create a default test name
-            $("#input-tests-new-name").val('Test ' + (Object.keys(VisualBlocks.currentPuzzle.tests).length + 1));
-        });
-
         //Create new test modal add button
         $("#modal-tests-new-btn").click(function() {
             var name = $("#input-tests-new-name").val();
@@ -235,10 +227,7 @@ function UI() {
             }
         });
 
-        //Dropdown edit tests button
-        $("#testing-dropdown-edit").click(function() {
-            showEditTestsList();
-        });
+
 
         //Resize the output panel to users window size
         function outputResize() {
@@ -248,6 +237,13 @@ function UI() {
         $(window).resize(outputResize);
         outputResize();
     };
+
+    //Renders a given template with view data
+    this.renderTemplate = function(templateName, view) {
+        var template = $("#template-" + templateName).html();
+        var render = Handlebars.compile(template);
+        return render(view);
+    }
 
     //Update puzzle name in places where it is displayed
     this.updatePuzzleName = function() {
@@ -265,19 +261,11 @@ function UI() {
 
     //Update the tests panel selection dropdown
     this.updateTestSelectionDropdown = function () {
-        menuItemsHTML = "";
+        //Render dropdown template with current puzzle data
+        $("#testing-select-menu").html(this.renderTemplate("testing-select-menu", VisualBlocks.currentPuzzle));
 
-        //Go through all tests and create a list item link for it
-        for (var testID in VisualBlocks.currentPuzzle.tests) {
-            test = VisualBlocks.currentPuzzle.tests[testID];
-
-            menuItemsHTML += '<li><a href="#" data-id="' + testID + '">' + test.name + '</a></li>';
-        }
-
-        $("#testing-select-menu").html(menuItemsHTML);
-
-        //Create the event bindings for clicking on a test name in the dropdown
-        $("#testing-select-menu a").click(function() {
+        //Bind click event on test list
+        $(".testing-dropdown-test-name").click(function() {
             id = $(this).attr('data-id');
 
             $("#testing-dropdownMenu").dropdown('toggle');
@@ -289,12 +277,18 @@ function UI() {
             return false;
         });
 
-        //Set test manage visibility
-        if(VisualBlocks.currentPuzzle.options.testListEditable) {
-            $(".testing-dropdown-manage").css('display', 'block');
-        } else {
-            $(".testing-dropdown-manage").css('display', 'none');
-        }
+        //Dropdown edit tests button
+        $("#testing-dropdown-edit").click(function() {
+            showEditTestsList();
+        });
+
+        //Dropdown new test button
+        $("#testing-dropdown-new").click(function() {
+            $("#modal-tests-new").modal('show');
+
+            //Create a default test name
+            $("#input-tests-new-name").val('Test ' + (Object.keys(VisualBlocks.currentPuzzle.tests).length + 1));
+        });
     };
 
     //Formats the test result
@@ -353,6 +347,16 @@ function UI() {
             VisualBlocks.output.writeLine('<strong>All tests passed</strong>');
         } else {
             VisualBlocks.output.writeLine('<strong>' + numPassed + ' out of ' + numTests + ' tests passed</strong>');
+        }
+    };
+
+    //Format the steps list UI and button
+    this.updateStepsList = function() {
+        //If display steps button
+        if(VisualBlocks.currentPuzzle.steps.length > 0) {
+            $("#nav-header-steps-btn").css('display', 'block');
+        } else {
+            $("#nav-header-steps-btn").css('display', 'none');
         }
     };
 }

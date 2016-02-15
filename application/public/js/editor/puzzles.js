@@ -23,6 +23,8 @@ function PuzzlesManager() {
         VisualBlocks.ui.updatePuzzleName();
         //Generate the tests menu
         VisualBlocks.ui.updateTestSelectionDropdown();
+        //Generate the steps UI
+        VisualBlocks.ui.updateStepsList();
 
         //Load the first test
         firstTestID = Object.keys(VisualBlocks.currentPuzzle.tests)[0];
@@ -87,6 +89,8 @@ function Puzzle(content) {
         content.options = {};
     }
     this.name = content.name || 'New Puzzle';
+    this.description = content.description || 'A new empty puzzle';
+    this.steps = content.steps || [];
     this.applicationCode = content.applicationCode || '<xml xmlns="http://www.w3.org/1999/xhtml"></xml>';
     this.tests = content.tests || {'defaul1': {
         'name': 'Test 1',

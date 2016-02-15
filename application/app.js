@@ -1,24 +1,18 @@
 var express = require('express');
-var exphbs = require('express-handlebars');
 var app = express();
-
-// view engine setup
-app.set('views','views');
-app.engine('.hbs', exphbs({ extname: '.hbs', defaultLayout: 'main' }));
-app.set('view engine', '.hbs');
 
 //static files
 app.use(express.static(__dirname + '/public'));
 
 //app routes
 app.get('/', function(req, res){
-    res.render('index');
+    res.sendFile('views/index.html', {root: __dirname});
 });
 app.get('/puzzles', function(req, res){
-    res.render('puzzles');
+    res.sendFile('views/puzzles.html', {root: __dirname});
 });
 app.get('/editor', function(req, res){
-    res.render('editor');
+    res.sendFile('views/editor.html', {root: __dirname});
 });
 
 app.listen(3000);
