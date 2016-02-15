@@ -40,7 +40,7 @@ function Executor() {
 
         //Add an API function for the assert block
         interpreter.setProperty(scope, 'assert', interpreter.createNativeFunction(function(value, check_if) {
-            return interpreter.createPrimitive(setTestAssertResult(value, check_if));
+            interpreter.createPrimitive(setTestAssertResult(value, check_if));
         }));
 
         //Add an API function for getting the next print output
@@ -56,6 +56,11 @@ function Executor() {
         //Add an API function for checking if any prompts left
         interpreter.setProperty(scope, 'getIfPromptsMissed', interpreter.createNativeFunction(function() {
             return interpreter.createPrimitive(testGetIfPromptsMissed());
+        }));
+
+        //Add an API function for ignoring and deleting the next output
+        interpreter.setProperty(scope, 'ignoreNextOutput', interpreter.createNativeFunction(function() {
+            interpreter.createPrimitive(testIgnoreNextOutput());
         }));
 
         //TESTING: CONSOLELOG
@@ -125,6 +130,12 @@ function Executor() {
     //Function that handles checks if any prompts were missed and not handled
     function testGetIfPromptsMissed() {
         console.log('NI: testGetIfPromptsMissed');
+    }
+
+    //Function that handles ignoring and deleting the next output
+    function testIgnoreNextOutput() {
+        //Delete this value from the stack
+        VisualBlocks.executor.testExecution.alerts.output.splice(0, 1);
     }
 
     //API function that allows tests to set their result
