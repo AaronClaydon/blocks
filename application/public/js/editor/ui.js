@@ -18,7 +18,7 @@ function UI() {
                 test = VisualBlocks.currentPuzzle.tests[testID];
 
                 name = test.name;
-                lastRun = VisualBlocks.ui.formatTestResult(VisualBlocks.executor.testExecution.results[testID]);
+                lastRun = VisualBlocks.ui.formatTestResult(testID);
 
                 html += '<tr><td>' + name + '</td>';
                 html += '<td>' + lastRun + '</td>';
@@ -291,13 +291,21 @@ function UI() {
     };
 
     //Formats the test result
-    this.formatTestResult = function(testResult) {
+    this.formatTestResult = function(testID) {
+        testResult = VisualBlocks.executor.testExecution.results[testID];
+
         if(testResult === undefined) {
             output = '<span class="bg-danger">NOTHING ASSERTED</span>';
         } else if(testResult) {
             output = '<span class="bg-success">SUCCESS</span>';
         } else {
-            output = '<span class="bg-danger">FAILED</span>';
+            additionalInfo = '';
+
+            if(VisualBlocks.executor.testExecution.promptSimulator.unhandledPrompt[testID]) {
+                additionalInfo = ' - UNHANDLED PROMPT';
+            }
+
+            output = '<span class="bg-danger">FAILED' + additionalInfo + '</span>';
         }
 
         return output;
@@ -319,7 +327,7 @@ function UI() {
             var testResult = VisualBlocks.executor.testExecution.results[testID];
 
             //Format output for test result
-            output += '<tr><td>' + test.name + '</td><td>' + VisualBlocks.ui.formatTestResult(testResult) + '</td></tr>';
+            output += '<tr><td>' + test.name + '</td><td>' + VisualBlocks.ui.formatTestResult(testID) + '</td></tr>';
 
             if(testResult) {
                 VisualBlocks.executor.testExecution.numPassed += 1; //Add to count of num tests passed

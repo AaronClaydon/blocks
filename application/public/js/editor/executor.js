@@ -96,8 +96,9 @@ function Executor() {
         }
 
         if (promptSimulatorValue === undefined) {
-            //TODO: Unhandled prompt notification & failure
             console.log('WARNING: Unhandled prompt');
+
+            VisualBlocks.executor.testExecution.promptSimulator.unhandledPrompt[VisualBlocks.executor.testExecution.currentTest] = true;
         }
 
         console.log("PROMPT: " + text + ' | given ' + promptSimulatorValue);
@@ -167,9 +168,10 @@ function Executor() {
         //Merge application and test code so test can reference it
         var mergedCode = appCode + testCode;
 
-        //Reset the prompt simulator data
+        //Reset the prompt simulator and output data
         VisualBlocks.executor.testExecution.promptSimulator.next = 0;
         VisualBlocks.executor.testExecution.promptSimulator.block = null;
+        VisualBlocks.executor.testExecution.alerts.output = [];
 
         //Find the first prompt simulator block in the test
         var testBlocks = runningTestWorkspace.getAllBlocks();
@@ -187,6 +189,30 @@ function Executor() {
         //Run through JavaScript Interpreter with our API
         var jsInterpreter = new Interpreter(mergedCode, interpreterTestJSAPI);
         jsInterpreter.run();
+
+        //Check if the test had an unhandled prompt and force it to failure
+        if(VisualBlocks.executor.testExecution.promptSimulator.unhandledPrompt[id]) {
+            ignoreUnhandled = false;
+
+            //check if there is an ignore unhandled block
+            for (var i = 0; i < testBlocks.length; i++) {
+                block = testBlocks[i];
+
+                if(block.type == 'ignore_unhandled_prompt') {
+                    ignoreUnhandled = true;
+
+                    //Delete the unhandled error message so we get the proper reason if failure
+                    delete VisualBlocks.executor.testExecution.promptSimulator.unhandledPrompt[id];
+
+                    break;
+                }
+            }
+
+            //if we dont ignore unhandled then set this test as a failure
+            if(!ignoreUnhandled) {
+                VisualBlocks.executor.testExecution.results[id] = false;
+            }
+        }
     }
 
     //Execute all tests in the puzzle
@@ -209,6 +235,7 @@ function Executor() {
         VisualBlocks.executor.testExecution.promptSimulator = {};
         VisualBlocks.executor.testExecution.promptSimulator.next = 0;
         VisualBlocks.executor.testExecution.promptSimulator.block = null;
+        VisualBlocks.executor.testExecution.promptSimulator.unhandledPrompt = {};
 
         //Stack of alert data
         VisualBlocks.executor.testExecution.alerts = {};

@@ -12,7 +12,7 @@ Blockly.Blocks['if_prompts_missed'] = {
     init: function() {
         this.setColour(Blockly.Blocks.testing.HUE);
         this.appendDummyInput()
-            .appendField('prompts missed?');
+            .appendField('[not implemented]prompts missed?');
         this.setOutput(true, 'Boolean');
         this.setTooltip('Checks if any prompts were missed and not handled.');
     }
