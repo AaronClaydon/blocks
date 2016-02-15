@@ -128,7 +128,14 @@ function Executor() {
 
     //API function that allows tests to set their result
     function setTestAssertResult(value, check_if) {
-        VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest] = (value.data == check_if);
+        //Get current test result and calculate new test result
+        currentResult = VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest];
+        newResult = (value.data == check_if);
+
+        //Only update test result if none already set or if changing from success to failure
+        if(currentResult === undefined || (currentResult && !newResult)) {
+            VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest] = newResult;
+        }
     }
 
     //Executes the users application code
@@ -146,6 +153,7 @@ function Executor() {
         VisualBlocks.executor.testExecution.currentTest = id;
 
         test = VisualBlocks.currentPuzzle.tests[id];
+        console.log(test.name);
 
         //Compile the application code
         var appCode = Blockly.JavaScript.workspaceToCode(VisualBlocks._workspaces.appWorkspace);
@@ -159,8 +167,12 @@ function Executor() {
         //Merge application and test code so test can reference it
         var mergedCode = appCode + testCode;
 
+        //Reset the prompt simulator data
+        VisualBlocks.executor.testExecution.promptSimulator.next = 0;
+        VisualBlocks.executor.testExecution.promptSimulator.block = null;
+
         //Find the first prompt simulator block in the test
-        var testBlocks = VisualBlocks._workspaces.testWorkspace.getAllBlocks();
+        var testBlocks = runningTestWorkspace.getAllBlocks();
         for (var i = 0; i < testBlocks.length; i++) {
             block = testBlocks[i];
 
@@ -169,6 +181,8 @@ function Executor() {
                 break;
             }
         }
+
+        VisualBlocks.executor.testExecution.runningTestWorkspace = runningTestWorkspace;
 
         //Run through JavaScript Interpreter with our API
         var jsInterpreter = new Interpreter(mergedCode, interpreterTestJSAPI);
@@ -187,6 +201,9 @@ function Executor() {
         VisualBlocks.executor.testExecution = [];
         VisualBlocks.executor.testExecution.currentTest = 'default';
         VisualBlocks.executor.testExecution.results = {};
+
+        //Holds the headless workspace that contains the running test
+        VisualBlocks.executor.testExecution.runningTestWorkspace = null;
 
         //Reference to the prompt simulator block
         VisualBlocks.executor.testExecution.promptSimulator = {};
