@@ -126,7 +126,6 @@ function UI() {
             var fileReader = new FileReader();
 
             fileReader.onload = function(e) {
-                console.log(e);
                 var contents = e.target.result; //File contents
 
                 try {
@@ -137,7 +136,7 @@ function UI() {
                     var puzzle = JSON.parse(contents);
                     VisualBlocks.puzzlesManager.loadPuzzle(puzzle);
 
-                    VisualBlocks.output.writeLine('Puzzle ' + puzzle.name + '(' + file.name + ') loaded from file');
+                    VisualBlocks.output.writeLine('Loaded local puzzle ' + puzzle.name + ' from ' + file.name);
                 }
                 catch(err) {
                     console.log(err);
