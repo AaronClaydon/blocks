@@ -7,10 +7,13 @@
 ** Google Blockly custom block for assertions
 */
 
+Blockly.Blocks.testing = {};
+Blockly.Blocks.testing.HUE = 10;
+
 //Block definition
 Blockly.Blocks['assert'] = {
     init: function() {
-        this.setColour(10);
+        this.setColour(Blockly.Blocks.testing.HUE);
         this.appendValueInput('ASSERT_SUCCESS_VALUE')
             .setCheck('Boolean')
             .appendField('assert test success as');

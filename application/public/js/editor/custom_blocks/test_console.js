@@ -8,7 +8,7 @@
 //Block definition
 Blockly.Blocks['console_output'] = {
     init: function() {
-        this.setColour(10);
+        this.setColour(Blockly.Blocks.testing.HUE);
         this.appendValueInput('ASSERT_SUCCESS_VALUE')
             .setCheck('String')
             .appendField('[dont use me]console.log');

@@ -10,7 +10,7 @@
 //Block definition
 Blockly.Blocks['if_outputs_left'] = {
     init: function() {
-        this.setColour(10);
+        this.setColour(Blockly.Blocks.testing.HUE);
         this.appendDummyInput()
             .appendField('outputs left?');
         this.setOutput(true, 'Boolean');

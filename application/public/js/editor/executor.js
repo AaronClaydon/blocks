@@ -72,18 +72,36 @@ function Executor() {
     }
     //Function that handles the prompt block in tests
     function testFunctionPrompt(text) {
+        var promptSimulatorValue;
+
         //Get the next value from the stack
-        promptSimulatorValueBlock = VisualBlocks.executor.testExecution.promptSimulators[0];
+        inputID = VisualBlocks.executor.testExecution.promptSimulator.next;
 
-        //Delete this value from the stack
-        VisualBlocks.executor.testExecution.promptSimulators.splice(0, 1);
+        //Check if we got an input for this prompt
+        if(VisualBlocks.executor.testExecution.promptSimulator.block != null
+            && inputID < VisualBlocks.executor.testExecution.promptSimulator.block.inputList.length) {
 
-        //Compile the prompt simulator value block to JavaScript
-        promptSimulatorValueBlockCode = Blockly.JavaScript.blockToCode(promptSimulatorValueBlock)[0];
+            promptSimulatorValueBlock = VisualBlocks.executor.testExecution.promptSimulator.block.inputList[inputID].connection.targetBlock();
 
-        //Execute the prompt simulator value code and set it as the return
-        var promptSimulatorValue = eval(promptSimulatorValueBlockCode);
+            //Increment next input value
+            VisualBlocks.executor.testExecution.promptSimulator.next += 1;
+
+            //Compile the prompt simulator value block to JavaScript
+            promptSimulatorValueBlockCode = Blockly.JavaScript.blockToCode(promptSimulatorValueBlock)[0];
+
+            //Execute the prompt simulator value code and set it as the return
+            promptSimulatorValue = eval(promptSimulatorValueBlockCode);
+        } else {
+            promptSimulatorValue = undefined;
+        }
+
+        if (promptSimulatorValue === undefined) {
+            //TODO: Unhandled prompt notification & failure
+            console.log('WARNING: Unhandled prompt');
+        }
+
         console.log("PROMPT: " + text + ' | given ' + promptSimulatorValue);
+
         return promptSimulatorValue;
     }
 
@@ -141,19 +159,17 @@ function Executor() {
         //Merge application and test code so test can reference it
         var mergedCode = appCode + testCode;
 
-        //Get all the set prompt simulator blocks, in order of definition
+        //Find the first prompt simulator block in the test
         var testBlocks = VisualBlocks._workspaces.testWorkspace.getAllBlocks();
         for (var i = 0; i < testBlocks.length; i++) {
             block = testBlocks[i];
 
             if(block.type == 'simulate_input') {
-                //Get the input block
-                inputBlock = block.inputList[0].connection.targetBlock();
-
-                //Push onto the prompt simulator stack
-                VisualBlocks.executor.testExecution.promptSimulators.push(inputBlock);
+                VisualBlocks.executor.testExecution.promptSimulator.block = block;
             }
         }
+
+        console.log(VisualBlocks.executor.testExecution.promptSimulator.block);
 
         //Run through JavaScript Interpreter with our API
         var jsInterpreter = new Interpreter(mergedCode, interpreterTestJSAPI);
@@ -173,8 +189,10 @@ function Executor() {
         VisualBlocks.executor.testExecution.currentTest = 'default';
         VisualBlocks.executor.testExecution.results = {};
 
-        //Stack of all prompt simulator blocks
-        VisualBlocks.executor.testExecution.promptSimulators = [];
+        //Reference to the prompt simulator block
+        VisualBlocks.executor.testExecution.promptSimulator = {};
+        VisualBlocks.executor.testExecution.promptSimulator.next = 0;
+        VisualBlocks.executor.testExecution.promptSimulator.block = null;
 
         //Stack of alert data
         VisualBlocks.executor.testExecution.alerts = {};

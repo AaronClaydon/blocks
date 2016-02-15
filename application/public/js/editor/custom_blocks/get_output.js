@@ -10,7 +10,7 @@
 //Block definition
 Blockly.Blocks['get_output'] = {
     init: function() {
-        this.setColour(10);
+        this.setColour(Blockly.Blocks.testing.HUE);
         this.appendDummyInput()
             .appendField('get next application output');
         this.setOutput(true, 'String');

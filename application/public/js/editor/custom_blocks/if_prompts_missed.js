@@ -10,7 +10,7 @@
 //Block definition
 Blockly.Blocks['if_prompts_missed'] = {
     init: function() {
-        this.setColour(10);
+        this.setColour(Blockly.Blocks.testing.HUE);
         this.appendDummyInput()
             .appendField('prompts missed?');
         this.setOutput(true, 'Boolean');
