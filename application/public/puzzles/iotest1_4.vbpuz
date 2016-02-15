@@ -18,5 +18,11 @@
             "name": "Missing prompt simulator value",
             "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"simulate_input\" x=\"7\" y=\"8\"><mutation items=\"1\"></mutation><value name=\"ADD0\"><block type=\"math_number\"><field name=\"NUM\">15</field></block></value><next><block type=\"assert\"><value name=\"ASSERT_SUCCESS_VALUE\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"text\"><field name=\"TEXT\">The double of 15 is 30</field></block></value><value name=\"B\"><block type=\"get_output\"></block></value></block></value><value name=\"ASSERT_SUCCESS_IF\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value><next></xml>"
         }
+    },
+    "options": {
+        "applicationCodeVisible": true,
+        "applicationCodeEditable": true,
+        "testCodeEditable": true,
+        "testListEditable": true
     }
 }

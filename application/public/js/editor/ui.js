@@ -288,6 +288,13 @@ function UI() {
             VisualBlocks.puzzlesManager.loadTest(id);
             return false;
         });
+
+        //Set test manage visibility
+        if(VisualBlocks.currentPuzzle.options.testListEditable) {
+            $(".testing-dropdown-manage").css('display', 'block');
+        } else {
+            $(".testing-dropdown-manage").css('display', 'none');
+        }
     };
 
     //Formats the test result

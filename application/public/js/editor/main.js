@@ -13,7 +13,6 @@ $(document).ready(function() {
 
     //Blockly workspaces
     VisualBlocks._workspaces = new WorkSpaces();
-    VisualBlocks._workspaces.init();
 
     //Block compiler and interpreter
     VisualBlocks.executor = new Executor();

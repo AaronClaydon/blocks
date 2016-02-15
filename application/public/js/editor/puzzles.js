@@ -2,7 +2,7 @@
 ** Visual Blocks Testing Environment
 ** Aaron Claydon
 **
-** editor/assert.js
+** editor/puzzles.js
 **
 ** Manages the currently loaded puzzle
 */
@@ -12,6 +12,9 @@ function PuzzlesManager() {
     this.loadPuzzle = function(puzzle) {
         //Set it as current
         VisualBlocks.currentPuzzle = puzzle;
+
+        //Init Blockly workspace
+        VisualBlocks._workspaces.init();
 
         //Load the application code
         VisualBlocks._workspaces.loadApplication(puzzle.applicationCode);
@@ -81,12 +84,27 @@ function Puzzle(content) {
     //allow default values if not loading from file
     if(content === undefined) {
         content = {};
+        content.options = {};
     }
     this.name = content.name || 'New Puzzle';
-    //this.puzzle = false;
     this.applicationCode = content.applicationCode || '<xml xmlns="http://www.w3.org/1999/xhtml"></xml>';
     this.tests = content.tests || {'defaul1': {
         'name': 'Test 1',
         'testCode': '<xml xmlns="http://www.w3.org/1999/xhtml"></xml>'
     }};
+
+    this.options = _parseOptions(content.options);
+    console.log('puzzle', this);
+    console.log('options', this.options);
+
+    function _parseOptions(opt) {
+        //Default options values
+        return {
+            //All defaults are true
+            applicationCodeVisible: opt.applicationCodeVisible !== false,
+            applicationCodeEditable: opt.applicationCodeEditable !== false,
+            testCodeEditable: opt.testCodeEditable !== false,
+            testListEditable: opt.testListEditable !== false
+        };
+    }
 }

@@ -9,10 +9,18 @@
 
 function WorkSpaces() {
     //Create and inject a workspace into the UI
-    function createWorkspace(area, workspace, toolbox) {
+    function createWorkspace(area, workspace, toolbox, visible, editable) {
         var blocklyArea = document.getElementById(area);
         var blocklyDiv = document.getElementById(workspace);
-        var workspace = Blockly.inject(blocklyDiv, {toolbox: document.getElementById(toolbox), workspaceType: workspace});
+        var workspace = Blockly.inject(blocklyDiv, {
+            toolbox: document.getElementById(toolbox),
+            workspaceType: workspace,
+            readOnly: !editable,
+            scrollbars: true
+        });
+
+        //Set visiiblity of the workspace from options
+        workspace.setVisible(visible);
 
         //Resize the Blockly workspace to fill the browser window
         var onresize = function(e) {
@@ -39,6 +47,10 @@ function WorkSpaces() {
     }
 
     function setTestToolboxBlockDisabled(block, disabled) {
+        //No need to do this is the test code isnt editable
+        if(!VisualBlocks.currentPuzzle.options.testCodeEditable) {
+            return;
+        }
         updatedToolbox = $(Blockly.Xml.textToDom($("#blockly-testing-toolbox")[0].outerHTML));
         updatedToolbox.find("block[type=" + block + "]").attr('disabled', disabled);
 
@@ -49,8 +61,17 @@ function WorkSpaces() {
     this.init = function() {
         this.generateToolboxes();
 
-        this.appWorkspace = createWorkspace('application-panel', 'application-blockly', 'blockly-application-toolbox');
-        this.testWorkspace = createWorkspace('testing-panel', 'testing-blockly', 'blockly-testing-toolbox');
+        //Dispose of old workspaces if reloading
+        if(this.appWorkspace !== undefined) {
+            this.appWorkspace.dispose();
+            this.testWorkspace.dispose();
+        }
+
+        options = VisualBlocks.currentPuzzle.options;
+        this.appWorkspace = createWorkspace('application-panel', 'application-blockly', 'blockly-application-toolbox',
+                                            options.applicationCodeVisible, options.applicationCodeEditable);
+        this.testWorkspace = createWorkspace('testing-panel', 'testing-blockly', 'blockly-testing-toolbox',
+                                            true, options.testCodeEditable);
 
         this.promptSimulatorDisabled = false;
 
