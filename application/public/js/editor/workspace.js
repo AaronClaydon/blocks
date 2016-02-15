@@ -38,12 +38,26 @@ function WorkSpaces() {
         return workspace;
     }
 
+    function setTestToolboxBlockDisabled(block, disabled) {
+        updatedToolbox = $(Blockly.Xml.textToDom($("#blockly-testing-toolbox")[0].outerHTML));
+        updatedToolbox.find("block[type=" + block + "]").attr('disabled', disabled);
+
+        VisualBlocks._workspaces.testWorkspace.updateToolbox(updatedToolbox[0].outerHTML);
+    }
+
     //Generates toolboxes and creates the two workspaces
     this.init = function() {
         this.generateToolboxes();
 
         this.appWorkspace = createWorkspace('application-panel', 'application-blockly', 'blockly-application-toolbox');
         this.testWorkspace = createWorkspace('testing-panel', 'testing-blockly', 'blockly-testing-toolbox');
+
+        this.promptSimulatorDisabled = false;
+
+        //Check if we need to disable the prompt simulator block in the test toolbox
+        this.testWorkspace.addChangeListener(function() {
+            VisualBlocks._workspaces.updateTestToolbox();
+        });
     };
 
     //Generate Blockly toolboxes by merging type specific and shared toolboxes
@@ -61,6 +75,29 @@ function WorkSpaces() {
         $('body').append('<xml id="blockly-application-toolbox" style="display: none">' + applicationToolbox + '</xml>');
         $('body').append('<xml id="blockly-testing-toolbox" style="display: none">' + testToolbox + '</xml>');
     };
+
+    //Disables adding any more simulator input blocks if one is already in the workspace
+    this.updateTestToolbox = function() {
+        //Check if we've got any simulate input blocks
+        simulateBlockInWorkspace = false;
+        testBlocks = this.testWorkspace.getAllBlocks();
+        for (var i = 0; i < testBlocks.length; i++) {
+            block = testBlocks[i];
+
+            if(block.type == 'simulate_input') {
+                simulateBlockInWorkspace = true;
+                break;
+            }
+        }
+
+        if(simulateBlockInWorkspace && !this.promptSimulatorDisabled) {
+            setTestToolboxBlockDisabled('simulate_input', true);
+            this.promptSimulatorDisabled = true;
+        } else if(!simulateBlockInWorkspace && this.promptSimulatorDisabled) {
+            setTestToolboxBlockDisabled('simulate_input', false);
+            this.promptSimulatorDisabled = false;
+        }
+    }
 
     //Load given code into the application workspace
     this.loadApplication = function(code) {

@@ -166,10 +166,9 @@ function Executor() {
 
             if(block.type == 'simulate_input') {
                 VisualBlocks.executor.testExecution.promptSimulator.block = block;
+                break;
             }
         }
-
-        console.log(VisualBlocks.executor.testExecution.promptSimulator.block);
 
         //Run through JavaScript Interpreter with our API
         var jsInterpreter = new Interpreter(mergedCode, interpreterTestJSAPI);
