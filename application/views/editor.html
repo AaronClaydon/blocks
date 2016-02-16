@@ -251,21 +251,11 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Steps</h4>
                     </div>
-                    <div class="modal-body">
-                        <div class="media">
-                            <div class="media-left media-middle">
-                                <a href="#">
-                                    <img class="media-object" src="https://placeholdit.imgix.net/~text?txtsize=10&txt=N&w=48&h=48" alt="not completed">
-                                </a>
-                            </div>
-                            <div class="media-body">
-                                <h4 class="media-heading">Middle aligned media</h4>
-                                ...
-                            </div>
-                        </div>
+                    <div class="modal-body" id="modal-steps-list">
+
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -653,6 +643,40 @@
                     </span>
                 {{/if}}
             {{/if_eq}}
+        </script>
+
+        <script id="template-steps-list" type="x-tmpl-mustache">
+            <div class="steps-list">
+                {{#each steps}}
+                    <div class="media">
+                        <div class="media-left media-middle steps-list-status">
+                            {{#if this.completed}}
+                                <span class="steps-list-status-complete">&#x2713</span>
+                            {{else}}
+                                <span class="steps-list-status-incomplete">&#x2717</span>
+                            {{/if}}
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{this.title}}</h4>
+                            {{this.description}}
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+
+            <div class="steps-progress">
+                <div class="progress">
+                    {{#if_eq progress.percent 100}}
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                            Complete!
+                        </div>
+                    {{else}}
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{progress.percent}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress.percent}}%;min-width: 40px;">
+                            {{progress.completed}}/{{progress.total}}
+                        </div>
+                    {{/if_eq}}
+                </div>
+            </div>
         </script>
 
         <!-- Scripts -->

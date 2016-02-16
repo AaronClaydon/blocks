@@ -331,5 +331,29 @@ function UI() {
         } else {
             $("#nav-header-steps-btn").css('display', 'none');
         }
+
+        //Calculate the progress
+        steps = VisualBlocks.currentPuzzle.steps;
+        stepsTotal = steps.length;
+        stepsCompleted = 0;
+
+        //Count how many steps completed
+        for (var i = 0; i < steps.length; i++) {
+            if(steps[i].completed) {
+                stepsCompleted++;
+            }
+        }
+
+        stepsPercent = (stepsCompleted / stepsTotal) * 100;
+
+        //Render the steps list in the modal
+        $("#modal-steps-list").html(VisualBlocks.ui.renderTemplate("steps-list", {
+            steps: steps,
+            progress: {
+                completed: stepsCompleted,
+                total: stepsTotal,
+                percent: stepsPercent
+            }
+        }));
     };
 }

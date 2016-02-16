@@ -96,3 +96,25 @@ a {
 .testing-results-table td:nth-child(1) {
     padding-right: 20px;
 }
+
+.steps-list {
+    max-height: 420px;
+    overflow-y: scroll;
+}
+.steps-list-status {
+    font-size: 28px;
+    text-align: center;
+}
+.steps-list-status .steps-list-status-complete {
+    padding-left: 10px;
+    padding-right: 10px;
+    color: green;
+}
+.steps-list-status .steps-list-status-incomplete {
+    padding-left: 13px;
+    padding-right: 14px;
+    color: red;
+}
+.steps-progress {
+    margin-top: 30px;
+}
