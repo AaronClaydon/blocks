@@ -261,6 +261,24 @@
             </div>
         </div>
 
+        <!-- Test execute inspect Modal -->
+        <div class="modal fade" id="modal-test-execute-inspect" tabindex="-1" role="dialog" aria-labelledby="Test Execute Inspect">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Test Execution Inspect</h4>
+                    </div>
+                    <div class="modal-body" id="modal-test-execute-inspect-data">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Shared Blockly Toolbox -->
         <xml id="blockly-shared-toolbox" style="display: none">
             <category name="Logic" colour="210">
@@ -612,7 +630,8 @@
                 {{#each tests}}
                     <tr>
                         <td>{{this.name}}</td>
-                        <td>{{{this.result}}}</td>
+                        <td>{{{this.formattedResult}}}</td>
+                        <td><a class="testing-results-table-test-inspect" data-id="{{@key}}">Inspect</a></td>
                     </tr>
                 {{/each}}
             </table>
@@ -629,10 +648,8 @@
         </script>
 
         <script id="template-test-formatted-output" type="x-tmpl-mustache">
-            {{#if_eq this.result undefined}}
-                <span class="bg-danger">FAILED - NO ASSERT</span>
-            {{else}}
-                {{#if this.result}}
+            {{#if assertion}}
+                {{#if success}}
                     <span class="bg-success">SUCCESS</span>
                 {{else}}
                     <span class="bg-danger">
@@ -642,7 +659,9 @@
                         {{/if}}
                     </span>
                 {{/if}}
-            {{/if_eq}}
+            {{else}}
+                <span class="bg-danger">FAILED - NO ASSERT</span>
+            {{/if}}
         </script>
 
         <script id="template-steps-list" type="x-tmpl-mustache">
@@ -685,12 +704,56 @@
             {{/if}}
         </script>
 
+        <script id="template-test-execute-inspect" type="x-tmpl-mustache">
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <td>{{test.name}}</td>
+                </tr>
+                <tr>
+                    <th>Success</th>
+                    <td>{{result.success}}</td>
+                </tr>
+                <tr>
+                    <th>Assertion</th>
+                    <td>{{result.assertion}}</td>
+                </tr>
+                <tr>
+                    <th>Unhandled prompt</th>
+                    <td>{{result.unhandledPrompt}}</td>
+                </tr>
+            </table>
+
+            <br/>
+            <strong>Execution log</strong><br/>
+            {{#each result.executionLog}}
+                {{#if_eq this.type 'assert'}}
+                    ASSERTION: {{this.value}} == {{this.check_if}}
+                {{/if_eq}}
+                {{#if_eq this.type 'print'}}
+                    PRINT: {{this.value}}
+                {{/if_eq}}
+                {{#if_eq this.type 'prompt'}}
+                    PROMPT: {{this.text}} | given {{this.value}}
+                {{/if_eq}}
+                <br/>
+            {{/each}}
+
+            <br/>
+            <strong>Variables</strong><br/>
+            {{#each result.variables}}
+                {{@key}}: {{this.data}} &lt;{{this.type}}&gt;
+                <br/>
+            {{/each}}
+        </script>
+
         <!-- Scripts -->
 
         <script src="/js/blockly/blockly_compressed.js"></script>
         <script src="/js/blockly/blocks_compressed.js"></script>
         <script src="/js/blockly/msg_en.js"></script>
         <script src="/js/blockly/javascript_compressed.js"></script>
+        <script src="/js/acorn.js"></script>
         <script src="/js/acorn_interpreter.js"></script>
         <script src="/js/filesaver.min.js"></script>
         <script src="/js/handlebars-v4.0.5.js"></script>

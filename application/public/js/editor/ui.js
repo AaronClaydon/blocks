@@ -288,10 +288,7 @@ function UI() {
 
     //Formats the test result
     this.formatTestResult = function(testID) {
-        return VisualBlocks.ui.renderTemplate("test-formatted-output", {
-            result: VisualBlocks.executor.testExecution.results[testID],
-            unhandledPrompt: VisualBlocks.executor.testExecution.promptSimulator.unhandledPrompt[testID]
-        });
+        return VisualBlocks.ui.renderTemplate("test-formatted-output", VisualBlocks.executor.testExecution.results[testID]);
     }
 
     //Format and display the test results in the output panel
@@ -306,12 +303,12 @@ function UI() {
         //Put the formatted test result html in the test object for the template
         for (var testID in renderedTests) {
             test = VisualBlocks.currentPuzzle.tests[testID];
-            test.result = VisualBlocks.ui.formatTestResult(testID);
+            test.formattedResult = VisualBlocks.ui.formatTestResult(testID);
 
             testResult = VisualBlocks.executor.testExecution.results[testID];
 
             //Count number of tests passed
-            if(testResult) {
+            if(testResult.success) {
                 numPassed += 1; //Add to count of num tests passed
             }
         }
@@ -322,6 +319,20 @@ function UI() {
             numTests: numTests,
             numPassed: numPassed
         }));
+
+        //handle inspect link click
+        $(".testing-results-table-test-inspect").click(function() {
+            testID = $(this).attr('data-id');
+
+            test = VisualBlocks.currentPuzzle.tests[testID];
+            result = VisualBlocks.executor.testExecution.results[testID];
+
+            $("#modal-test-execute-inspect-data").html(VisualBlocks.ui.renderTemplate("test-execute-inspect", {
+                test: test,
+                result: result
+            }));
+            $("#modal-test-execute-inspect").modal('show');
+        });
     };
 
     //Format the steps list UI and button

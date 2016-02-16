@@ -72,8 +72,13 @@ function Executor() {
     //Function that handles the alert block in tests
     function testFunctionAlert(text) {
         //push alert text into the stack for retrieval
-        console.log("PRINT: " + text);
         VisualBlocks.executor.testExecution.alerts.output.push(text);
+
+        //Log the execution
+        VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest].executionLog.push({
+            type: 'print',
+            value: text
+        });
     }
     //Function that handles the prompt block in tests
     function testFunctionPrompt(text) {
@@ -101,12 +106,15 @@ function Executor() {
         }
 
         if (promptSimulatorValue === undefined) {
-            console.log('WARNING: Unhandled prompt');
-
-            VisualBlocks.executor.testExecution.promptSimulator.unhandledPrompt[VisualBlocks.executor.testExecution.currentTest] = true;
+            VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest].unhandledPrompt = true;
         }
 
-        console.log("PROMPT: " + text + ' | given ' + promptSimulatorValue);
+        //Log the execution
+        VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest].executionLog.push({
+            type: 'prompt',
+            text: text,
+            value: promptSimulatorValue
+        });
 
         return promptSimulatorValue;
     }
@@ -141,13 +149,23 @@ function Executor() {
     //API function that allows tests to set their result
     function setTestAssertResult(value, check_if) {
         //Get current test result and calculate new test result
-        currentResult = VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest];
+        currentResult = VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest].success;
         newResult = (value.data == check_if);
+
+        //Log the fact the test has had an assertion
+        VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest].assertion = true;
 
         //Only update test result if none already set or if changing from success to failure
         if(currentResult === undefined || (currentResult && !newResult)) {
-            VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest] = newResult;
+            VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest].success = newResult;
         }
+
+        //Log the execution
+        VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest].executionLog.push({
+            type: 'assert',
+            value: value.data,
+            check_if: check_if.data
+        });
     }
 
     //Executes the users application code
@@ -165,7 +183,15 @@ function Executor() {
         VisualBlocks.executor.testExecution.currentTest = id;
 
         test = VisualBlocks.currentPuzzle.tests[id];
-        console.log(test.name);
+
+        //add default test result data
+        VisualBlocks.executor.testExecution.results[id] = {
+            assertion: false,
+            success: undefined,
+            unhandledPrompt: false,
+            executionLog: [],
+            variables: []
+        };
 
         //Compile the application code
         var appCode = Blockly.JavaScript.workspaceToCode(VisualBlocks._workspaces.appWorkspace);
@@ -201,8 +227,10 @@ function Executor() {
         var jsInterpreter = new Interpreter(mergedCode, interpreterTestJSAPI);
         jsInterpreter.run();
 
+        VisualBlocks.executor.testExecution.results[id].variables = jsInterpreter.variableValues;
+
         //Check if the test had an unhandled prompt and force it to failure
-        if(VisualBlocks.executor.testExecution.promptSimulator.unhandledPrompt[id]) {
+        if(VisualBlocks.executor.testExecution.results[id].unhandledPrompt) {
             ignoreUnhandled = false;
 
             //check if there is an ignore unhandled block
@@ -213,7 +241,7 @@ function Executor() {
                     ignoreUnhandled = true;
 
                     //Delete the unhandled error message so we get the proper reason if failure
-                    delete VisualBlocks.executor.testExecution.promptSimulator.unhandledPrompt[id];
+                    VisualBlocks.executor.testExecution.results[id].unhandledPrompt = false;
 
                     break;
                 }
@@ -221,7 +249,7 @@ function Executor() {
 
             //if we dont ignore unhandled then set this test as a failure
             if(!ignoreUnhandled) {
-                VisualBlocks.executor.testExecution.results[id] = false;
+                VisualBlocks.executor.testExecution.results[id].success = false;
             }
         }
     }
@@ -246,7 +274,7 @@ function Executor() {
         VisualBlocks.executor.testExecution.promptSimulator = {};
         VisualBlocks.executor.testExecution.promptSimulator.next = 0;
         VisualBlocks.executor.testExecution.promptSimulator.block = null;
-        VisualBlocks.executor.testExecution.promptSimulator.unhandledPrompt = {};
+        //VisualBlocks.executor.testExecution.promptSimulator.unhandledPrompt = {};
 
         //Stack of alert data
         VisualBlocks.executor.testExecution.alerts = {};

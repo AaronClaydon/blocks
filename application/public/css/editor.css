@@ -93,7 +93,7 @@ a {
 .testing-results-table td {
     padding-bottom: 4px;
 }
-.testing-results-table td:nth-child(1) {
+.testing-results-table td {
     padding-right: 20px;
 }
 
