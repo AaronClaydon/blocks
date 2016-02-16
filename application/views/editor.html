@@ -206,19 +206,8 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Edit Tests</h4>
                     </div>
-                    <div class="modal-body">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Last Run</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody id="modal-tests-edit-tests-list">
+                    <div class="modal-body" id="modal-tests-edit-tests-list">
 
-                            </tbody>
-                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -596,6 +585,74 @@
                 <li><a id="testing-dropdown-new" class="testing-dropdown-manage">Add new test</a></li>
                 <li><a id="testing-dropdown-edit" class="testing-dropdown-manage">Edit tests</a></li>
             {{/if}}
+        </script>
+
+        <script id="template-edit-tests-list" type="x-tmpl-mustache">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Last Run</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each tests}}
+                        <tr>
+                            <td>{{this.name}}</td>
+                            <td>{{{this.result}}}</td>
+                            <td>
+                                <button type="button" class="btn btn-info btn-xs btn-edit" data-id="{{@key}}">Rename</button>
+                                {{#if ../allowDelete}}
+                                    <button type="button" class="btn btn-danger btn-xs btn-delete" data-id="{{@key}}">Delete</button>
+                                {{else}}
+                                    <button type="button" class="btn btn-danger btn-xs btn-delete" disabled>Delete</button>
+                                {{/if}}
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </script>
+
+        <script id="template-tests-runall-output" type="x-tmpl-mustache">
+            <strong>Running all tests</strong>
+
+            <table class="testing-results-table">
+                {{#each tests}}
+                    <tr>
+                        <td>{{this.name}}</td>
+                        <td>{{{this.result}}}</td>
+                    </tr>
+                {{/each}}
+            </table>
+
+            {{#if_eq this.numPassed 0}}
+                <strong>All tests failed</strong>
+            {{else}}
+                {{#if_eq this.numPassed this.numTests}}
+                    <strong>All tests passed</strong>
+                {{else}}
+                    <strong>{{numPassed}} out of {{numTests}} tests passed</strong>
+                {{/if_eq}}
+            {{/if_eq}}
+        </script>
+
+        <script id="template-test-formatted-output" type="x-tmpl-mustache">
+            {{#if_eq this.result undefined}}
+                <span class="bg-danger">FAILED - NO ASSERT</span>
+            {{else}}
+                {{#if this.result}}
+                    <span class="bg-success">SUCCESS</span>
+                {{else}}
+                    <span class="bg-danger">
+                        FAILED
+                        {{#if unhandledPrompt}}
+                             - UNHANDLED PROMPT
+                        {{/if}}
+                    </span>
+                {{/if}}
+            {{/if_eq}}
         </script>
 
         <!-- Scripts -->

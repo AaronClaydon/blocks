@@ -251,7 +251,5 @@ function Executor() {
         //Stack of alert data
         VisualBlocks.executor.testExecution.alerts = {};
         VisualBlocks.executor.testExecution.alerts.output = [];
-
-        VisualBlocks.executor.testExecution.numPassed = 0;
     }
 }

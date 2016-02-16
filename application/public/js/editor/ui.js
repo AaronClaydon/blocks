@@ -13,28 +13,17 @@ function UI() {
 
         //Generate the list of tests
         function generateTestsList() {
-            html = '';
-            for (var testID in VisualBlocks.currentPuzzle.tests) {
-                test = VisualBlocks.currentPuzzle.tests[testID];
-
-                name = test.name;
-                lastRun = VisualBlocks.ui.formatTestResult(testID);
-
-                html += '<tr><td>' + name + '</td>';
-                html += '<td>' + lastRun + '</td>';
-                html += '<td><button type="button" class="btn btn-info btn-xs btn-edit" data-id="' + testID + '">Rename</button> ';
-
-                var deleteDisabled = '';
-                //Only enable delete button if there are more than one test
-                if(Object.keys(VisualBlocks.currentPuzzle.tests).length === 1) {
-                    deleteDisabled = 'disabled';
-                }
-                html += '<button type="button" class="btn btn-danger btn-xs btn-delete" data-id="' + testID + '" ' + deleteDisabled + '>Delete</button>';
-
-                html += '</td></tr>';
+            //Put the formatted test result html in the test object for the template
+            var renderedTests = VisualBlocks.currentPuzzle.tests;
+            for (var testID in renderedTests) {
+                renderedTests[testID].result = VisualBlocks.ui.formatTestResult(testID);
             }
 
-            $("#modal-tests-edit-tests-list").html(html);
+            //Render and set the test list in the edit modal
+            $("#modal-tests-edit-tests-list").html(VisualBlocks.ui.renderTemplate("edit-tests-list", {
+                tests: renderedTests,
+                allowDelete: (Object.keys(VisualBlocks.currentPuzzle.tests).length > 1)
+            }));
 
             //Create the event bindings for pressing the delete button
             $("#modal-tests-edit-list .btn-delete").click(function() {
@@ -68,6 +57,14 @@ function UI() {
 
     //Scale the UI and set window resize events
     this.init = function() {
+        //Custom handlebars function for if comparison
+        Handlebars.registerHelper('if_eq', function(a, b, opts) {
+            if(a == b) // Or === depending on your needs
+            return opts.fn(this);
+            else
+            return opts.inverse(this);
+        });
+
         //New puzzle modal button
         $("#modal-new-btn").click(function() {
             VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle());
@@ -227,8 +224,6 @@ function UI() {
             }
         });
 
-
-
         //Resize the output panel to users window size
         function outputResize() {
             var newHeight = $("#output-panel").height() - 35;
@@ -255,7 +250,6 @@ function UI() {
 
     //Update the tests panel title
     this.updateTestPanelName = function () {
-        //var test = VisualBlocks.currentPuzzle[VisualBlocks.ui.currentTest];
         $("#testing-current-name").text(test.name);
     };
 
@@ -293,61 +287,40 @@ function UI() {
 
     //Formats the test result
     this.formatTestResult = function(testID) {
-        testResult = VisualBlocks.executor.testExecution.results[testID];
-
-        if(testResult === undefined) {
-            output = '<span class="bg-danger">NOTHING ASSERTED</span>';
-        } else if(testResult) {
-            output = '<span class="bg-success">SUCCESS</span>';
-        } else {
-            additionalInfo = '';
-
-            if(VisualBlocks.executor.testExecution.promptSimulator.unhandledPrompt[testID]) {
-                additionalInfo = ' - UNHANDLED PROMPT';
-            }
-
-            output = '<span class="bg-danger">FAILED' + additionalInfo + '</span>';
-        }
-
-        return output;
+        return VisualBlocks.ui.renderTemplate("test-formatted-output", {
+            result: VisualBlocks.executor.testExecution.results[testID],
+            unhandledPrompt: VisualBlocks.executor.testExecution.promptSimulator.unhandledPrompt[testID]
+        });
     }
 
     //Format and display the test results in the output panel
     this.outputTestResults = function() {
         //Spacing break line is not needed if output is empty
         VisualBlocks.output.lineBreakIfEmpty();
-        VisualBlocks.output.writeLine('<strong>Running all tests</strong>');
 
-        //Generate the results table
-        output = '<table class="testing-results-table">';
+        renderedTests = VisualBlocks.currentPuzzle.tests;
+        numPassed = 0;
+        numTests = Object.keys(VisualBlocks.currentPuzzle.tests).length;
 
-        for (var testID in VisualBlocks.currentPuzzle.tests) {
+        //Put the formatted test result html in the test object for the template
+        for (var testID in renderedTests) {
             test = VisualBlocks.currentPuzzle.tests[testID];
+            test.result = VisualBlocks.ui.formatTestResult(testID);
 
-            //Get the result from the test
-            var testResult = VisualBlocks.executor.testExecution.results[testID];
+            testResult = VisualBlocks.executor.testExecution.results[testID];
 
-            //Format output for test result
-            output += '<tr><td>' + test.name + '</td><td>' + VisualBlocks.ui.formatTestResult(testID) + '</td></tr>';
-
+            //Count number of tests passed
             if(testResult) {
-                VisualBlocks.executor.testExecution.numPassed += 1; //Add to count of num tests passed
+                numPassed += 1; //Add to count of num tests passed
             }
         }
 
-        output += '</table>';
-        VisualBlocks.output.write(output);
-
-        //Display success message
-        numPassed = VisualBlocks.executor.testExecution.numPassed;
-        numTests = Object.keys(VisualBlocks.currentPuzzle.tests).length;
-        if(numPassed == 0) {
-            VisualBlocks.output.writeLine('<strong>All tests failed</strong>');
-        } else if(numPassed == numTests) {
-            VisualBlocks.output.writeLine('<strong>All tests passed</strong>');
-        } else {
-            VisualBlocks.output.writeLine('<strong>' + numPassed + ' out of ' + numTests + ' tests passed</strong>');
-        }
+        //Render the test results in the output pane
+        VisualBlocks.output.writeLine(VisualBlocks.ui.renderTemplate("tests-runall-output", {
+            tests: renderedTests,
+            numTests: numTests,
+            numPassed: numPassed
+        }));
     };
 
     //Format the steps list UI and button
