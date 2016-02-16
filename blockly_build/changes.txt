@@ -9,3 +9,7 @@ core/procedures.js - all 'root/workspace.getAllBlocks()' calls have additional b
 core/inject.js - add custom option
                - in parseOptions Function
                - add "workspaceType: options['workspaceType']" to return
+
+generators/javascript/variables.js - add variable change notifier
+                                   - updatedVariable("' + varName + '");
+                                   - on variable set block code return

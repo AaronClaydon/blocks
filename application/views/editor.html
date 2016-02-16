@@ -736,11 +736,14 @@
                 {{#if_eq this.type 'prompt'}}
                     PROMPT: {{this.text}} | given {{this.value}}
                 {{/if_eq}}
+                {{#if_eq this.type 'variable_set'}}
+                    SET VAR: {{this.name}} = {{this.value}} &lt;{{this.value.type}}&gt;
+                {{/if_eq}}
                 <br/>
             {{/each}}
 
             <br/>
-            <strong>Variables</strong><br/>
+            <strong>Final Variables Value</strong><br/>
             {{#each result.variables}}
                 {{@key}}: {{this.data}} &lt;{{this.type}}&gt;
                 <br/>

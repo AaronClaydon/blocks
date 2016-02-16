@@ -22,6 +22,9 @@ function Executor() {
             text = text ? text.toString() : '';
             return interpreter.createPrimitive(prompt(text));
         }));
+
+        //Add an API function that ignores updatedVariable()
+        interpreter.setProperty(scope, 'updatedVariable', interpreter.createNativeFunction(function(name) {}));
     }
 
     //Provides an API to allow compiled test block code to interact with the editor
@@ -61,6 +64,11 @@ function Executor() {
         //Add an API function for ignoring and deleting the next output
         interpreter.setProperty(scope, 'ignoreNextOutput', interpreter.createNativeFunction(function() {
             interpreter.createPrimitive(testIgnoreNextOutput());
+        }));
+
+        //Add an API function for notifying variable update
+        interpreter.setProperty(scope, 'updatedVariable', interpreter.createNativeFunction(function(name) {
+            interpreter.createPrimitive(testUpdatedVariable(name));
         }));
 
         //TESTING: CONSOLELOG
@@ -168,6 +176,18 @@ function Executor() {
         });
     }
 
+    //Function that handles notifying variable updates
+    function testUpdatedVariable(name) {
+        value = VisualBlocks.executor.testExecution.jsInterpreter.variableValues[name.data];
+
+        //Log the variable update
+        VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest].executionLog.push({
+            type: 'variable_set',
+            name: name.data,
+            value: value
+        });
+    }
+
     //Executes the users application code
     this.executeApplication = function() {
         //Compile to JavaScript
@@ -225,8 +245,10 @@ function Executor() {
 
         //Run through JavaScript Interpreter with our API
         var jsInterpreter = new Interpreter(mergedCode, interpreterTestJSAPI);
+        VisualBlocks.executor.testExecution.jsInterpreter = jsInterpreter;
         jsInterpreter.run();
 
+        //Set list of test execution final variable values
         VisualBlocks.executor.testExecution.results[id].variables = jsInterpreter.variableValues;
 
         //Check if the test had an unhandled prompt and force it to failure
@@ -267,6 +289,9 @@ function Executor() {
         VisualBlocks.executor.testExecution.currentTest = 'default';
         VisualBlocks.executor.testExecution.results = {};
 
+        //Holds the current JavaScript interpreter
+        VisualBlocks.executor.testExecution.jsInterpreter = null;
+
         //Holds the headless workspace that contains the running test
         VisualBlocks.executor.testExecution.runningTestWorkspace = null;
 
@@ -274,7 +299,6 @@ function Executor() {
         VisualBlocks.executor.testExecution.promptSimulator = {};
         VisualBlocks.executor.testExecution.promptSimulator.next = 0;
         VisualBlocks.executor.testExecution.promptSimulator.block = null;
-        //VisualBlocks.executor.testExecution.promptSimulator.unhandledPrompt = {};
 
         //Stack of alert data
         VisualBlocks.executor.testExecution.alerts = {};
