@@ -98,8 +98,6 @@ function Puzzle(content) {
     }};
 
     this.options = _parseOptions(content.options);
-    console.log('puzzle', this);
-    console.log('options', this.options);
 
     function _parseOptions(opt) {
         //Default options values

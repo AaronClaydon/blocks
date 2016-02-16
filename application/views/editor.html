@@ -650,10 +650,14 @@
                 {{#each steps}}
                     <div class="media">
                         <div class="media-left media-middle steps-list-status">
-                            {{#if this.completed}}
-                                <span class="steps-list-status-complete">&#x2713</span>
+                            {{#if this.hasSuccessCondition}}
+                                {{#if this.completed}}
+                                    <span class="steps-list-status-complete">&#x2713</span>
+                                {{else}}
+                                    <span class="steps-list-status-incomplete">&#x2717</span>
+                                {{/if}}
                             {{else}}
-                                <span class="steps-list-status-incomplete">&#x2717</span>
+                                <span class="steps-list-status-nocondition">&nbsp;</span>
                             {{/if}}
                         </div>
                         <div class="media-body">
@@ -664,19 +668,21 @@
                 {{/each}}
             </div>
 
-            <div class="steps-progress">
-                <div class="progress">
-                    {{#if_eq progress.percent 100}}
-                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-                            Complete!
-                        </div>
-                    {{else}}
-                        <div class="progress-bar" role="progressbar" aria-valuenow="{{progress.percent}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress.percent}}%;min-width: 40px;">
-                            {{progress.completed}}/{{progress.total}}
-                        </div>
-                    {{/if_eq}}
+            {{#if progress.display}}
+                <div class="steps-progress">
+                    <div class="progress">
+                        {{#if_eq progress.percent 100}}
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                Complete!
+                            </div>
+                        {{else}}
+                            <div class="progress-bar" role="progressbar" aria-valuenow="{{progress.percent}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress.percent}}%;min-width: 40px;">
+                                {{progress.completed}}/{{progress.total}}
+                            </div>
+                        {{/if_eq}}
+                    </div>
                 </div>
-            </div>
+            {{/if}}
         </script>
 
         <!-- Scripts -->

@@ -131,11 +131,12 @@ function UI() {
 
                     //Parse puzzle json and load it
                     var puzzle = JSON.parse(contents);
-                    VisualBlocks.puzzlesManager.loadPuzzle(puzzle);
+                    VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle(puzzle));
 
                     VisualBlocks.output.writeLine('Loaded local puzzle ' + puzzle.name + ' from ' + file.name);
                 }
                 catch(err) {
+                    throw err;
                     console.log(err);
                     alert('Cannot load puzzle');
                 }
@@ -334,11 +335,14 @@ function UI() {
 
         //Calculate the progress
         steps = VisualBlocks.currentPuzzle.steps;
-        stepsTotal = steps.length;
+        stepsTotal = 0;
         stepsCompleted = 0;
 
         //Count how many steps completed
         for (var i = 0; i < steps.length; i++) {
+            if(steps[i].hasSuccessCondition) {
+                stepsTotal++;
+            }
             if(steps[i].completed) {
                 stepsCompleted++;
             }
@@ -350,6 +354,7 @@ function UI() {
         $("#modal-steps-list").html(VisualBlocks.ui.renderTemplate("steps-list", {
             steps: steps,
             progress: {
+                display: (stepsTotal > 0),
                 completed: stepsCompleted,
                 total: stepsTotal,
                 percent: stepsPercent

@@ -115,6 +115,10 @@ a {
     padding-right: 14px;
     color: red;
 }
+.steps-list-status .steps-list-status-nocondition {
+    padding-left: 36px;
+    color: red;
+}
 .steps-progress {
     margin-top: 30px;
 }
