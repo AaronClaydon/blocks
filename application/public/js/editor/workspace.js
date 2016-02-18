@@ -75,11 +75,89 @@ function WorkSpaces() {
 
         this.promptSimulatorDisabled = false;
 
-        //Check if we need to disable the prompt simulator block in the test toolbox
-        this.testWorkspace.addChangeListener(function() {
+        //Calls event when workspace has been edited
+        this.testWorkspace.addChangeListener(function(e) {
+            //Check if we need to disable the prompt simulator block in the test toolbox
             VisualBlocks._workspaces.updateTestToolbox();
+
+            //Check the puzzles steps for block events
+            VisualBlocks._workspaces.checkBlocks(VisualBlocks._workspaces.testWorkspace);
+        });
+        this.appWorkspace.addChangeListener(function(e) {
+            //Check the puzzles steps for block events
+            VisualBlocks._workspaces.checkBlocks(VisualBlocks._workspaces.appWorkspace);
         });
     };
+
+    //Check the puzzles steps for block events
+    this.checkBlocks = function(workspace) {
+        var workspaceType = '';
+        if(workspace.options.workspaceType === 'application-blockly') {
+            workspaceType = 'application';
+        } else {
+            workspaceType = 'test';
+        }
+
+        //Get the relevant steps to compare against
+        relevantSteps = [];
+        relevantStepsBeenSet = {};
+        for (var i = 0; i < VisualBlocks.currentPuzzle.steps.length; i++) {
+            step = VisualBlocks.currentPuzzle.steps[i];
+            successCondition = step.successCondition;
+
+            if(successCondition !== undefined) {
+                if(successCondition.workspace == workspaceType) {
+                    //Add to the list of relevant events for blocks
+                    if($.inArray(successCondition.event, ['contains_block']) > -1) {
+                        relevantSteps.push(step);
+                    }
+                }
+            }
+        }
+
+        //Go through all the blocks in the workspace
+        if(relevantSteps.length > 0) {
+            allBlocks = workspace.getAllBlocks();
+            for (var blockID = 0; blockID < allBlocks.length; blockID++) {
+                block = allBlocks[blockID];
+
+                //Go througn all block relevant steps
+                for (var stepID = 0; stepID < relevantSteps.length; stepID++) {
+                    step = relevantSteps[stepID];
+
+                    //Basic event data
+                    eventData = {
+                        type: block.type
+                    };
+
+                    //Block specific event data
+                    if(block.type == 'procedures_defreturn') {
+                        eventData.function_name = block.getFieldValue('NAME');
+                    } else if(block.type == 'procedures_callreturn') {
+                        eventData.function_name = block.getFieldValue('NAME');
+                    }
+
+                    //If it has already been set as true then we ignore the result of the results
+                    if(!relevantStepsBeenSet[stepID]) {
+                        //Execute the step equality success condition
+                        stepResult = VisualBlocks.puzzlesManager.executeEventEquality(step.successCondition, eventData);
+
+                        relevantSteps[stepID].completed = stepResult;
+
+                        if(stepResult) {
+                            relevantStepsBeenSet[stepID] = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        //Update all the steps
+        for (var stepID = 0; stepID < relevantSteps.length; stepID++) {
+            step = relevantSteps[stepID];
+            VisualBlocks.puzzlesManager.updateStep(stepID, step.completed);
+        }
+    }
 
     //Generate Blockly toolboxes by merging type specific and shared toolboxes
     this.generateToolboxes = function() {

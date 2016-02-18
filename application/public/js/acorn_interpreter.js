@@ -1857,6 +1857,7 @@ Interpreter.prototype['stepCallExpression'] = function() {
                            state.arguments[i]);
         }
         this.setProperty(scope, 'arguments', argsList);
+        //LATER: FUNCTIOn CALL DATA: console.log(state.func_.node.id.name, state.func_.node.params, state.arguments);
         var funcState = {
           node: state.func_.node.body,
           scope: scope,

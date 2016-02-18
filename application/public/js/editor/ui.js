@@ -351,7 +351,8 @@ function UI() {
 
         //Count how many steps completed
         for (var i = 0; i < steps.length; i++) {
-            if(steps[i].hasSuccessCondition) {
+            if(steps[i].successCondition !== undefined) {
+                steps[i].hasSuccessCondition = true;
                 stepsTotal++;
             }
             if(steps[i].completed) {
