@@ -3,6 +3,10 @@
     "description": "First test of the puzzles framework, contains completion steps",
     "steps": [
         {
+            "title": "Basic step",
+            "description": "I have no success condition"
+        },
+        {
             "title": "Call double",
             "description": "Call the double function in your test",
             "successCondition": {

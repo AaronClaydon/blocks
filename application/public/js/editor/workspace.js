@@ -101,8 +101,10 @@ function WorkSpaces() {
         //Get the relevant steps to compare against
         relevantSteps = [];
         relevantStepsBeenSet = {};
+        relevantStepsResults = {};
         for (var i = 0; i < VisualBlocks.currentPuzzle.steps.length; i++) {
             step = VisualBlocks.currentPuzzle.steps[i];
+            step.id = i;
             successCondition = step.successCondition;
 
             if(successCondition !== undefined) {
@@ -142,7 +144,7 @@ function WorkSpaces() {
                         //Execute the step equality success condition
                         stepResult = VisualBlocks.puzzlesManager.executeEventEquality(step.successCondition, eventData);
 
-                        relevantSteps[stepID].completed = stepResult;
+                        relevantStepsResults[stepID] = stepResult;
 
                         if(stepResult) {
                             relevantStepsBeenSet[stepID] = true;
@@ -155,7 +157,7 @@ function WorkSpaces() {
         //Update all the steps
         for (var stepID = 0; stepID < relevantSteps.length; stepID++) {
             step = relevantSteps[stepID];
-            VisualBlocks.puzzlesManager.updateStep(stepID, step.completed);
+            VisualBlocks.puzzlesManager.updateStep(step.id, relevantStepsResults[stepID]);
         }
     }
 
