@@ -13,6 +13,7 @@ function WorkSpaces() {
         var blocklyArea = document.getElementById(area);
         var blocklyDiv = document.getElementById(workspace);
         var workspace = Blockly.inject(blocklyDiv, {
+            media: 'blockly_media/',
             toolbox: document.getElementById(toolbox),
             workspaceType: workspace,
             readOnly: !editable,
