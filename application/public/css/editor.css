@@ -31,6 +31,9 @@ a {
     padding: 60px 0 10px 10px;
 }
 
+#application-panel, #testing-panel {
+    width: 50%;
+}
 .main .main-panels {
     box-sizing: border-box;
     width: 100%;
@@ -38,7 +41,6 @@ a {
 }
 .main .main-panels .panel-container {
     box-sizing: border-box;
-    width: 50%;
     height: 100%;
     float: left;
     padding-right: 10px;

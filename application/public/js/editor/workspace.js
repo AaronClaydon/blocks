@@ -23,25 +23,15 @@ function WorkSpaces() {
         //Set visiiblity of the workspace from options
         workspace.setVisible(visible);
 
-        //Resize the Blockly workspace to fill the browser window
-        var onresize = function(e) {
-            // Compute the absolute coordinates and dimensions of blocklyArea.
-            var element = blocklyArea;
-            var x = 0;
-            var y = 36;
-            do {
-                x += element.offsetLeft;
-                y += element.offsetTop;
-                element = element.offsetParent;
-            } while (element);
+        //Resize the worksapce to fit the panel it is in
+        var onresize = function() {
+            panel = $(blocklyArea);
+            space = $(blocklyDiv);
 
-            // Position blocklyDiv over blocklyArea.
-            blocklyDiv.style.left = x + 'px';
-            blocklyDiv.style.top = y + 'px';
-            blocklyDiv.style.width = (blocklyArea.offsetWidth - 10) + 'px';
-            blocklyDiv.style.height = (blocklyArea.offsetHeight - 36) + 'px';
-        };
-        window.addEventListener('resize', onresize, false);
+            space.height(panel.height() - $(".panel-heading").outerHeight() + 1);
+            space.width(panel.width() + 1);
+        }
+        $(window).resize(onresize);
         onresize();
 
         return workspace;

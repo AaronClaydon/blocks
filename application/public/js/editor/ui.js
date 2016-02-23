@@ -235,6 +235,68 @@ function UI() {
         }
         $(window).resize(outputResize);
         outputResize();
+
+        //Load the users dimension settings
+        $("#application-panel").width(localStorage.getItem('app_panel_width') + "%");
+        $("#testing-panel").width(localStorage.getItem('testing_panel_width') + "%");
+        $(".main-panels").height(localStorage.getItem('main_panel_height') + "%");
+        $(".output-panel").height(localStorage.getItem('output_panel_height') + "%");
+
+        //Resizing the workspace and output panels
+        interact('#application-panel')
+            .resizable({
+                edges: { left: false, right: true, bottom: false, top: false }
+            })
+            .on('resizemove', function (event) {
+                var target = event.target;
+                //Calculate the current app panel width as a percentage
+                appPanelWidth = ($("#application-panel").width() / $(".main-panels").outerWidth()) * 100;
+                //Calculate the modifier that we're resizing by
+                modifierPercent = event.rect.right / ($("#application-panel").outerWidth() + 10);
+                //Calculate the new widths
+                newAppPanelWidth = (appPanelWidth * modifierPercent) - 10;
+                newTestPanelWidth = 80 - newAppPanelWidth;
+
+                //Constraints on the sizing
+                if(newAppPanelWidth > 5 && newAppPanelWidth < 70) {
+                    $("#application-panel").width(newAppPanelWidth + "%");
+                    $("#testing-panel").width(newTestPanelWidth + "%");
+
+                    //Set the new user dimension settings
+                    localStorage.setItem('app_panel_width', newAppPanelWidth);
+                    localStorage.setItem('testing_panel_width', newTestPanelWidth);
+                }
+
+                window.dispatchEvent(new Event('resize'));
+            });
+
+        //Resize the output panel
+        interact('#output-panel')
+            .resizable({
+                edges: { left: false, right: false, bottom: false, top: true }
+            })
+            .on('resizemove', function (event) {
+                var target = event.target;
+                //Calculate the current main panel height as a percentage
+                mainPanelsHeight = ($(".main-panels").outerHeight() / $(".main").height()) * 100;
+                //Calculate the modifier that we're resizing by
+                modifierPercent = event.rect.top / ($(".main-panels").outerHeight() + 70);
+                //Calculate the new heights
+                newMainPanelsHeight = mainPanelsHeight * modifierPercent;
+                newOutputPanelHeight = 90 - newMainPanelsHeight;
+
+                //Constraints on the sizing
+                if(newMainPanelsHeight > 10 && newOutputPanelHeight > 2) {
+                    $(".main-panels").height(newMainPanelsHeight + "%");
+                    $(".output-panel").height(newOutputPanelHeight + "%");
+
+                    //Set the new user dimension settings
+                    localStorage.setItem('main_panel_height', newMainPanelsHeight);
+                    localStorage.setItem('output_panel_height', newOutputPanelHeight);
+                }
+
+                window.dispatchEvent(new Event('resize'));
+            });
     };
 
     //Renders a given template with view data
