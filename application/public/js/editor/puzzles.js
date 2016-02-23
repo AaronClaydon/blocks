@@ -29,6 +29,11 @@ function PuzzlesManager() {
         //Load the first test
         firstTestID = Object.keys(VisualBlocks.currentPuzzle.tests)[0];
         VisualBlocks.puzzlesManager.loadTest(firstTestID);
+
+        //Call test updated event, with the number of tests
+        VisualBlocks.puzzlesManager.callEvent("update_tests", {
+            numTests: Object.keys(VisualBlocks.currentPuzzle.tests).length
+        });
     }
 
     //Load a puzzle from a remote file
@@ -97,8 +102,8 @@ function PuzzlesManager() {
     //Puzzle step event handler
     this.callEvent = function(eventName, eventData) {
         //Check all the steps success condition against the event
-        for (var i = 0; i < VisualBlocks.currentPuzzle.steps.length; i++) {
-            step = VisualBlocks.currentPuzzle.steps[i];
+        for (var stepID in VisualBlocks.currentPuzzle.steps) {
+            step = VisualBlocks.currentPuzzle.steps[stepID];
             successCondition = step.successCondition;
 
             if(successCondition !== undefined) {
@@ -106,10 +111,10 @@ function PuzzlesManager() {
                 if(successCondition.event == eventName) {
                     //Compare the step equality definiton against the event
                     if(successCondition.equality !== undefined) {
-                        result = this.executeEventEquality(successCondition, eventData);
+                        result = this.executeEventEquality(successCondition.equality, eventData);
 
                         //Update the step with the new completed value
-                        VisualBlocks.puzzlesManager.updateStep(i, result);
+                        VisualBlocks.puzzlesManager.updateStep(stepID, result);
                     }
                 }
             }
@@ -117,9 +122,7 @@ function PuzzlesManager() {
     };
 
     //Execute a step event equality
-    this.executeEventEquality = function(successCondition, eventData) {
-        equality = successCondition.equality;
-
+    this.executeEventEquality = function(equality, eventData) {
         resultSet = false; //if the result value has already been set
         result = false;
 
@@ -139,6 +142,22 @@ function PuzzlesManager() {
 
     //Update the step completed value
     this.updateStep = function(stepID, value) {
+        //Check all prerequisite steps have been completed
+        step = VisualBlocks.currentPuzzle.steps[stepID];
+
+        if(step.successCondition.prerequisite !== undefined) {
+            for (var i = 0; i < step.successCondition.prerequisite.length; i++) {
+                prereqstepid = step.successCondition.prerequisite[i];
+                prereqstep = VisualBlocks.currentPuzzle.steps[prereqstepid];
+
+                //Set step as not complete if a prerequisite step is not complete
+                if(!prereqstep.completed) {
+                    value = false;
+                    break;
+                }
+            }
+        }
+
         console.log("STEP UPDATE", VisualBlocks.currentPuzzle.steps[stepID].title, value);
         VisualBlocks.currentPuzzle.steps[stepID].completed = value;
         VisualBlocks.ui.updateStepsList();
@@ -149,7 +168,7 @@ function PuzzlesManager() {
         stepsCompleted = 0;
 
         //Count how many steps completed
-        for (var i = 0; i < steps.length; i++) {
+        for (var i in steps) {
             if(steps[i].successCondition !== undefined) {
                 steps[i].hasSuccessCondition = true;
                 stepsTotal++;
@@ -161,7 +180,7 @@ function PuzzlesManager() {
 
         //If all steps are completed, then puzzle is complete
         if(stepsTotal == stepsCompleted) {
-            alert("PUZZLE COMPLETE");
+            console.log("PUZZLE COMPLETE");
         }
     }
 }
@@ -175,7 +194,7 @@ function Puzzle(content) {
     }
     this.name = content.name || 'New Puzzle';
     this.description = content.description || 'A new empty puzzle';
-    this.steps = content.steps || [];
+    this.steps = content.steps || {};
     this.applicationCode = content.applicationCode || '<xml xmlns="http://www.w3.org/1999/xhtml"></xml>';
     this.tests = content.tests || {'defaul1': {
         'name': 'Test 1',

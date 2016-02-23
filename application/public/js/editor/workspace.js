@@ -142,7 +142,7 @@ function WorkSpaces() {
         relevantSteps = [];
         relevantStepsBeenSet = {};
         relevantStepsResults = {};
-        for (var i = 0; i < VisualBlocks.currentPuzzle.steps.length; i++) {
+        for (var i in VisualBlocks.currentPuzzle.steps) {
             step = VisualBlocks.currentPuzzle.steps[i];
             step.id = i;
             successCondition = step.successCondition;
@@ -150,7 +150,7 @@ function WorkSpaces() {
             if(successCondition !== undefined) {
                 if(successCondition.workspace == workspaceType) {
                     //Add to the list of relevant events for blocks
-                    if($.inArray(successCondition.event, ['contains_block']) > -1) {
+                    if($.inArray(successCondition.event, ['contains_block', 'block_has_input']) > -1) {
                         relevantSteps.push(step);
                     }
                 }
@@ -166,28 +166,33 @@ function WorkSpaces() {
                 //Go througn all block relevant steps
                 for (var stepID = 0; stepID < relevantSteps.length; stepID++) {
                     step = relevantSteps[stepID];
-
-                    //Basic event data
-                    eventData = {
-                        type: block.type
-                    };
-
-                    //Block specific event data
-                    if(block.type == 'procedures_defreturn') {
-                        eventData.function_name = block.getFieldValue('NAME');
-                    } else if(block.type == 'procedures_callreturn') {
-                        eventData.function_name = block.getFieldValue('NAME');
-                    }
+                    stepResult = undefined;
 
                     //If it has already been set as true then we ignore the result of the results
                     if(!relevantStepsBeenSet[stepID]) {
-                        //Execute the step equality success condition
-                        stepResult = VisualBlocks.puzzlesManager.executeEventEquality(step.successCondition, eventData);
+                        //Basic event data
+                        eventData = this.getBlockEventData(block);
+                        if(step.successCondition.event === 'contains_block') {
+                            //Execute the step equality success condition
+                            stepResult = VisualBlocks.puzzlesManager.executeEventEquality(step.successCondition.equality, eventData);
 
-                        relevantStepsResults[stepID] = stepResult;
+                            relevantStepsResults[stepID] = stepResult;
+                            if(stepResult) {
+                                relevantStepsBeenSet[stepID] = true;
+                            }
+                        } else if(step.successCondition.event === 'block_has_input') {
+                            parentEqualityResult = VisualBlocks.puzzlesManager.executeEventEquality(step.successCondition.parent, eventData);
 
-                        if(stepResult) {
-                            relevantStepsBeenSet[stepID] = true;
+                            if(parentEqualityResult) {
+                                inputEqualityResult = this.recursiveBlockInputCheck(block, step.successCondition.input);
+
+                                relevantStepsResults[stepID] = inputEqualityResult;
+                                if(inputEqualityResult) {
+                                    relevantStepsBeenSet[stepID] = true;
+                                }
+                            }
+                        } else {
+                            console.log('STEP ERROR: UNHANDLED EVENT', step.successCondition.event);
                         }
                     }
                 }
@@ -196,6 +201,54 @@ function WorkSpaces() {
 
         return [relevantSteps, relevantStepsResults]
     }
+
+    //Get data that describes the block, type, names, etc
+    this.getBlockEventData = function(block) {
+        //Basic event data
+        eventData = {
+            type: block.type
+        };
+
+        //Block specific event data
+        if(block.type == 'procedures_defreturn') {
+            eventData.function_name = block.getFieldValue('NAME');
+        } else if(block.type == 'procedures_callreturn') {
+            eventData.function_name = block.getFieldValue('NAME');
+        }
+
+        return eventData;
+    }
+
+    //Check if any of the blocks inputs, and the inputs for the input, match a certain equality
+    this.recursiveBlockInputCheck = function(block, equality) {
+        //Get all inputs for this block
+        for (var inputID in block.inputList) {
+            inputBlockConnection = block.inputList[inputID].connection
+
+            //If this input references another block
+            if(inputBlockConnection !== null) {
+                inputBlock = inputBlockConnection.targetBlock();
+                if(inputBlock !== null) {
+                    eventData = this.getBlockEventData(inputBlock);
+
+                    //Check if equality matches the input
+                    inputEqualityResult = VisualBlocks.puzzlesManager.executeEventEquality(equality, eventData);
+
+                    //Return true if matches, else recursively check again
+                    if(inputEqualityResult) {
+                        return true;
+                    } else {
+                        //check if child input is successful and end the search
+                        recur_success = this.recursiveBlockInputCheck(inputBlock, equality);
+
+                        if(recur_success) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    };
 
     //Generate Blockly toolboxes by merging type specific and shared toolboxes
     this.generateToolboxes = function() {

@@ -93,7 +93,7 @@
     "tests": {
         "sfjd9": {
             "name": "Test 1",
-            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"assert\" x=\"4\" y=\"6\"><value name=\"ASSERT_SUCCESS_VALUE\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"math_number\"><field name=\"NUM\">20</field></block></value><value name=\"B\"><block type=\"procedures_callreturn\"><mutation name=\"double\"><arg name=\"x\"></arg></mutation><value name=\"ARG0\"><block type=\"math_number\"><field name=\"NUM\">10</field></block></value></block></value></block></value><value name=\"ASSERT_SUCCESS_IF\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value></block></xml>",
+            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"assert\" x=\"4\" y=\"6\"><value name=\"ASSERT_SUCCESS_VALUE\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value><value name=\"ASSERT_SUCCESS_IF\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value></block></xml>",
             "formattedResult": "\n                    <span class=\"bg-success\">SUCCESS</span>\n        "
         },
         "R=Q#rA7TR`EPnPyKNis|": {

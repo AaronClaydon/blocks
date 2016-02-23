@@ -323,6 +323,12 @@ function UI() {
             numPassed: numPassed
         }));
 
+        //Call test results event, with test results - shouldn't really be in ui
+        VisualBlocks.puzzlesManager.callEvent("tests_result", {
+            numTests: numTests,
+            numPassed: numPassed
+        });
+
         //handle inspect link click
         $(".testing-results-table-test-inspect").click(function() {
             testID = $(this).attr('data-id');
@@ -341,7 +347,7 @@ function UI() {
     //Format the steps list UI and button
     this.updateStepsList = function() {
         //If display steps button
-        if(VisualBlocks.currentPuzzle.steps.length > 0) {
+        if(Object.keys(VisualBlocks.currentPuzzle.steps).length > 0) {
             $("#nav-header-steps-btn").css('display', 'block');
         } else {
             $("#nav-header-steps-btn").css('display', 'none');
@@ -353,12 +359,12 @@ function UI() {
         stepsCompleted = 0;
 
         //Count how many steps completed
-        for (var i = 0; i < steps.length; i++) {
-            if(steps[i].successCondition !== undefined) {
-                steps[i].hasSuccessCondition = true;
+        for (var stepID in steps) {
+            if(steps[stepID].successCondition !== undefined) {
+                steps[stepID].hasSuccessCondition = true;
                 stepsTotal++;
             }
-            if(steps[i].completed) {
+            if(steps[stepID].completed) {
                 stepsCompleted++;
             }
         }
