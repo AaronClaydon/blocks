@@ -78,7 +78,7 @@ function UI() {
 
             //Check if user suports the file reading api's
             if (window.File && window.FileReader && window.FileList && window.Blob) {
-                var encodedPuzzle = JSON.stringify(VisualBlocks.currentPuzzle, null, 4);
+                var encodedPuzzle = VisualBlocks.puzzlesManager.encodedPuzzle();
 
                 //Create a file of the encoded puzzle and save it
                 var blob = new Blob([encodedPuzzle], {type: "application/json;charset=utf-8"});

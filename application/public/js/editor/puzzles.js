@@ -183,6 +183,23 @@ function PuzzlesManager() {
             console.log("PUZZLE COMPLETE");
         }
     }
+
+    //Encode the puzzle as JSON, ready for saving
+    this.encodedPuzzle = function() {
+        //really hacky way of copying an object
+        savePuzzle = JSON.parse(JSON.stringify(VisualBlocks.currentPuzzle));
+
+        //Delete information we dont need to save
+        for (var stepID in savePuzzle.steps) {
+            step = savePuzzle.steps[stepID];
+            delete step['completed'];
+            delete step['hasSuccessCondition'];
+        }
+
+        //Encode the puzzle as json and return it
+        puzzleJSON = JSON.stringify(savePuzzle, null, 4);
+        return puzzleJSON;
+    }
 }
 
 //Hold puzzle data
