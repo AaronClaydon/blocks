@@ -192,6 +192,9 @@ function UI() {
                 VisualBlocks.ui.updateTestSelectionDropdown();
                 $("#modal-tests-new").modal('hide');
 
+                //Update the current workspace with any changes to the current test
+                VisualBlocks.puzzlesManager.updateCurrentTest();
+
                 //Load the newly created test
                 VisualBlocks.puzzlesManager.loadTest(testNumber);
             }

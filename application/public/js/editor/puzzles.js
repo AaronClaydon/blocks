@@ -87,6 +87,11 @@ function PuzzlesManager() {
     //Deletes a given test
     this.deleteTest = function(id) {
         delete VisualBlocks.currentPuzzle.tests[id];
+
+        //Call test updated event, with the number of tests
+        VisualBlocks.puzzlesManager.callEvent("update_tests", {
+            numTests: Object.keys(VisualBlocks.currentPuzzle.tests).length
+        });
     }
 
     //Puzzle step event handler

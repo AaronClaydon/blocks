@@ -81,13 +81,53 @@ function WorkSpaces() {
             VisualBlocks._workspaces.updateTestToolbox();
 
             //Check the puzzles steps for block events
-            VisualBlocks._workspaces.checkBlocks(VisualBlocks._workspaces.testWorkspace);
+            VisualBlocks._workspaces.checkAllTestsBlocks();
         });
         this.appWorkspace.addChangeListener(function(e) {
             //Check the puzzles steps for block events
-            VisualBlocks._workspaces.checkBlocks(VisualBlocks._workspaces.appWorkspace);
+            result = VisualBlocks._workspaces.checkBlocks(VisualBlocks._workspaces.appWorkspace);
+            relevantSteps = result[0];
+            relevantStepsResults = result[1];
+
+            //Update all the steps
+            for (var stepID = 0; stepID < relevantSteps.length; stepID++) {
+                step = relevantSteps[stepID];
+                VisualBlocks.puzzlesManager.updateStep(step.id, relevantStepsResults[stepID]);
+            }
         });
     };
+
+    this.checkAllTestsBlocks = function() {
+        stepsToUpdate = {};
+
+        for (var testID in VisualBlocks.currentPuzzle.tests) {
+            if(testID === VisualBlocks.ui.currentTest) {
+                testWorkspace = VisualBlocks._workspaces.testWorkspace;
+            } else {
+                test = VisualBlocks.currentPuzzle.tests[testID];
+                testDom = Blockly.Xml.textToDom(test.testCode);
+                testWorkspace = new Blockly.Workspace();
+                Blockly.Xml.domToWorkspace(testWorkspace, testDom);
+            }
+
+            result = VisualBlocks._workspaces.checkBlocks(testWorkspace);
+            relevantSteps = result[0];
+            relevantStepsResults = result[1];
+
+            //Update all the steps
+            for (var stepID = 0; stepID < relevantSteps.length; stepID++) {
+                step = relevantSteps[stepID];
+
+                if(stepsToUpdate[step.id] === undefined || !stepsToUpdate[step.id]) {
+                    stepsToUpdate[step.id] = relevantStepsResults[stepID];
+                }
+            }
+        }
+
+        for (var stepID in stepsToUpdate) {
+            VisualBlocks.puzzlesManager.updateStep(stepID, stepsToUpdate[stepID]);
+        }
+    }
 
     //Check the puzzles steps for block events
     this.checkBlocks = function(workspace) {
@@ -154,11 +194,7 @@ function WorkSpaces() {
             }
         }
 
-        //Update all the steps
-        for (var stepID = 0; stepID < relevantSteps.length; stepID++) {
-            step = relevantSteps[stepID];
-            VisualBlocks.puzzlesManager.updateStep(step.id, relevantStepsResults[stepID]);
-        }
+        return [relevantSteps, relevantStepsResults]
     }
 
     //Generate Blockly toolboxes by merging type specific and shared toolboxes
