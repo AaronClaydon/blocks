@@ -920,6 +920,16 @@
 
         <script id="template-edit-puzzle-steps-edit-success-condition" type="x-tmpl-mustache">
             <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="edit-puzzle-step-prereq" class="col-sm-3 control-label">Prerequisites</label>
+                    <div class="col-sm-9">
+                        <select multiple class="form-control" id="edit-puzzle-step-success-prereq">
+                            {{#step_prereq step}}
+                                <option value="{{this.id}}" {{#if this.selected}}selected{{/if}}>{{this.step.title}}</option>
+                            {{/step_prereq}}
+                        </select>
+                    </div>
+                </div>
                 {{#if event_definition.specific_workspace}}
                 <div class="form-group">
                     <label for="edit-puzzle-step-success-workspace" class="col-sm-3 control-label">Workspace</label>

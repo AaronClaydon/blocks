@@ -120,12 +120,19 @@ function UI() {
 
         //When the success condition type has changed we update the success condition form
         $("#edit-puzzle-step-success-event").change(function() {
-            //Render the success form in the modal
-            $("#modal-edit-steps-edit-body-success-condition").html(
-                VisualBlocks.ui.renderTemplate("edit-puzzle-steps-edit-success-condition", {
-                    event_definition: event_definitions[$(this).val()],
+            eventType = $(this).val();
+            html = "";
+
+            //Only render the success condition html if the type is not none
+            if(eventType !== "none") {
+                html = VisualBlocks.ui.renderTemplate("edit-puzzle-steps-edit-success-condition", {
+                    event_definition: event_definitions[eventType],
                     step: step
-                }));
+                })
+            }
+
+            //Render the success form in the modal
+            $("#modal-edit-steps-edit-body-success-condition").html(html);
         });
 
         //Show the event data form
@@ -159,10 +166,35 @@ function UI() {
                 variable = equality.variables[variableID];
 
                 //Return the variable name, current value, and the equality
-                ret = ret + options.fn({
+                ret += options.fn({
                     name: variable,
                     value: setVariables[variable],
                     equality: key
+                });
+            }
+
+            return ret;
+        });
+
+        //Custom handlebars function for providing a list of steps and selecting them if they are a prerequisite for a given step
+        Handlebars.registerHelper('step_prereq', function(givenStep, options) {
+            var ret = "";
+
+            //Iterate through all the steps in the puzzle
+            for (var stepID in VisualBlocks.currentPuzzle.steps) {
+                step = VisualBlocks.currentPuzzle.steps[stepID];
+
+                isSelected = false;
+                if(givenStep.successCondition.prerequisite !== undefined) {
+                    //If the current step is a prerequisite of the given step we make it selected
+                    isSelected = ($.inArray(stepID, givenStep.successCondition.prerequisite) > -1);
+                }
+
+                //Add to the list of steps
+                ret += options.fn({
+                    step: step,
+                    id: stepID,
+                    selected: isSelected
                 });
             }
 
@@ -311,6 +343,12 @@ function UI() {
                     //Add the equality to the success condition
                     successCondition[equalityID] = equalityValues;
                 }
+
+                //Add any prerequisites
+                preReqs = $("#edit-puzzle-step-success-prereq").val();
+                if(preReqs !== null) {
+                    successCondition.prerequisite = preReqs;
+                }
             }
 
             //Construct the step data
@@ -320,7 +358,7 @@ function UI() {
                 successCondition: successCondition
             };
 
-            console.log(step.successCondition);
+            console.log(step);
 
             //Save the step data to the current puzzle
             stepID = $("#edit-puzzle-step-id").val();
