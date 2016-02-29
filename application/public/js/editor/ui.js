@@ -414,9 +414,8 @@ function UI() {
                     VisualBlocks.output.writeLine('Loaded local puzzle ' + puzzle.name + ' from ' + file.name);
                 }
                 catch(err) {
-                    throw err;
-                    console.log(err);
-                    alert('Cannot load puzzle');
+                    console.log('FAILED TO LOAD PUZZLE', err);
+                    alert('Failed to load the Puzzle File\n\n\n\n' + err);
                 }
             };
             fileReader.readAsText(file);
