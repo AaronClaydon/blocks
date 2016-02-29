@@ -34,14 +34,6 @@ function PuzzlesManager() {
         VisualBlocks.puzzlesManager.callEvent("update_tests", {
             numTests: Object.keys(VisualBlocks.currentPuzzle.tests).length
         });
-
-
-        //TESTING: DELETE ME
-        //$("#modal-edit-steps-add-btn").click();
-        //$("#edit-puzzle-step-success-event").val('block_has_input');
-        //$("#edit-puzzle-step-success-event").change();
-        $("#nav-header-edit-puzzle-steps-btn").click();
-        //$("#modal-edit-steps-list .btn-edit[data-id=step3]").click();
     }
 
     //Load a puzzle from a remote file
@@ -51,6 +43,21 @@ function PuzzlesManager() {
             VisualBlocks.output.writeLine('Loaded remote puzzle ' + data.name + ' from ' + filename);
             VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle(data));
         });
+    }
+
+    //Create a new workspace puzzle
+    this.newWorkspace = function() {
+        VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle());
+    }
+
+    //Create a new puzzle
+    this.newPuzzle = function() {
+        VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle({
+            isPuzzle: true,
+            name: 'New Puzzle',
+            description: 'A new empty puzzle',
+            options: {}
+        }));
     }
 
     //Load a given test into the test editor panel

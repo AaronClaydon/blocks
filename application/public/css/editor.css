@@ -14,7 +14,7 @@ textarea {
     border: 0;
     background-color: #6685B5;
 }
-#nav-header-steps-btn, #nav-header-edit-puzzle-btn {
+#nav-header-steps-btn, .nav-header-edit-puzzle {
     display: none;
 }
 .navbar .navbar-brand {

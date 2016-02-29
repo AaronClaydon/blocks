@@ -45,8 +45,8 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <!-- <li><a href="/puzzles">Puzzles</a></li> -->
-                        <li id="nav-header-edit-puzzle-btn"><a>Edit Puzzle</a></li>
-                        <li id="nav-header-edit-puzzle-steps-btn"><a>Edit Steps</a></li>
+                        <li id="nav-header-edit-puzzle-btn" class="nav-header-edit-puzzle"><a>Edit Puzzle</a></li>
+                        <li id="nav-header-edit-puzzle-steps-btn" class="nav-header-edit-puzzle"><a>Edit Steps</a></li>
                     </ul>
                 </div>
             </div>
@@ -331,7 +331,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-default" id="modal-edit-steps-edit-cancel-btn">Cancel</button>
                         <button type="button" class="btn btn-primary" id="modal-edit-steps-edit-save-btn">Save</button>
                     </div>
                 </div>
@@ -924,7 +924,7 @@
                     <label for="edit-puzzle-step-prereq" class="col-sm-3 control-label">Prerequisites</label>
                     <div class="col-sm-9">
                         <select multiple class="form-control" id="edit-puzzle-step-success-prereq">
-                            {{#step_prereq step}}
+                            {{#step_prereq step id}}
                                 <option value="{{this.id}}" {{#if this.selected}}selected{{/if}}>{{this.step.title}}</option>
                             {{/step_prereq}}
                         </select>

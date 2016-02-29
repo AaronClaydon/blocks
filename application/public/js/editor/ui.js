@@ -111,6 +111,12 @@ function UI() {
         $("#modal-edit-steps-list").modal('hide');
         $("#modal-edit-steps-edit").modal('show');
 
+        //Cancel button pressed
+        $("#modal-edit-steps-edit-cancel-btn").click(function() {
+            $("#modal-edit-steps-list").modal('show');
+            $("#modal-edit-steps-edit").modal('hide');
+        });
+
         //Construct the body of the modal with the step data and the list of event definitions
         $("#modal-edit-steps-edit-body").html(VisualBlocks.ui.renderTemplate("edit-puzzle-steps-edit", {
             event_definitions: event_definitions,
@@ -127,7 +133,8 @@ function UI() {
             if(eventType !== "none") {
                 html = VisualBlocks.ui.renderTemplate("edit-puzzle-steps-edit-success-condition", {
                     event_definition: event_definitions[eventType],
-                    step: step
+                    step: step,
+                    id: id
                 })
             }
 
@@ -177,25 +184,29 @@ function UI() {
         });
 
         //Custom handlebars function for providing a list of steps and selecting them if they are a prerequisite for a given step
-        Handlebars.registerHelper('step_prereq', function(givenStep, options) {
+        Handlebars.registerHelper('step_prereq', function(givenStep, givenID, options) {
             var ret = "";
 
             //Iterate through all the steps in the puzzle
             for (var stepID in VisualBlocks.currentPuzzle.steps) {
                 step = VisualBlocks.currentPuzzle.steps[stepID];
 
-                isSelected = false;
-                if(givenStep.successCondition.prerequisite !== undefined) {
-                    //If the current step is a prerequisite of the given step we make it selected
-                    isSelected = ($.inArray(stepID, givenStep.successCondition.prerequisite) > -1);
-                }
+                //Cant have a prerequisite step that can never be a success
+                //Cant have itself as a prerequisite step
+                if(step.successCondition !== undefined && stepID !== givenID) {
+                    isSelected = false;
+                    if(givenStep.successCondition !== undefined && givenStep.successCondition.prerequisite !== undefined) {
+                        //If the current step is a prerequisite of the given step we make it selected
+                        isSelected = ($.inArray(stepID, givenStep.successCondition.prerequisite) > -1);
+                    }
 
-                //Add to the list of steps
-                ret += options.fn({
-                    step: step,
-                    id: stepID,
-                    selected: isSelected
-                });
+                    //Add to the list of steps
+                    ret += options.fn({
+                        step: step,
+                        id: stepID,
+                        selected: isSelected
+                    });
+                }
             }
 
             return ret;
@@ -203,19 +214,13 @@ function UI() {
 
         //New empty workspace modal button
         $("#modal-new-btn").click(function() {
-            VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle());
+            VisualBlocks.puzzlesManager.newWorkspace();
             VisualBlocks.output.clear();
         });
 
         //New puzzle modal button
         $("#modal-new-puzzle-btn").click(function() {
-            //new puzzle defaults
-            VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle({
-                isPuzzle: true,
-                name: 'New Puzzle',
-                description: 'A new empty puzzle',
-                options: {}
-            }));
+            VisualBlocks.puzzlesManager.newPuzzle();
             VisualBlocks.output.clear();
         });
 
@@ -311,6 +316,12 @@ function UI() {
             successCondition = {};
             successEvent = $("#edit-puzzle-step-success-event").val();
 
+            //Construct the step data
+            step = {
+                title: $("#edit-puzzle-step-title").val(),
+                description: $("#edit-puzzle-step-description").val()
+            };
+
             //Event has no success condition
             if(successEvent !== "none") {
                 //Get the event definition for this type
@@ -349,14 +360,10 @@ function UI() {
                 if(preReqs !== null) {
                     successCondition.prerequisite = preReqs;
                 }
-            }
 
-            //Construct the step data
-            step = {
-                title: $("#edit-puzzle-step-title").val(),
-                description: $("#edit-puzzle-step-description").val(),
-                successCondition: successCondition
-            };
+                //Add the success condition data to the step
+                step.successCondition = successCondition;
+            }
 
             console.log(step);
 
@@ -367,6 +374,15 @@ function UI() {
             //Show the edit puzzle list modal
             $("#modal-edit-steps-edit").modal('hide');
             $("#nav-header-edit-puzzle-steps-btn").click();
+
+            //Force a step data refresh
+            if(step.successCondition === undefined) {
+                //just updates the steps list ui
+                VisualBlocks.ui.updateStepsList();
+            } else {
+                //This gives it the has success condition value and updates the ui
+                VisualBlocks.puzzlesManager.updateStep(stepID, false);
+            }
         });
 
         //Load puzzle remotely (published) modal button
@@ -677,11 +693,11 @@ function UI() {
             $("#nav-header-steps-btn").css('display', 'none');
         }
 
-        //Display edit puzzle button if this is a unpublished puzzle
+        //Display edit puzzle & steps button if this is a unpublished puzzle
         if(VisualBlocks.currentPuzzle.isPuzzle && !VisualBlocks.currentPuzzle.isPublished) {
-            $("#nav-header-edit-puzzle-btn").css('display', 'block');
+            $(".nav-header-edit-puzzle").css('display', 'block');
         } else {
-            $("#nav-header-edit-puzzle-btn").css('display', 'none');
+            $(".nav-header-edit-puzzle").css('display', 'none');
         }
 
         //Calculate the progress
