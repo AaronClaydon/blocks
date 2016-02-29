@@ -221,6 +221,12 @@ function PuzzlesManager() {
             delete step['hasSuccessCondition'];
         }
 
+        for (var testID in savePuzzle.tests) {
+            test = savePuzzle.tests[testID];
+            delete test['formattedResult'];
+            delete test['result'];
+        }
+
         //Encode the puzzle as json and return it
         puzzleJSON = JSON.stringify(savePuzzle, null, 4);
         return puzzleJSON;
