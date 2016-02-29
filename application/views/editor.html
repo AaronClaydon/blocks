@@ -44,7 +44,9 @@
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/puzzles">Puzzles</a></li>
+                        <!-- <li><a href="/puzzles">Puzzles</a></li> -->
+                        <li id="nav-header-edit-puzzle-btn"><a>Edit Puzzle</a></li>
+                        <li id="nav-header-edit-puzzle-steps-btn"><a>Edit Steps</a></li>
                     </ul>
                 </div>
             </div>
@@ -114,11 +116,12 @@
                         <h4 class="modal-title" id="myModalLabel">New Puzzle</h4>
                     </div>
                     <div class="modal-body">
-                        Are you sure you want to create a new Puzzle, any unsaved changes to the current Puzzle will be lost.
+                        Are you sure you want to create a new empty Workspace or create your own Puzzle, any unsaved changes to the current Workspace will be lost.
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="modal-new-btn">Create New</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="modal-new-btn">Empty Workspace</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="modal-new-puzzle-btn">New Puzzle</button>
                     </div>
                 </div>
             </div>
@@ -273,6 +276,63 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Puzzle Modal -->
+        <div class="modal fade" id="modal-edit-puzzle" tabindex="-1" role="dialog" aria-labelledby="Edit Puzzle">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Edit Puzzle</h4>
+                    </div>
+                    <div class="modal-body" id="modal-edit-puzzle-data">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="modal-edit-puzzle-data-save-btn">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Puzzle Steps Modal -->
+        <div class="modal fade" id="modal-edit-steps-list" tabindex="-1" role="dialog" aria-labelledby="Edit Steps">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Edit Steps</h4>
+                    </div>
+                    <div class="modal-body" id="modal-edit-steps-data">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="modal-edit-steps-add-btn">Add Step</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Puzzle Step Modal -->
+        <div class="modal fade" id="modal-edit-steps-edit" tabindex="-1" role="dialog" aria-labelledby="Edit Step">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Edit Step</h4>
+                    </div>
+                    <div class="modal-body" id="modal-edit-steps-edit-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="modal-edit-steps-edit-save-btn">Save</button>
                     </div>
                 </div>
             </div>
@@ -747,6 +807,150 @@
                 {{@key}}: {{this.data}} &lt;{{this.type}}&gt;
                 <br/>
             {{/each}}
+        </script>
+
+        <script id="template-edit-puzzle-data" type="x-tmpl-mustache">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="edit-puzzle-name" class="col-sm-3 control-label">Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="edit-puzzle-name" value="{{name}}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit-puzzle-description" class="col-sm-3 control-label">Description</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" id="edit-puzzle-description">{{description}}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Options</label>
+                    <div class="col-sm-9 edit-puzzle-options">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="edit-puzzle-opt-applicationvisible" {{#if options.applicationCodeVisible}}checked{{/if}}>
+                                Application code visible
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="edit-puzzle-opt-applicationeditable" {{#if options.applicationCodeEditable}}checked{{/if}}>
+                                Application code editable
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="edit-puzzle-opt-testcodeeditable" {{#if options.testCodeEditable}}checked{{/if}}>
+                                Test code editable
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="edit-puzzle-opt-testlisteditable" {{#if options.testListEditable}}checked{{/if}}>
+                                Test list editable
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </script>
+
+        <script id="template-edit-puzzle-steps-list" type="x-tmpl-mustache">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Condition</th>
+                        <th width="104"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{#each steps}}
+                    <tr>
+                        <td>{{this.title}}</td>
+                        <td>
+                            {{#if this.successCondition}}
+                                {{this.successCondition.event}}
+                            {{else}}
+                                <i>None</i>
+                            {{/if}}
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-info btn-xs btn-edit" data-id="{{@key}}">Edit</button>
+                            <button type="button" class="btn btn-danger btn-xs btn-delete" data-id="{{@key}}">Delete</button>
+                        </td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </script>
+
+        <script id="template-edit-puzzle-steps-edit" type="x-tmpl-mustache">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="edit-puzzle-step-title" class="col-sm-3 control-label">Title</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="edit-puzzle-step-title" value="{{title}}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit-puzzle-step-description" class="col-sm-3 control-label">Description</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" id="edit-puzzle-step-description">{{description}}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit-puzzle-step-success-event" class="col-sm-3 control-label">Success Event</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="edit-puzzle-step-success-event">
+                            {{#each event_definitions}}
+                                <option value="{{@key}}">{{this.name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+            </form>
+
+            <div id="modal-edit-steps-edit-body-success-condition">
+
+            </div>
+        </script>
+
+        <script id="template-edit-puzzle-steps-edit-success-condition" type="x-tmpl-mustache">
+            <form class="form-horizontal">
+                {{#if specific_workspace}}
+                <div class="form-group">
+                    <label for="edit-puzzle-step-success-workspace" class="col-sm-3 control-label">Workspace</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="edit-puzzle-step-success-workspace">
+                            <option value="application">Application</option>
+                            <option value="test">Test</option>
+                        </select>
+                    </div>
+                </div>
+                {{/if}}
+
+                {{#each equalities}}
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">{{this.name}}</label>
+                    <div class="col-sm-9">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <select class="form-control">
+                                    <option value=""></option>
+                                    {{#each this.variables}}
+                                        <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </form>
         </script>
 
         <!-- Scripts -->

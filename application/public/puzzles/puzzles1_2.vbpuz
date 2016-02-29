@@ -1,6 +1,8 @@
 {
     "name": "puzzles1_2",
     "description": "First test of the puzzles framework, contains completion steps",
+    "isPuzzle": true,
+    "isPublished": true,
     "steps": {
         "step1": {
             "title": "Basic step",

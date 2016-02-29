@@ -34,6 +34,12 @@ function PuzzlesManager() {
         VisualBlocks.puzzlesManager.callEvent("update_tests", {
             numTests: Object.keys(VisualBlocks.currentPuzzle.tests).length
         });
+
+
+        //TESTING: DELETE ME
+        $("#modal-edit-steps-add-btn").click();
+        $("#edit-puzzle-step-success-event").val('block_has_input');
+        $("#edit-puzzle-step-success-event").change();
     }
 
     //Load a puzzle from a remote file
@@ -209,8 +215,10 @@ function Puzzle(content) {
         content = {};
         content.options = {};
     }
-    this.name = content.name || 'New Puzzle';
-    this.description = content.description || 'A new empty puzzle';
+    this.name = content.name || 'New Workspace';
+    this.description = content.description || 'A new empty workspace';
+    this.isPuzzle = content.isPuzzle || false;
+    this.isPublished = content.isPublished || false;
     this.steps = content.steps || {};
     this.applicationCode = content.applicationCode || '<xml xmlns="http://www.w3.org/1999/xhtml"></xml>';
     this.tests = content.tests || {'defaul1': {

@@ -5,13 +5,18 @@ html, body {
 a {
     cursor: pointer;
 }
+textarea {
+    resize: none;
+}
 
 .navbar {
     border-radius: 0;
     border: 0;
     background-color: #6685B5;
 }
-
+#nav-header-steps-btn, #nav-header-edit-puzzle-btn {
+    display: none;
+}
 .navbar .navbar-brand {
     color: white;
     font-weight: 800;
@@ -123,4 +128,8 @@ a {
 }
 .steps-progress {
     margin-top: 30px;
+}
+
+.edit-puzzle-options {
+    padding-left: 30px;
 }

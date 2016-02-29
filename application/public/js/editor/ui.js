@@ -65,9 +65,21 @@ function UI() {
             return opts.inverse(this);
         });
 
-        //New puzzle modal button
+        //New empty workspace modal button
         $("#modal-new-btn").click(function() {
             VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle());
+            VisualBlocks.output.clear();
+        });
+
+        //New puzzle modal button
+        $("#modal-new-puzzle-btn").click(function() {
+            //new puzzle defaults
+            VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle({
+                isPuzzle: true,
+                name: 'New Puzzle',
+                description: 'A new empty puzzle',
+                options: {}
+            }));
             VisualBlocks.output.clear();
         });
 
@@ -105,6 +117,112 @@ function UI() {
             } else {
                 alert('Sorry your browser does not support loading files from your computer');
             }
+        });
+
+        //Edit puzzle header button
+        $("#nav-header-edit-puzzle-btn").click(function() {
+            $("#modal-edit-puzzle-data").html(VisualBlocks.ui.renderTemplate("edit-puzzle-data", VisualBlocks.currentPuzzle));
+            $("#modal-edit-puzzle").modal('show');
+        });
+
+        //Edit puzzle data save button
+        $("#modal-edit-puzzle-data-save-btn").click(function() {
+            //Update the current puzzle data with the form changes
+            VisualBlocks.currentPuzzle.name = $("#edit-puzzle-name").val();
+            VisualBlocks.currentPuzzle.description = $("#edit-puzzle-description").val();
+            VisualBlocks.currentPuzzle.options = {
+                applicationCodeVisible: $("#edit-puzzle-opt-applicationvisible").is(':checked'),
+                applicationCodeEditable: $("#edit-puzzle-opt-applicationeditable").is(':checked'),
+                testCodeEditable: $("#edit-puzzle-opt-testcodeeditable").is(':checked'),
+                testListEditable: $("#edit-puzzle-opt-testlisteditable").is(':checked')
+            };
+
+            VisualBlocks.ui.updatePuzzleName();
+            $("#modal-edit-puzzle").modal('hide');
+        });
+
+        //Edit puzzle steps header button
+        $("#nav-header-edit-puzzle-steps-btn").click(function() {
+            $("#modal-edit-steps-data").html(VisualBlocks.ui.renderTemplate("edit-puzzle-steps-list", VisualBlocks.currentPuzzle));
+            $("#modal-edit-steps-list").modal('show');
+
+            //Edit step button
+            $("#modal-edit-steps-list .btn-edit").click(function() {
+                id = $(this).attr('data-id');
+
+                alert("edit" + id);
+            });
+
+            //Delete step button
+            $("#modal-edit-steps-list .btn-delete").click(function() {
+                id = $(this).attr('data-id');
+
+                alert("delete" + id);
+            });
+        });
+
+        //Edit puzzle steps add new step button
+        $("#modal-edit-steps-add-btn").click(function() {
+            var event_definitions = {
+                "none": {
+                    name: "None",
+                },
+                "contains_block": {
+                    name: "Contains Block",
+                    specific_workspace: true,
+                    equalities: {
+                        "equality": {
+                            name: "Block",
+                            variables: ["type", "function_name"]
+                        }
+                    }
+                },
+                "block_has_input": {
+                    name: "Contains Block with Input",
+                    specific_workspace: true,
+                    equalities: {
+                        "parent": {
+                            name: "Block",
+                            variables: ["type", "function_name"]
+                        },
+                        "input": {
+                            name: "Input",
+                            variables: ["type", "function_name"]
+                        }
+                    }
+                },
+                "update_tests": {
+                    name: "Test List Updated",
+                    specific_workspace: false,
+                    equalities: {
+                        "equality": {
+                            name: "Test List",
+                            variables: ["numTests"]
+                        }
+                    }
+                },
+                "tests_result": {
+                    name: "Test Results",
+                    specific_workspace: false,
+                    equalities: {
+                        "equality": {
+                            name: "Test Results",
+                            variables: ["numTests", "numPassed"]
+                        }
+                    }
+                }
+            };
+
+            $("#modal-edit-steps-list").modal('hide');
+            $("#modal-edit-steps-edit").modal('show');
+            $("#modal-edit-steps-edit-body").html(VisualBlocks.ui.renderTemplate("edit-puzzle-steps-edit", {
+                event_definitions: event_definitions
+            }));
+
+            $("#edit-puzzle-step-success-event").change(function() {
+                $("#modal-edit-steps-edit-body-success-condition").html(
+                    VisualBlocks.ui.renderTemplate("edit-puzzle-steps-edit-success-condition", event_definitions[$(this).val()]));
+            });
         });
 
         //Load puzzle remotely (published) modal button
@@ -408,11 +526,18 @@ function UI() {
 
     //Format the steps list UI and button
     this.updateStepsList = function() {
-        //If display steps button
-        if(Object.keys(VisualBlocks.currentPuzzle.steps).length > 0) {
+        //Display steps button if this is a puzzle
+        if(VisualBlocks.currentPuzzle.isPuzzle) {
             $("#nav-header-steps-btn").css('display', 'block');
         } else {
             $("#nav-header-steps-btn").css('display', 'none');
+        }
+
+        //Display edit puzzle button if this is a unpublished puzzle
+        if(VisualBlocks.currentPuzzle.isPuzzle && !VisualBlocks.currentPuzzle.isPublished) {
+            $("#nav-header-edit-puzzle-btn").css('display', 'block');
+        } else {
+            $("#nav-header-edit-puzzle-btn").css('display', 'none');
         }
 
         //Calculate the progress
