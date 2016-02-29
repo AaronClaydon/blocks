@@ -886,17 +886,19 @@
         </script>
 
         <script id="template-edit-puzzle-steps-edit" type="x-tmpl-mustache">
+            <input type="hidden" id="edit-puzzle-step-id" value="{{id}}" />
+
             <form class="form-horizontal">
                 <div class="form-group">
                     <label for="edit-puzzle-step-title" class="col-sm-3 control-label">Title</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="edit-puzzle-step-title" value="{{title}}" />
+                        <input type="text" class="form-control" id="edit-puzzle-step-title" value="{{step.title}}" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="edit-puzzle-step-description" class="col-sm-3 control-label">Description</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" id="edit-puzzle-step-description">{{description}}</textarea>
+                        <textarea class="form-control" id="edit-puzzle-step-description">{{step.description}}</textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -904,7 +906,7 @@
                     <div class="col-sm-9">
                         <select class="form-control" id="edit-puzzle-step-success-event">
                             {{#each event_definitions}}
-                                <option value="{{@key}}">{{this.name}}</option>
+                                <option value="{{@key}}" {{#if_eq @key ../step.successCondition.event}}selected{{/if_eq}}>{{this.name}}</option>
                             {{/each}}
                         </select>
                     </div>
@@ -918,7 +920,7 @@
 
         <script id="template-edit-puzzle-steps-edit-success-condition" type="x-tmpl-mustache">
             <form class="form-horizontal">
-                {{#if specific_workspace}}
+                {{#if event_definition.specific_workspace}}
                 <div class="form-group">
                     <label for="edit-puzzle-step-success-workspace" class="col-sm-3 control-label">Workspace</label>
                     <div class="col-sm-9">
@@ -930,22 +932,19 @@
                 </div>
                 {{/if}}
 
-                {{#each equalities}}
+                {{#each event_definition.equalities}}
                 <div class="form-group">
                     <label class="col-sm-3 control-label">{{this.name}}</label>
                     <div class="col-sm-9">
                         <div class="row">
-                            <div class="col-md-6">
-                                <select class="form-control">
-                                    <option value=""></option>
-                                    {{#each this.variables}}
-                                        <option value="{{this}}">{{this}}</option>
-                                    {{/each}}
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" />
-                            </div>
+                            {{#step_equality_values @key ../step this}}
+                                <div class="col-md-6">
+                                    {{this.name}}
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="event-step-equality-value-{{this.equality}}-{{this.name}}" value="{{this.value}}"/>
+                                </div>
+                            {{/step_equality_values}}
                         </div>
                     </div>
                 </div>

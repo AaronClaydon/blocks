@@ -8,6 +8,57 @@
 */
 
 function UI() {
+    //Details about the step events
+    var event_definitions = {
+        "none": {
+            name: "None",
+        },
+        "contains_block": {
+            name: "Contains Block",
+            specific_workspace: true,
+            equalities: {
+                "equality": {
+                    name: "Block",
+                    variables: ["type", "function_name"]
+                }
+            }
+        },
+        "block_has_input": {
+            name: "Contains Block with Input",
+            specific_workspace: true,
+            equalities: {
+                "parent": {
+                    name: "Block",
+                    variables: ["type", "function_name"]
+                },
+                "input": {
+                    name: "Input",
+                    variables: ["type", "function_name"]
+                }
+            }
+        },
+        "update_tests": {
+            name: "Test List Updated",
+            specific_workspace: false,
+            equalities: {
+                "equality": {
+                    name: "Test List",
+                    variables: ["numTests"]
+                }
+            }
+        },
+        "tests_result": {
+            name: "Test Results",
+            specific_workspace: false,
+            equalities: {
+                "equality": {
+                    name: "Test Results",
+                    variables: ["numTests", "numPassed"]
+                }
+            }
+        }
+    };
+
     function showEditTestsList() {
         $("#modal-tests-edit-list").modal('show');
 
@@ -55,6 +106,32 @@ function UI() {
         generateTestsList();
     }
 
+    function editPuzzleStepUI(step, id) {
+        //Show the edit puzzle modal
+        $("#modal-edit-steps-list").modal('hide');
+        $("#modal-edit-steps-edit").modal('show');
+
+        //Construct the body of the modal with the step data and the list of event definitions
+        $("#modal-edit-steps-edit-body").html(VisualBlocks.ui.renderTemplate("edit-puzzle-steps-edit", {
+            event_definitions: event_definitions,
+            step: step,
+            id: id
+        }));
+
+        //When the success condition type has changed we update the success condition form
+        $("#edit-puzzle-step-success-event").change(function() {
+            //Render the success form in the modal
+            $("#modal-edit-steps-edit-body-success-condition").html(
+                VisualBlocks.ui.renderTemplate("edit-puzzle-steps-edit-success-condition", {
+                    event_definition: event_definitions[$(this).val()],
+                    step: step
+                }));
+        });
+
+        //Show the event data form
+        $("#edit-puzzle-step-success-event").change();
+    }
+
     //Scale the UI and set window resize events
     this.init = function() {
         //Custom handlebars function for if comparison
@@ -63,6 +140,33 @@ function UI() {
             return opts.fn(this);
             else
             return opts.inverse(this);
+        });
+
+        //Custom handlebars function for providing a list of an event equality variables and step values
+        Handlebars.registerHelper('step_equality_values', function(key, step, equality, options) {
+            var ret = "";
+
+            //Get the currently set values for the equality variables
+            //If there isnt one then we make the list empty
+            if(step.successCondition === undefined || step.successCondition[key] === undefined) {
+                setVariables = {};
+            } else {
+                setVariables = step.successCondition[key];
+            }
+
+            //Go through all the equality variables
+            for (var variableID in equality.variables) {
+                variable = equality.variables[variableID];
+
+                //Return the variable name, current value, and the equality
+                ret = ret + options.fn({
+                    name: variable,
+                    value: setVariables[variable],
+                    equality: key
+                });
+            }
+
+            return ret;
         });
 
         //New empty workspace modal button
@@ -150,79 +254,81 @@ function UI() {
             $("#modal-edit-steps-list .btn-edit").click(function() {
                 id = $(this).attr('data-id');
 
-                alert("edit" + id);
+                editPuzzleStepUI(VisualBlocks.currentPuzzle.steps[id], id);
             });
 
             //Delete step button
             $("#modal-edit-steps-list .btn-delete").click(function() {
                 id = $(this).attr('data-id');
 
-                alert("delete" + id);
+                //delete the step
+                VisualBlocks.puzzlesManager.deleteStep(id);
+                //real hacky way of redrawing the list
+                $("#nav-header-edit-puzzle-steps-btn").click();
             });
         });
 
         //Edit puzzle steps add new step button
         $("#modal-edit-steps-add-btn").click(function() {
-            var event_definitions = {
-                "none": {
-                    name: "None",
-                },
-                "contains_block": {
-                    name: "Contains Block",
-                    specific_workspace: true,
-                    equalities: {
-                        "equality": {
-                            name: "Block",
-                            variables: ["type", "function_name"]
-                        }
-                    }
-                },
-                "block_has_input": {
-                    name: "Contains Block with Input",
-                    specific_workspace: true,
-                    equalities: {
-                        "parent": {
-                            name: "Block",
-                            variables: ["type", "function_name"]
-                        },
-                        "input": {
-                            name: "Input",
-                            variables: ["type", "function_name"]
-                        }
-                    }
-                },
-                "update_tests": {
-                    name: "Test List Updated",
-                    specific_workspace: false,
-                    equalities: {
-                        "equality": {
-                            name: "Test List",
-                            variables: ["numTests"]
-                        }
-                    }
-                },
-                "tests_result": {
-                    name: "Test Results",
-                    specific_workspace: false,
-                    equalities: {
-                        "equality": {
-                            name: "Test Results",
-                            variables: ["numTests", "numPassed"]
-                        }
-                    }
+            id = Blockly.genUid(); //generate a unique id for this step
+            editPuzzleStepUI({}, id);
+        });
+
+        //Edit puzzle step save button
+        $("#modal-edit-steps-edit-save-btn").click(function() {
+            successCondition = {};
+            successEvent = $("#edit-puzzle-step-success-event").val();
+
+            //Event has no success condition
+            if(successEvent !== "none") {
+                //Get the event definition for this type
+                event_definition = event_definitions[successEvent];
+                successCondition.event = successEvent;
+
+                //Set the workspace of this event type needs one
+                if(event_definition.specific_workspace) {
+                    successCondition.workspace = $("#edit-puzzle-step-success-workspace").val();
                 }
+
+                //Go through all the equalities in the event definition
+                for (var equalityID in event_definition.equalities) {
+                    equality = event_definition.equalities[equalityID];
+                    equalityValues = {};
+
+                    //All the variables in this equality definition
+                    for (var variableID in equality.variables) {
+                        //Equality variable name
+                        variable = equality.variables[variableID];
+                        //Variable value the user has given
+                        variableValue = $("#event-step-equality-value-" + equalityID + "-" + variable).val();
+
+                        //If the variable value is blank we dont add it to the definition
+                        if(variableValue !== "") {
+                            equalityValues[variable] = variableValue;
+                        }
+                    }
+
+                    //Add the equality to the success condition
+                    successCondition[equalityID] = equalityValues;
+                }
+            }
+
+            //Construct the step data
+            step = {
+                title: $("#edit-puzzle-step-title").val(),
+                description: $("#edit-puzzle-step-description").val(),
+                successCondition: successCondition
             };
 
-            $("#modal-edit-steps-list").modal('hide');
-            $("#modal-edit-steps-edit").modal('show');
-            $("#modal-edit-steps-edit-body").html(VisualBlocks.ui.renderTemplate("edit-puzzle-steps-edit", {
-                event_definitions: event_definitions
-            }));
+            console.log(step.successCondition);
 
-            $("#edit-puzzle-step-success-event").change(function() {
-                $("#modal-edit-steps-edit-body-success-condition").html(
-                    VisualBlocks.ui.renderTemplate("edit-puzzle-steps-edit-success-condition", event_definitions[$(this).val()]));
-            });
+            //Save the step data to the current puzzle
+            stepID = $("#edit-puzzle-step-id").val();
+            VisualBlocks.puzzlesManager.editStep(stepID, step);
+
+            //Show the edit puzzle list modal
+            $("#modal-edit-steps-edit").modal('hide');
+            $("#nav-header-edit-puzzle-steps-btn").click();
         });
 
         //Load puzzle remotely (published) modal button

@@ -37,9 +37,11 @@ function PuzzlesManager() {
 
 
         //TESTING: DELETE ME
-        $("#modal-edit-steps-add-btn").click();
-        $("#edit-puzzle-step-success-event").val('block_has_input');
-        $("#edit-puzzle-step-success-event").change();
+        //$("#modal-edit-steps-add-btn").click();
+        //$("#edit-puzzle-step-success-event").val('block_has_input');
+        //$("#edit-puzzle-step-success-event").change();
+        $("#nav-header-edit-puzzle-steps-btn").click();
+        //$("#modal-edit-steps-list .btn-edit[data-id=step3]").click();
     }
 
     //Load a puzzle from a remote file
@@ -103,6 +105,16 @@ function PuzzlesManager() {
         VisualBlocks.puzzlesManager.callEvent("update_tests", {
             numTests: Object.keys(VisualBlocks.currentPuzzle.tests).length
         });
+    }
+
+    //Edit/add a given step
+    this.editStep = function(id, step) {
+        VisualBlocks.currentPuzzle.steps[id] = step;
+    }
+
+    //Delete a given step
+    this.deleteStep = function(id) {
+        delete VisualBlocks.currentPuzzle.steps[id];
     }
 
     //Puzzle step event handler
