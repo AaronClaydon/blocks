@@ -34,8 +34,6 @@ function PuzzlesManager() {
         VisualBlocks.puzzlesManager.callEvent("update_tests", {
             numTests: Object.keys(VisualBlocks.currentPuzzle.tests).length
         });
-
-        $("#nav-header-edit-puzzle-steps-btn").click()
     }
 
     //Load a puzzle from a remote file

@@ -6,11 +6,13 @@
     "steps": {
         "step1": {
             "title": "Basic step",
-            "description": "I have no success condition"
+            "description": "I have no success condition",
+            "order": 0
         },
         "step2": {
             "title": "Call double",
             "description": "Call the double function in your test",
+            "order": 1,
             "successCondition": {
                 "event": "contains_block",
                 "workspace": "test",
@@ -24,6 +26,7 @@
         "step3": {
             "title": "Test and assert the double function in the first test",
             "description": "Call the double function in your test and assert its result",
+            "order": 2,
             "successCondition": {
                 "event": "block_has_input",
                 "workspace": "test",
@@ -40,6 +43,7 @@
         "step4": {
             "title": "Create another test",
             "description": "Create a second test",
+            "order": 3,
             "successCondition": {
                 "event": "update_tests",
                 "equality": {
@@ -51,6 +55,7 @@
         "step5": {
             "title": "Call triple",
             "description": "Call the triple function in your test",
+            "order": 4,
             "successCondition": {
                 "event": "contains_block",
                 "workspace": "test",
@@ -64,6 +69,7 @@
         "step6": {
             "title": "Test and assert the triple function in the second test",
             "description": "Call the triple function in your test and assert its result",
+            "order": 5,
             "successCondition": {
                 "event": "block_has_input",
                 "workspace": "test",
@@ -80,6 +86,7 @@
         "step7": {
             "title": "Tests assert as true",
             "description": "Both tests assert as true",
+            "order": 6,
             "successCondition": {
                 "event": "tests_result",
                 "equality": {
