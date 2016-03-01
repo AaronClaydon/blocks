@@ -127,6 +127,53 @@ function UI() {
         generateTestsList();
     }
 
+    function editPuzzleStepListUI() {
+        //create an array of the steps ordered by their order value
+        orderedSteps = [];
+        for (var stepID in steps) {
+            step = steps[stepID];
+            step.id = stepID;
+            orderedSteps[step.order] = step;
+        }
+
+        $("#modal-edit-steps-data").html(VisualBlocks.ui.renderTemplate("edit-puzzle-steps-list", {steps: orderedSteps}));
+        $("#modal-edit-steps-list").modal('show');
+
+        //Change step order button
+        $("#modal-edit-steps-list .btn-order").click(function() {
+            id = $(this).attr('data-id');
+            direction = $(this).attr('data-direction');
+
+            VisualBlocks.puzzlesManager.moveStep(id, direction);
+
+            //Redraw the step list
+            editPuzzleStepListUI();
+
+            //Refresh the step list UI
+            VisualBlocks.ui.updateStepsList();
+        });
+
+        //Edit step button
+        $("#modal-edit-steps-list .btn-edit").click(function() {
+            id = $(this).attr('data-id');
+
+            editPuzzleStepUI(VisualBlocks.currentPuzzle.steps[id], id);
+        });
+
+        //Delete step button
+        $("#modal-edit-steps-list .btn-delete").click(function() {
+            id = $(this).attr('data-id');
+
+            //delete the step
+            VisualBlocks.puzzlesManager.deleteStep(id);
+            //redraw the step list
+            editPuzzleStepListUI();
+
+            //Refresh the step list UI
+            VisualBlocks.ui.updateStepsList();
+        });
+    }
+
     function editPuzzleStepUI(step, id) {
         //Show the edit puzzle modal
         $("#modal-edit-steps-list").modal('hide');
@@ -172,6 +219,14 @@ function UI() {
         //Custom handlebars function for if comparison
         Handlebars.registerHelper('if_eq', function(a, b, opts) {
             if(a == b) // Or === depending on your needs
+            return opts.fn(this);
+            else
+            return opts.inverse(this);
+        });
+
+        //Custom handlebars function for if comparison, add third parameter to b
+        Handlebars.registerHelper('if_eq_math', function(a, b, x, opts) {
+            if(a == (b + x)) // Or === depending on your needs
             return opts.fn(this);
             else
             return opts.inverse(this);
@@ -305,42 +360,28 @@ function UI() {
 
         //Edit puzzle steps header button
         $("#nav-header-edit-puzzle-steps-btn").click(function() {
-            $("#modal-edit-steps-data").html(VisualBlocks.ui.renderTemplate("edit-puzzle-steps-list", VisualBlocks.currentPuzzle));
-            $("#modal-edit-steps-list").modal('show');
-
-            //Edit step button
-            $("#modal-edit-steps-list .btn-edit").click(function() {
-                id = $(this).attr('data-id');
-
-                editPuzzleStepUI(VisualBlocks.currentPuzzle.steps[id], id);
-            });
-
-            //Delete step button
-            $("#modal-edit-steps-list .btn-delete").click(function() {
-                id = $(this).attr('data-id');
-
-                //delete the step
-                VisualBlocks.puzzlesManager.deleteStep(id);
-                //real hacky way of redrawing the list
-                $("#nav-header-edit-puzzle-steps-btn").click();
-            });
+            editPuzzleStepListUI();
         });
 
         //Edit puzzle steps add new step button
         $("#modal-edit-steps-add-btn").click(function() {
             id = Blockly.genUid(); //generate a unique id for this step
-            editPuzzleStepUI({}, id);
+            editPuzzleStepUI({order: Object.keys(VisualBlocks.currentPuzzle.steps).length}, id);
         });
 
         //Edit puzzle step save button
         $("#modal-edit-steps-edit-save-btn").click(function() {
+            stepID = $("#edit-puzzle-step-id").val();
+
             successCondition = {};
             successEvent = $("#edit-puzzle-step-success-event").val();
 
             //Construct the step data
             step = {
                 title: $("#edit-puzzle-step-title").val(),
-                description: $("#edit-puzzle-step-description").val()
+                description: $("#edit-puzzle-step-description").val(),
+                order: $("#edit-puzzle-step-order").val(),
+                id: stepID
             };
 
             //Event has no success condition
@@ -389,12 +430,11 @@ function UI() {
             console.log(step);
 
             //Save the step data to the current puzzle
-            stepID = $("#edit-puzzle-step-id").val();
             VisualBlocks.puzzlesManager.editStep(stepID, step);
 
             //Show the edit puzzle list modal
             $("#modal-edit-steps-edit").modal('hide');
-            $("#nav-header-edit-puzzle-steps-btn").click();
+            editPuzzleStepListUI();
 
             //Force a step data refresh
             if(step.successCondition === undefined) {
@@ -724,23 +764,27 @@ function UI() {
         steps = VisualBlocks.currentPuzzle.steps;
         stepsTotal = 0;
         stepsCompleted = 0;
+        orderedSteps = [];
 
-        //Count how many steps completed
+        //Count how many steps completed and order them
         for (var stepID in steps) {
-            if(steps[stepID].successCondition !== undefined) {
-                steps[stepID].hasSuccessCondition = true;
+            step = steps[stepID];
+            if(step.successCondition !== undefined) {
+                step.hasSuccessCondition = true;
                 stepsTotal++;
             }
-            if(steps[stepID].completed) {
+            if(step.completed) {
                 stepsCompleted++;
             }
+
+            orderedSteps[step.order] = step;
         }
 
         stepsPercent = (stepsCompleted / stepsTotal) * 100;
 
         //Render the steps list in the modal
         $("#modal-steps-list").html(VisualBlocks.ui.renderTemplate("steps-list", {
-            steps: steps,
+            steps: orderedSteps,
             progress: {
                 display: (stepsTotal > 0),
                 completed: stepsCompleted,

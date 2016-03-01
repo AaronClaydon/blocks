@@ -859,6 +859,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>Order</th>
                         <th>Name</th>
                         <th>Condition</th>
                         <th width="104"></th>
@@ -867,6 +868,10 @@
                 <tbody>
                 {{#each steps}}
                     <tr>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-order" data-id="{{this.id}}" data-direction="up" {{#if_eq this.order 0}}disabled{{/if_eq}}>&#x25B2</button>
+                            <button type="button" class="btn btn-primary btn-order" data-id="{{this.id}}" data-direction="down" {{#if_eq_math this.order ../steps.length -1}}disabled{{/if_eq_math}}>&#x25BC</button>
+                        </td>
                         <td>{{this.title}}</td>
                         <td>
                             {{#if this.successCondition}}
@@ -876,8 +881,8 @@
                             {{/if}}
                         </td>
                         <td>
-                            <button type="button" class="btn btn-info btn-xs btn-edit" data-id="{{@key}}">Edit</button>
-                            <button type="button" class="btn btn-danger btn-xs btn-delete" data-id="{{@key}}">Delete</button>
+                            <button type="button" class="btn btn-info btn-xs btn-edit" data-id="{{this.id}}">Edit</button>
+                            <button type="button" class="btn btn-danger btn-xs btn-delete" data-id="{{this.id}}">Delete</button>
                         </td>
                     </tr>
                 {{/each}}
@@ -887,6 +892,7 @@
 
         <script id="template-edit-puzzle-steps-edit" type="x-tmpl-mustache">
             <input type="hidden" id="edit-puzzle-step-id" value="{{id}}" />
+            <input type="hidden" id="edit-puzzle-step-order" value="{{step.order}}" />
 
             <form class="form-horizontal">
                 <div class="form-group">

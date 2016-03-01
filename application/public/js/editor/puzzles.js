@@ -34,6 +34,8 @@ function PuzzlesManager() {
         VisualBlocks.puzzlesManager.callEvent("update_tests", {
             numTests: Object.keys(VisualBlocks.currentPuzzle.tests).length
         });
+
+        $("#nav-header-edit-puzzle-steps-btn").click()
     }
 
     //Load a puzzle from a remote file
@@ -121,7 +123,48 @@ function PuzzlesManager() {
 
     //Delete a given step
     this.deleteStep = function(id) {
+        deletedOrder = VisualBlocks.currentPuzzle.steps[id].order;
         delete VisualBlocks.currentPuzzle.steps[id];
+
+        //Shift the order of the steps under it down by one
+        for (var stepID in VisualBlocks.currentPuzzle.steps) {
+            step = VisualBlocks.currentPuzzle.steps[stepID];
+
+            if(step.order > deletedOrder) {
+                step.order--;
+            }
+        }
+    }
+
+    //Moves a given step in one direction, updating the other steps as well
+    this.moveStep = function(moveStepID, direction) {
+        moveStep = VisualBlocks.currentPuzzle.steps[moveStepID];
+        pivot = moveStep.order;
+
+        //Calculate the new order value for the given step
+        if(direction === 'up') {
+            newOrder = moveStep.order - 1;
+        } else if(direction === 'down') {
+            newOrder = moveStep.order + 1;
+        }
+
+        //Go through all the steps and update the order value of the step being shifted by the given step
+        for (var stepID in VisualBlocks.currentPuzzle.steps) {
+            step = VisualBlocks.currentPuzzle.steps[stepID];
+
+            if(direction === 'up') {
+                if(step.order === newOrder) {
+                    step.order++;
+                }
+            } else if (direction === 'down') {
+                if(step.order === newOrder) {
+                    step.order--;
+                }
+            }
+        }
+
+        //Update the given steps order
+        moveStep.order = newOrder;
     }
 
     //Puzzle step event handler
@@ -219,6 +262,7 @@ function PuzzlesManager() {
             step = savePuzzle.steps[stepID];
             delete step['completed'];
             delete step['hasSuccessCondition'];
+            delete step['id'];
         }
 
         for (var testID in savePuzzle.tests) {
