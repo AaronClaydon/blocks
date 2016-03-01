@@ -98,7 +98,12 @@
         "]aK=Eio]V[juYq(s!O^k": {
             "title": "Specific print output",
             "description": "Make the application print \"The double of 50 is 100\"",
-            "id": "]aK=Eio]V[juYq(s!O^k"
+            "successCondition": {
+                "event": "print_output",
+                "equality": {
+                    "string": "The double of 50 is 100"
+                }
+            }
         },
         "o{EPLUJ#p^[}1F~HrBh?": {
             "title": "Specific variable",

@@ -57,6 +57,16 @@ function UI() {
                     variables: ["numTests", "numPassed"]
                 }
             }
+        },
+        "print_output": {
+            name: "Print output",
+            specific_workspace: false,
+            equalities: {
+                "equality": {
+                    name: "Text",
+                    variables: ["string"]
+                }
+            }
         }
     };
 

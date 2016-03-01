@@ -81,6 +81,8 @@ function Executor() {
     function testFunctionAlert(text) {
         //push alert text into the stack for retrieval
         VisualBlocks.executor.testExecution.alerts.output.push(text);
+        //push alert text into the list of all outputs in this exeuction run
+        VisualBlocks.executor.testExecution.alerts.outputAll.push(text);
 
         //Log the execution
         VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest].executionLog.push({
@@ -278,8 +280,23 @@ function Executor() {
 
     //Execute all tests in the puzzle
     this.executeAllTests = function() {
+        //Iterate through all the puzzle tests and execute them
         for (var testID in VisualBlocks.currentPuzzle.tests) {
             VisualBlocks.executor.executeTest(testID);
+        }
+
+        //Check the outputs against any output events
+        for (var stepID in VisualBlocks.currentPuzzle.steps) {
+            step = VisualBlocks.currentPuzzle.steps[stepID];
+
+            //Only interested in print_output events
+            if(step.hasSuccessCondition && step.successCondition.event === 'print_output') {
+                successCondition = step.successCondition;
+                //Check if the given output string was ever outputed
+                result = ($.inArray(successCondition.equality.string, VisualBlocks.executor.testExecution.alerts.outputAll) > -1);
+
+                VisualBlocks.puzzlesManager.updateStep(stepID, result);
+            }
         }
     }
 
@@ -303,5 +320,6 @@ function Executor() {
         //Stack of alert data
         VisualBlocks.executor.testExecution.alerts = {};
         VisualBlocks.executor.testExecution.alerts.output = [];
+        VisualBlocks.executor.testExecution.alerts.outputAll = [];
     }
 }
