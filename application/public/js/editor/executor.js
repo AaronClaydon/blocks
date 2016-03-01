@@ -82,7 +82,7 @@ function Executor() {
         //push alert text into the stack for retrieval
         VisualBlocks.executor.testExecution.alerts.output.push(text);
         //push alert text into the list of all outputs in this exeuction run
-        VisualBlocks.executor.testExecution.alerts.outputAll.push(text);
+        VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest].alerts.push(text);
 
         //Log the execution
         VisualBlocks.executor.testExecution.results[VisualBlocks.executor.testExecution.currentTest].executionLog.push({
@@ -212,7 +212,8 @@ function Executor() {
             success: undefined,
             unhandledPrompt: false,
             executionLog: [],
-            variables: []
+            variables: [],
+            alerts: []
         };
 
         //Compile the application code
@@ -280,23 +281,65 @@ function Executor() {
 
     //Execute all tests in the puzzle
     this.executeAllTests = function() {
-        //Iterate through all the puzzle tests and execute them
-        for (var testID in VisualBlocks.currentPuzzle.tests) {
-            VisualBlocks.executor.executeTest(testID);
+        //Get the relevant steps to compare against
+        relevantSteps = [];
+        relevantStepsBeenSet = {};
+        relevantStepsResults = {};
+        for (var i in VisualBlocks.currentPuzzle.steps) {
+            step = VisualBlocks.currentPuzzle.steps[i];
+            step.id = i;
+            successCondition = step.successCondition;
+
+            if(successCondition !== undefined) {
+                //Add to the list of relevant events for blocks
+                if($.inArray(successCondition.event, ['print_output', 'final_variable_value']) > -1) {
+                    relevantSteps.push(step);
+                }
+            }
         }
 
-        //Check the outputs against any output events
-        for (var stepID in VisualBlocks.currentPuzzle.steps) {
-            step = VisualBlocks.currentPuzzle.steps[stepID];
+        //Iterate through all the puzzle tests and execute them
+        for (var testID in VisualBlocks.currentPuzzle.tests) {
+            //Actually execute the test
+            VisualBlocks.executor.executeTest(testID);
+            testResult = VisualBlocks.executor.testExecution.results[testID];
 
-            //Only interested in print_output events
-            if(step.hasSuccessCondition && step.successCondition.event === 'print_output') {
+            //Go through all the relevant steps
+            for (var stepID in relevantSteps) {
+                step = relevantSteps[stepID];
                 successCondition = step.successCondition;
-                //Check if the given output string was ever outputed
-                result = ($.inArray(successCondition.equality.string, VisualBlocks.executor.testExecution.alerts.outputAll) > -1);
 
-                VisualBlocks.puzzlesManager.updateStep(stepID, result);
+                //If it has already been set as true then we ignore the result of the results
+                if(!relevantStepsBeenSet[stepID]) {
+                    //Print output matching event
+                    if(successCondition.event === 'print_output') {
+                        //Check if the given output string was ever outputed
+                        stepResult = ($.inArray(successCondition.equality.string, testResult.alerts) > -1);
+                    //Final variable value matching event
+                    } else if(successCondition.event === 'final_variable_value') {
+                        stepResult = false;
+                        variable = testResult.variables[successCondition.equality.name];
+
+                        //Variable was never defined in the execution
+                        if(variable !== undefined) {
+                            //Check if the variable type and value are a match
+                            stepResult = (variable.type === successCondition.equality.type && variable.data == successCondition.equality.value);
+                        }
+                    }
+
+                    //Record the value, if its become true then we dont care about this step anymore
+                    relevantStepsResults[stepID] = stepResult;
+                    if(stepResult) {
+                        relevantStepsBeenSet[stepID] = true;
+                    }
+                }
             }
+        }
+
+        //Update all the steps
+        for (var stepID = 0; stepID < relevantSteps.length; stepID++) {
+            step = relevantSteps[stepID];
+            VisualBlocks.puzzlesManager.updateStep(step.id, relevantStepsResults[stepID]);
         }
     }
 
@@ -320,6 +363,5 @@ function Executor() {
         //Stack of alert data
         VisualBlocks.executor.testExecution.alerts = {};
         VisualBlocks.executor.testExecution.alerts.output = [];
-        VisualBlocks.executor.testExecution.alerts.outputAll = [];
     }
 }

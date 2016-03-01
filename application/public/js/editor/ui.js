@@ -67,6 +67,16 @@ function UI() {
                     variables: ["string"]
                 }
             }
+        },
+        "final_variable_value": {
+            name: "Final variable value",
+            specific_workspace: false,
+            equalities: {
+                "equality": {
+                    name: "Variable",
+                    variables: ["name", "type", "value"]
+                }
+            }
         }
     };
 

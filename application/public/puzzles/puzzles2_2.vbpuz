@@ -103,12 +103,20 @@
                 "equality": {
                     "string": "The double of 50 is 100"
                 }
-            }
+            },
+            "id": "]aK=Eio]V[juYq(s!O^k"
         },
         "o{EPLUJ#p^[}1F~HrBh?": {
             "title": "Specific variable",
             "description": "Make the variable \"tripleReturn\" have the value of 99",
-            "id": "o{EPLUJ#p^[}1F~HrBh?"
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "tripleReturn",
+                    "type": "number",
+                    "value": "99"
+                }
+            }
         },
         "zk-UJeDy-i}72lmoaV|S": {
             "title": "4 tests",
