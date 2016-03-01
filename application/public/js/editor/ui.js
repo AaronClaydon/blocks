@@ -575,10 +575,7 @@ function UI() {
         outputResize();
 
         //Load the users dimension settings
-        $("#application-panel").width(localStorage.getItem('app_panel_width') + "%");
-        $("#testing-panel").width(localStorage.getItem('testing_panel_width') + "%");
-        $(".main-panels").height(localStorage.getItem('main_panel_height') + "%");
-        $(".output-panel").height(localStorage.getItem('output_panel_height') + "%");
+        VisualBlocks.ui.loadWorkspaceDimensions();
 
         //Resizing the workspace and output panels
         interact('#application-panel')
@@ -605,6 +602,7 @@ function UI() {
                     localStorage.setItem('testing_panel_width', newTestPanelWidth);
                 }
 
+                //Force the blockly interface to updates its size
                 window.dispatchEvent(new Event('resize'));
             });
 
@@ -633,6 +631,7 @@ function UI() {
                     localStorage.setItem('output_panel_height', newOutputPanelHeight);
                 }
 
+                //Force the blockly interface to update its size
                 window.dispatchEvent(new Event('resize'));
             });
     };
@@ -793,4 +792,26 @@ function UI() {
             }
         }));
     };
+
+    //Load the users dimension settings
+    this.loadWorkspaceDimensions = function() {
+        $("#application-panel").width(localStorage.getItem('app_panel_width') + "%");
+        $("#testing-panel").width(localStorage.getItem('testing_panel_width') + "%");
+        $(".main-panels").height(localStorage.getItem('main_panel_height') + "%");
+        $(".output-panel").height(localStorage.getItem('output_panel_height') + "%");
+    };
+
+    //Reset the users resizing values
+    this.resetWorkspaceDimensions = function() {
+        //Delete stored values
+        localStorage.removeItem('main_panel_height');
+        localStorage.removeItem('output_panel_height');
+        localStorage.removeItem('app_panel_width');
+        localStorage.removeItem('testing_panel_width');
+    }
+
+    //Display a message to the user that they've completed the puzzle
+    this.puzzleComplete = function() {
+        $("#modal-puzzle-complete").modal('show');
+    }
 }

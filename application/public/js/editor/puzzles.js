@@ -245,8 +245,16 @@ function PuzzlesManager() {
         }
 
         //If all steps are completed, then puzzle is complete
+        //Update complete value and display a message to the user
         if(stepsTotal == stepsCompleted) {
-            console.log("PUZZLE COMPLETE");
+            //Only display the puzzle complete alert if the puzzle previously wasnt complete
+            if(!VisualBlocks.currentPuzzle.complete) {
+                VisualBlocks.ui.puzzleComplete();
+            }
+
+            VisualBlocks.currentPuzzle.complete = true;
+        } else {
+            VisualBlocks.currentPuzzle.complete = false;
         }
     }
 
@@ -262,12 +270,12 @@ function PuzzlesManager() {
             delete step['hasSuccessCondition'];
             delete step['id'];
         }
-
         for (var testID in savePuzzle.tests) {
             test = savePuzzle.tests[testID];
             delete test['formattedResult'];
             delete test['result'];
         }
+        delete savePuzzle.complete;
 
         //Encode the puzzle as json and return it
         puzzleJSON = JSON.stringify(savePuzzle, null, 4);
