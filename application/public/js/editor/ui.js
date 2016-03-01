@@ -9,6 +9,7 @@
 
 function UI() {
     //Details about the step events
+    var block_variables = ["type", "function_name", "value"];
     var event_definitions = {
         "none": {
             name: "None",
@@ -19,7 +20,7 @@ function UI() {
             equalities: {
                 "equality": {
                     name: "Block",
-                    variables: ["type", "function_name"]
+                    variables: block_variables
                 }
             }
         },
@@ -29,11 +30,11 @@ function UI() {
             equalities: {
                 "parent": {
                     name: "Block",
-                    variables: ["type", "function_name"]
+                    variables: block_variables
                 },
                 "input": {
                     name: "Input",
-                    variables: ["type", "function_name"]
+                    variables: block_variables
                 }
             }
         },

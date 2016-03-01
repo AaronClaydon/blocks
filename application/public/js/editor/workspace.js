@@ -205,6 +205,10 @@ function WorkSpaces() {
             eventData.function_name = block.getFieldValue('NAME');
         } else if(block.type == 'procedures_callreturn') {
             eventData.function_name = block.getFieldValue('NAME');
+        } else if(block.type == 'math_number') {
+            eventData.value = block.getFieldValue('NUM');
+        } else if(block.type == 'text') {
+            eventData.value = block.getFieldValue('TEXT');
         }
 
         return eventData;

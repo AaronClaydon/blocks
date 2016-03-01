@@ -41,10 +41,10 @@
                     "function_name": "double"
                 },
                 "input": {
-                    "type": "math_number"
+                    "type": "math_number",
+                    "value": "10"
                 }
-            },
-            "id": "hPyX9MH,d15P^X;MEe(p"
+            }
         },
         "`Z}KEv6QsCYd@%nWm}vm": {
             "title": "Test the double function",
