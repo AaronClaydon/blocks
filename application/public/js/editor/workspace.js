@@ -209,6 +209,8 @@ function WorkSpaces() {
             eventData.value = block.getFieldValue('NUM');
         } else if(block.type == 'text') {
             eventData.value = block.getFieldValue('TEXT');
+        } else if(block.type == 'simulate_input') {
+            eventData.numInputs = block.inputList.length;
         }
 
         return eventData;

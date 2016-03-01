@@ -936,7 +936,7 @@
                     <div class="col-sm-9">
                         <select class="form-control" id="edit-puzzle-step-success-workspace">
                             <option value="application">Application</option>
-                            <option value="test">Test</option>
+                            <option value="test" {{#if_eq this.step.successCondition.workspace 'test'}}selected{{/if_eq}}>Test</option>
                         </select>
                     </div>
                 </div>

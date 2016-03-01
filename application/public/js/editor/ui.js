@@ -9,7 +9,7 @@
 
 function UI() {
     //Details about the step events
-    var block_variables = ["type", "function_name", "value"];
+    var block_variables = ["type", "function_name", "value", "numInputs"];
     var event_definitions = {
         "none": {
             name: "None",

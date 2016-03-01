@@ -44,7 +44,8 @@
                     "type": "math_number",
                     "value": "10"
                 }
-            }
+            },
+            "id": "hPyX9MH,d15P^X;MEe(p"
         },
         "`Z}KEv6QsCYd@%nWm}vm": {
             "title": "Test the double function",
@@ -81,6 +82,17 @@
         "j-9N#RiBit+k}OJw.U)U": {
             "title": "Provide the two prompt values in a test",
             "description": "Simulate the two prompt values that are needed",
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input",
+                    "numInputs": "2"
+                },
+                "input": {
+                    "type": "math_number"
+                }
+            },
             "id": "j-9N#RiBit+k}OJw.U)U"
         },
         "]aK=Eio]V[juYq(s!O^k": {
