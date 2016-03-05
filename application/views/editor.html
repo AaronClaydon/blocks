@@ -1014,7 +1014,16 @@
                                                     {{/each}}
                                                 </select>
                                             {{else}}
-                                                <input type="text" class="form-control" id="event-step-equality-value-{{this.equality}}-{{this.variableID}}" value="{{this.value}}"/>
+                                                {{#if this.variable.values}}
+                                                    <select class="form-control" id="event-step-equality-value-{{this.equality}}-{{this.variableID}}">
+                                                        <option></option>
+                                                        {{#each this.variable.values}}
+                                                            <option value="{{@key}}" {{#if_eq ../this.value @key}}selected{{/if_eq}}>{{this}}</option>
+                                                        {{/each}}
+                                                    </select>
+                                                {{else}}
+                                                    <input type="text" class="form-control" id="event-step-equality-value-{{this.equality}}-{{this.variableID}}" value="{{this.value}}"/>
+                                                {{/if}}
                                             {{/if_eq}}
                                         {{/if_eq}}
                                     {{/if_eq}}

@@ -28,6 +28,87 @@ function UI() {
         "numInputs": {
             name: "Number of Inputs",
             onType: "simulate_input"
+        },
+        "numItems": {
+            name: "Number of Items",
+            onType: "lists_create_with"
+        },
+        "logicCompareOperator": {
+            name: "Operator",
+            values: {
+                "EQ": "=",
+                "NEQ": "\u2260",
+                "LT": "<",
+                "LTE": "\u2264",
+                "GT": ">",
+                "GTE": "\u2265"
+            },
+            onType: "logic_compare"
+        },
+        "logicOperation": {
+            name: "Operation",
+            values: {
+                "AND": "AND",
+                "OR": "OR"
+            },
+            onType: "logic_operation"
+        },
+        "logicBooleanValue": {
+            name: "Value",
+            values: {
+                "TRUE": "TRUE",
+                "FALSE": "FALSE"
+            },
+            onType: "logic_boolean"
+        },
+        "mathArtithmeticOperator": {
+            name: "Operation",
+            values: {
+                "ADD": "+",
+                "MINUS": "-",
+                "MULTIPLY": "×",
+                "DIVIDE": "÷",
+                "POWER": "^"
+            },
+            onType: "math_arithmetic"
+        },
+        "mathSingleOperator": {
+            name: "Operation",
+            values: {
+                "ROOT": "square root",
+                "ABS": "absolute",
+                "NEG": "-",
+                "LN": "ln",
+                "LOG10": "log10",
+                "EXP": "e^",
+                "POW10": "10^"
+            },
+            onType: "math_single"
+        },
+        "mathTrigOperator": {
+            name: "Operation",
+            values: {
+                "SIN": "sin",
+                "COS": "cos",
+                "TAN": "tan",
+                "ASIN": "asin",
+                "ACOS": "acos",
+                "ATAN": "atan"
+            },
+            onType: "math_trig"
+        },
+        "mathNumberProperty": {
+            name: "Property",
+            values: {
+                "EVEN": "even",
+                "ODD": "odd",
+                "PRIME": "prime",
+                "WHOLE": "whole",
+                "POSITIVE": "positive",
+                "NEGATIVE": "negative",
+                "DIVISIBLE_BY": "divisible by"
+            },
+            onType: "math_number_property"
         }
     };
     var event_definitions = {

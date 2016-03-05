@@ -212,6 +212,22 @@ function WorkSpaces() {
             eventData.value = block.getFieldValue('TEXT');
         } else if(block.type == 'simulate_input') {
             eventData.numInputs = block.inputList.length;
+        } else if(block.type == 'lists_create_with') {
+            eventData.numItems = block.inputList.length;
+        } else if(block.type == 'logic_compare') {
+            eventData.logicCompareOperator = block.getFieldValue('OP');
+        } else if(block.type == 'logic_operation') {
+            eventData.logicOperation = block.getFieldValue('OP');
+        } else if(block.type == 'logic_boolean') {
+            eventData.logicBooleanValue = block.getFieldValue('BOOL');
+        } else if(block.type == 'math_arithmetic') {
+            eventData.mathArtithmeticOperator = block.getFieldValue('OP');
+        } else if(block.type == 'math_single') {
+            eventData.mathSingleOperator = block.getFieldValue('OP');
+        } else if(block.type == 'math_trig') {
+            eventData.mathTrigOperator = block.getFieldValue('OP');
+        } else if(block.type == 'math_number_property') {
+            eventData.mathNumberProperty = block.getFieldValue('PROPERTY');
         }
 
         return eventData;
