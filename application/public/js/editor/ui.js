@@ -231,21 +231,6 @@ function UI() {
 
             //Only render the success condition html if the type is not none
             if(eventType !== "none") {
-                //Get all the blocks available in the application
-                //Used for the block type dropdown
-                blocks = {};
-                $("#blockly-testing-toolbox category").each(function() {
-                    category = $(this).attr('name');
-                    blocks[category] = [];
-
-                    $(this).find('block').each(function() {
-                        blocks[category].push($(this).attr('type'));
-                    });
-                });
-                //Manually set the dynamically generated categories
-                blocks['Variables'] = ['variables_get', 'variables_set'];
-                blocks['Functions'] = ['procedures_defreturn', 'procedures_defnoreturn', 'procedures_callreturn', 'procedures_callnoreturn', 'procedures_ifreturn'];
-
                 //Get all the function & variable names defined in the application workspace
                 appBlocks = VisualBlocks._workspaces.appWorkspace.getAllBlocks();
                 functionNames = [];
@@ -264,7 +249,6 @@ function UI() {
                     event_definition: event_definitions[eventType],
                     step: step,
                     id: id,
-                    blocks: blocks,
                     functionNames: functionNames,
                     variableNames: variableNames
                 })
@@ -274,7 +258,7 @@ function UI() {
             $("#modal-edit-steps-edit-body-success-condition").html(html);
 
             //Update the equality variable list if the block type has changed
-            $("#modal-edit-steps-edit-body-success-condition .event-step-equality-block-type").change(function() {
+            $("#modal-edit-steps-edit-body-success-condition .event-step-equality-block-type-value").change(function() {
                 equality = $(this).attr('data-equality');
                 variable = $(this).attr('data-variable');
 
@@ -290,6 +274,22 @@ function UI() {
                 VisualBlocks.ui.currentEditStep.successCondition[equality][variable] = $(this).val();
 
                 editPuzzleStepEqualityUI(eventType);
+            });
+
+            //Select block type button click
+            $("#modal-edit-steps-edit-body-success-condition .event-step-equality-block-type-btn").click(function() {
+                //Show the select block type modal
+                $("#modal-edit-steps-select-block").modal('show');
+                equality = $(this).attr('data-equality');
+                variable = $(this).attr('data-variable');
+
+                //Event fired when a block has been selected
+                VisualBlocks.ui.selectedBlockEvent = function(value) {
+                    //Update the type hidden field
+                    $("#event-step-equality-value-" + equality + "-" + variable).val(value).trigger('change');
+                }
+
+                return false;
             });
         }
 
@@ -700,6 +700,52 @@ function UI() {
 
                 showEditTestsList();
             }
+        });
+
+        //Select block type modal events
+        //Create a blockly workspace once the modal is shown
+        $("#modal-edit-steps-select-block").on('shown.bs.modal', function() {
+            //Create the blockly workspace
+            var workspace = Blockly.inject($("#modal-edit-steps-select-block-body")[0], {
+                media: 'blockly_media/',
+                toolbox: document.getElementById('blockly-application-toolbox'),
+                workspaceType: 'application-blockly',
+                trashcan: false,
+                scrollbars: false
+            });
+
+            //Load it with some procedure definitions so we can select a call block
+            Blockly.Xml.domToWorkspace(workspace, Blockly.Xml.textToDom('<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"procedures_defnoreturn\" x=\"-500\" y=\"-500\"><field name=\"NAME\">do something</field><comment pinned=\"false\" h=\"80\" w=\"160\">Describe this function...</comment></block><block type=\"procedures_defreturn\" x=\"-500\" y=\"-500\"><field name=\"NAME\">do something return</field><comment pinned=\"false\" h=\"80\" w=\"160\">Describe this function...</comment></block></xml>'));
+
+            //Tracks number of times the change listener is called
+            updateCount = 0;
+            //Called when a block has been selected
+            workspace.addChangeListener(function(e) {
+                //Ignore the first update - thats default blocks
+                if(updateCount == 1) {
+                    //Get the block type and send it back to the caller through the select event
+                    blockType = workspace.getAllBlocks()[2].type; //Index 2 is the new block
+                    VisualBlocks.ui.selectedBlockEvent(blockType);
+
+                    //Hide the modal
+                    $("#modal-edit-steps-select-block").modal('hide');
+                }
+
+                updateCount++;
+                //Make the toolbox wider to hide the default procedure blocks
+                $(workspace.toolbox_.HtmlDiv).find('.blocklyTreeRoot').width(160);
+            });
+
+            //Make the toolbox at the front
+            $(workspace.toolbox_.HtmlDiv).css('z-index', 9999);
+
+            VisualBlocks._workspaces.selectBlockWorkspace = workspace;
+        })
+        .on('hide.bs.modal', function() {
+            //Clear the event
+            VisualBlocks.ui.selectedBlockEvent = function() {};
+            //Dispose of the blockly workspace when the modal is being hidden
+            VisualBlocks._workspaces.selectBlockWorkspace.dispose();
         });
 
         //Resize the output panel to users window size

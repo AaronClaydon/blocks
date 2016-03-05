@@ -338,6 +338,24 @@
             </div>
         </div>
 
+        <!-- Edit Puzzle Step Select Block Modal -->
+        <div class="modal fade" id="modal-edit-steps-select-block" tabindex="-1" role="dialog" aria-labelledby="Select Block">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Select Block</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modal-edit-steps-select-block-body" style="height: 520px; width: 100%;"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Puzzle Complete Modal -->
         <div class="modal fade" id="modal-puzzle-complete" tabindex="-1" role="dialog" aria-labelledby="Puzzle Complete">
             <div class="modal-dialog" role="document">
@@ -977,15 +995,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     {{#if_eq this.variableID 'type'}}
-                                        <select class="form-control event-step-equality-block-type" data-equality="{{this.equality}}" data-variable="{{this.variableID}}" id="event-step-equality-value-{{this.equality}}-{{this.variableID}}">
-                                            {{#each ../../blocks}}
-                                                <optgroup label="{{@key}}">
-                                                    {{#each this}}
-                                                        <option value="{{this}}" {{#if_eq ../../this.value this}}selected{{/if_eq}}>{{this}}</option>
-                                                    {{/each}}
-                                                </optgroup>
-                                            {{/each}}
-                                        </select>
+                                        <input type="hidden" value="{{this.value}}" data-equality="{{this.equality}}" data-variable="{{this.variableID}}" id="event-step-equality-value-{{this.equality}}-{{this.variableID}}" class="event-step-equality-block-type-value"/>
+                                        <button class="form-control btn btn-default event-step-equality-block-type-btn" data-equality="{{this.equality}}" data-variable="{{this.variableID}}">{{this.value}}</button>
                                     {{else}}
                                         {{#if_eq this.variableID 'function_name'}}
                                             <select class="form-control" id="event-step-equality-value-{{this.equality}}-{{this.variableID}}">
