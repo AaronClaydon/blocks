@@ -328,7 +328,7 @@ function UI() {
                 //Render the success condition config ui
                 html = VisualBlocks.ui.renderTemplate("edit-puzzle-steps-edit-success-condition", {
                     event_definition: event_definitions[eventType],
-                    step: step,
+                    step: VisualBlocks.ui.currentEditStep,
                     id: id,
                     functionNames: functionNames,
                     variableNames: variableNames
@@ -340,19 +340,8 @@ function UI() {
 
             //Update the equality variable list if the block type has changed
             $("#modal-edit-steps-edit-body-success-condition .event-step-equality-block-type-value").change(function() {
-                equality = $(this).attr('data-equality');
-                variable = $(this).attr('data-variable');
-
-                //Create these objects if they dont exist
-                if(VisualBlocks.ui.currentEditStep.successCondition === undefined) {
-                    VisualBlocks.ui.currentEditStep.successCondition = {};
-                }
-                if(VisualBlocks.ui.currentEditStep.successCondition[equality] === undefined) {
-                    VisualBlocks.ui.currentEditStep.successCondition[equality] = {};
-                }
-
                 //Update the value in the currently being edited step object
-                VisualBlocks.ui.currentEditStep.successCondition[equality][variable] = $(this).val();
+                VisualBlocks.ui.currentEditStep = constructStepData();
 
                 editPuzzleStepEqualityUI(eventType);
             });
@@ -400,6 +389,66 @@ function UI() {
         $("#edit-puzzle-step-success-event").change();
     }
 
+    function constructStepData() {
+        stepID = $("#edit-puzzle-step-id").val();
+
+        successCondition = {};
+        successEvent = $("#edit-puzzle-step-success-event").val();
+
+        //Construct the step data
+        step = {
+            title: $("#edit-puzzle-step-title").val(),
+            description: $("#edit-puzzle-step-description").val(),
+            order: $("#edit-puzzle-step-order").val(),
+            id: stepID
+        };
+
+        //Event has no success condition
+        if(successEvent !== "none") {
+            //Get the event definition for this type
+            event_definition = event_definitions[successEvent];
+            successCondition.event = successEvent;
+
+            //Set the workspace of this event type needs one
+            if(event_definition.specific_workspace) {
+                successCondition.workspace = $("#edit-puzzle-step-success-workspace").val();
+            }
+
+            //Go through all the equalities in the event definition
+            for (var equalityID in event_definition.equalities) {
+                equality = event_definition.equalities[equalityID];
+                equalityValues = {};
+
+                //All the variables in this equality definition
+                for (var variableID in equality.variables) {
+                    //Equality variable name
+                    variable = equality.variables[variableID];
+                    //Variable value the user has given
+                    variableValue = $("#event-step-equality-value-" + equalityID + "-" + variableID).val();
+
+                    //If the variable value is blank we dont add it to the definition
+                    if(variableValue !== undefined && variableValue !== "") {
+                        equalityValues[variableID] = variableValue;
+                    }
+                }
+
+                //Add the equality to the success condition
+                successCondition[equalityID] = equalityValues;
+            }
+
+            //Add any prerequisites
+            preReqs = $("#edit-puzzle-step-success-prereq").val();
+            if(preReqs !== null) {
+                successCondition.prerequisite = preReqs;
+            }
+
+            //Add the success condition data to the step
+            step.successCondition = successCondition;
+        }
+
+        return step;
+    }
+
     //Scale the UI and set window resize events
     this.init = function() {
         //Custom handlebars function for if comparison
@@ -438,7 +487,7 @@ function UI() {
                 display = true;
 
                 //If the variable has the value of type
-                if(setVariables.type !== undefined) {
+                if(equality.variables.type !== undefined) {
                     //Only display this variable if the block type matches
                     if(variable.onType) {
                         display = (variable.onType === setVariables.type)
@@ -590,59 +639,7 @@ function UI() {
         $("#modal-edit-steps-edit-save-btn").click(function() {
             stepID = $("#edit-puzzle-step-id").val();
 
-            successCondition = {};
-            successEvent = $("#edit-puzzle-step-success-event").val();
-
-            //Construct the step data
-            step = {
-                title: $("#edit-puzzle-step-title").val(),
-                description: $("#edit-puzzle-step-description").val(),
-                order: $("#edit-puzzle-step-order").val(),
-                id: stepID
-            };
-
-            //Event has no success condition
-            if(successEvent !== "none") {
-                //Get the event definition for this type
-                event_definition = event_definitions[successEvent];
-                successCondition.event = successEvent;
-
-                //Set the workspace of this event type needs one
-                if(event_definition.specific_workspace) {
-                    successCondition.workspace = $("#edit-puzzle-step-success-workspace").val();
-                }
-
-                //Go through all the equalities in the event definition
-                for (var equalityID in event_definition.equalities) {
-                    equality = event_definition.equalities[equalityID];
-                    equalityValues = {};
-
-                    //All the variables in this equality definition
-                    for (var variableID in equality.variables) {
-                        //Equality variable name
-                        variable = equality.variables[variableID];
-                        //Variable value the user has given
-                        variableValue = $("#event-step-equality-value-" + equalityID + "-" + variableID).val();
-
-                        //If the variable value is blank we dont add it to the definition
-                        if(variableValue !== undefined && variableValue !== "") {
-                            equalityValues[variableID] = variableValue;
-                        }
-                    }
-
-                    //Add the equality to the success condition
-                    successCondition[equalityID] = equalityValues;
-                }
-
-                //Add any prerequisites
-                preReqs = $("#edit-puzzle-step-success-prereq").val();
-                if(preReqs !== null) {
-                    successCondition.prerequisite = preReqs;
-                }
-
-                //Add the success condition data to the step
-                step.successCondition = successCondition;
-            }
+            step = constructStepData();
 
             console.log(step);
 
