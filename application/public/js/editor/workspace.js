@@ -201,10 +201,11 @@ function WorkSpaces() {
         };
 
         //Block specific event data
-        if(block.type == 'procedures_defreturn') {
+        if(block.type == 'procedures_defreturn' || block.type == 'procedures_callreturn'
+            || block.type == 'procedures_defnoreturn' || block.type == 'procedures_callnoreturn') {
             eventData.function_name = block.getFieldValue('NAME');
-        } else if(block.type == 'procedures_callreturn') {
-            eventData.function_name = block.getFieldValue('NAME');
+        } else if(block.type === 'variables_get' || block.type === 'variables_set') {
+            eventData.varaiable_name = block.getFieldValue('VAR');
         } else if(block.type == 'math_number') {
             eventData.value = block.getFieldValue('NUM');
         } else if(block.type == 'text') {

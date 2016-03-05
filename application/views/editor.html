@@ -973,10 +973,40 @@
                         <div class="row">
                             {{#step_equality_values @key ../step this}}
                                 <div class="col-md-6">
-                                    {{this.name}}
+                                    {{this.variable.name}}
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" id="event-step-equality-value-{{this.equality}}-{{this.name}}" value="{{this.value}}"/>
+                                    {{#if_eq this.variableID 'type'}}
+                                        <select class="form-control event-step-equality-block-type" data-equality="{{this.equality}}" data-variable="{{this.variableID}}" id="event-step-equality-value-{{this.equality}}-{{this.variableID}}">
+                                            {{#each ../../blocks}}
+                                                <optgroup label="{{@key}}">
+                                                    {{#each this}}
+                                                        <option value="{{this}}" {{#if_eq ../../this.value this}}selected{{/if_eq}}>{{this}}</option>
+                                                    {{/each}}
+                                                </optgroup>
+                                            {{/each}}
+                                        </select>
+                                    {{else}}
+                                        {{#if_eq this.variableID 'function_name'}}
+                                            <select class="form-control" id="event-step-equality-value-{{this.equality}}-{{this.variableID}}">
+                                                <option></option>
+                                                {{#each ../../functionNames}}
+                                                    <option value="{{this}}" {{#if_eq ../this.value this}}selected{{/if_eq}}>{{this}}</option>
+                                                {{/each}}
+                                            </select>
+                                        {{else}}
+                                            {{#if_eq this.variableID 'variable_name'}}
+                                                <select class="form-control" id="event-step-equality-value-{{this.equality}}-{{this.variableID}}">
+                                                    <option></option>
+                                                    {{#each ../../variableNames}}
+                                                        <option value="{{this}}" {{#if_eq ../this.value this}}selected{{/if_eq}}>{{this}}</option>
+                                                    {{/each}}
+                                                </select>
+                                            {{else}}
+                                                <input type="text" class="form-control" id="event-step-equality-value-{{this.equality}}-{{this.variableID}}" value="{{this.value}}"/>
+                                            {{/if_eq}}
+                                        {{/if_eq}}
+                                    {{/if_eq}}
                                 </div>
                             {{/step_equality_values}}
                         </div>

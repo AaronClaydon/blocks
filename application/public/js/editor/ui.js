@@ -9,7 +9,27 @@
 
 function UI() {
     //Details about the step events
-    var block_variables = ["type", "function_name", "value", "numInputs"];
+    var block_variables = {
+        "type": {
+            name: "Block Type"
+        },
+        "function_name": {
+            name: "Function Name",
+            onTypeSet: "procedures"
+        },
+        "variable_name": {
+            name: "Variable Name",
+            onTypeSet: "variables"
+        },
+        "value": {
+            name: "Value",
+            onTypeSet: "values"
+        },
+        "numInputs": {
+            name: "Simulate Inputs",
+            onType: "simulate_input"
+        }
+    };
     var event_definitions = {
         "none": {
             name: "None",
@@ -44,7 +64,11 @@ function UI() {
             equalities: {
                 "equality": {
                     name: "Test List",
-                    variables: ["numTests"]
+                    variables: {
+                        "numTests": {
+                            name: "Number of Tests"
+                        }
+                    }
                 }
             }
         },
@@ -54,7 +78,14 @@ function UI() {
             equalities: {
                 "equality": {
                     name: "Test Results",
-                    variables: ["numTests", "numPassed"]
+                    variables: {
+                        "numTests": {
+                            name: "Number of Tests"
+                        },
+                        "numPassed": {
+                            name: "Number Passed"
+                        }
+                    }
                 }
             }
         },
@@ -64,7 +95,11 @@ function UI() {
             equalities: {
                 "equality": {
                     name: "Text",
-                    variables: ["string"]
+                    variables: {
+                        "string": {
+                            name: "Output String"
+                        }
+                    }
                 }
             }
         },
@@ -74,7 +109,17 @@ function UI() {
             equalities: {
                 "equality": {
                     name: "Variable",
-                    variables: ["name", "type", "value"]
+                    variables: {
+                        "name": {
+                            name: "Name"
+                        },
+                        "type": {
+                            name: "Type"
+                        },
+                        "value": {
+                            name: "Value"
+                        }
+                    }
                 }
             }
         }
@@ -157,7 +202,10 @@ function UI() {
         $("#modal-edit-steps-list .btn-edit").click(function() {
             id = $(this).attr('data-id');
 
-            editPuzzleStepUI(VisualBlocks.currentPuzzle.steps[id], id);
+            //Hacky way of copying the step object, so we dont actually make any changes to it until we save
+            editStep = JSON.parse(JSON.stringify(VisualBlocks.currentPuzzle.steps[id]));
+
+            editPuzzleStepUI(editStep, id);
         });
 
         //Delete step button
@@ -175,6 +223,76 @@ function UI() {
     }
 
     function editPuzzleStepUI(step, id) {
+        //Set this as the currently being edited step
+        VisualBlocks.ui.currentEditStep = step;
+
+        function editPuzzleStepEqualityUI(eventType) {
+            html = "";
+
+            //Only render the success condition html if the type is not none
+            if(eventType !== "none") {
+                //Get all the blocks available in the application
+                //Used for the block type dropdown
+                blocks = {};
+                $("#blockly-testing-toolbox category").each(function() {
+                    category = $(this).attr('name');
+                    blocks[category] = [];
+
+                    $(this).find('block').each(function() {
+                        blocks[category].push($(this).attr('type'));
+                    });
+                });
+                //Manually set the dynamically generated categories
+                blocks['Variables'] = ['variables_get', 'variables_set'];
+                blocks['Functions'] = ['procedures_defreturn', 'procedures_defnoreturn', 'procedures_callreturn', 'procedures_callnoreturn', 'procedures_ifreturn'];
+
+                //Get all the function & variable names defined in the application workspace
+                appBlocks = VisualBlocks._workspaces.appWorkspace.getAllBlocks();
+                functionNames = [];
+                variableNames = [];
+                for (var i = 0; i < appBlocks.length; i++) {
+                    appBlock = appBlocks[i];
+                    if(appBlock.type === 'procedures_defreturn' || appBlock.type === 'procedures_defnoreturn') {
+                        functionNames.push(appBlock.getFieldValue('NAME'));
+                    } else if(appBlock.type === 'variables_set') {
+                        variableNames.push(appBlock.getFieldValue('VAR'));
+                    }
+                }
+
+                //Render the success condition config ui
+                html = VisualBlocks.ui.renderTemplate("edit-puzzle-steps-edit-success-condition", {
+                    event_definition: event_definitions[eventType],
+                    step: step,
+                    id: id,
+                    blocks: blocks,
+                    functionNames: functionNames,
+                    variableNames: variableNames
+                })
+            }
+
+            //Render the success form in the modal
+            $("#modal-edit-steps-edit-body-success-condition").html(html);
+
+            //Update the equality variable list if the block type has changed
+            $("#modal-edit-steps-edit-body-success-condition .event-step-equality-block-type").change(function() {
+                equality = $(this).attr('data-equality');
+                variable = $(this).attr('data-variable');
+
+                //Create these objects if they dont exist
+                if(VisualBlocks.ui.currentEditStep.successCondition === undefined) {
+                    VisualBlocks.ui.currentEditStep.successCondition = {};
+                }
+                if(VisualBlocks.ui.currentEditStep.successCondition[equality] === undefined) {
+                    VisualBlocks.ui.currentEditStep.successCondition[equality] = {};
+                }
+
+                //Update the value in the currently being edited step object
+                VisualBlocks.ui.currentEditStep.successCondition[equality][variable] = $(this).val();
+
+                editPuzzleStepEqualityUI(eventType);
+            });
+        }
+
         //Show the edit puzzle modal
         $("#modal-edit-steps-list").modal('hide');
         $("#modal-edit-steps-edit").modal('show');
@@ -194,20 +312,7 @@ function UI() {
 
         //When the success condition type has changed we update the success condition form
         $("#edit-puzzle-step-success-event").change(function() {
-            eventType = $(this).val();
-            html = "";
-
-            //Only render the success condition html if the type is not none
-            if(eventType !== "none") {
-                html = VisualBlocks.ui.renderTemplate("edit-puzzle-steps-edit-success-condition", {
-                    event_definition: event_definitions[eventType],
-                    step: step,
-                    id: id
-                })
-            }
-
-            //Render the success form in the modal
-            $("#modal-edit-steps-edit-body-success-condition").html(html);
+            editPuzzleStepEqualityUI($(this).val());
         });
 
         //Show the event data form
@@ -248,12 +353,43 @@ function UI() {
             for (var variableID in equality.variables) {
                 variable = equality.variables[variableID];
 
-                //Return the variable name, current value, and the equality
-                ret += options.fn({
-                    name: variable,
-                    value: setVariables[variable],
-                    equality: key
-                });
+                //if we are displaying this variable
+                display = true;
+
+                //If the variable has the value of type
+                if(setVariables.type !== undefined) {
+                    //Only display this variable if the block type matches
+                    if(variable.onType) {
+                        display = (variable.onType === setVariables.type)
+                    //Only display this variable if the block type is in this set
+                    } else if(variable.onTypeSet) {
+                        set = '';
+
+                        //Work out what set this block type is in
+                        if(setVariables.type === 'procedures_defreturn' || setVariables.type === 'procedures_callreturn'
+                            || setVariables.type === 'procedures_defnoreturn' || setVariables.type === 'procedures_callnoreturn') {
+                            set = 'procedures';
+                        } else if(setVariables.type === 'variables_set' || setVariables.type === 'variables_get') {
+                            set = 'variables';
+                        } else if(setVariables.type === 'text' || setVariables.type === 'math_number') {
+                            set = 'values';
+                        }
+
+                        //If the actual set matches the equality set
+                        display = (variable.onTypeSet === set);
+                    }
+                }
+
+                //Only add this variable to the return if we are displaying it
+                if(display) {
+                    //Return the variable name, current value, and the equality
+                    ret += options.fn({
+                        variableID: variableID,
+                        variable: variable,
+                        value: setVariables[variableID],
+                        equality: key
+                    });
+                }
             }
 
             return ret;
@@ -405,11 +541,11 @@ function UI() {
                         //Equality variable name
                         variable = equality.variables[variableID];
                         //Variable value the user has given
-                        variableValue = $("#event-step-equality-value-" + equalityID + "-" + variable).val();
+                        variableValue = $("#event-step-equality-value-" + equalityID + "-" + variableID).val();
 
                         //If the variable value is blank we dont add it to the definition
-                        if(variableValue !== "") {
-                            equalityValues[variable] = variableValue;
+                        if(variableValue !== undefined && variableValue !== "") {
+                            equalityValues[variableID] = variableValue;
                         }
                     }
 
