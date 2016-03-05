@@ -26,7 +26,7 @@ function UI() {
             onTypeSet: "values"
         },
         "numInputs": {
-            name: "Simulate Inputs",
+            name: "Number of Inputs",
             onType: "simulate_input"
         }
     };
@@ -83,7 +83,7 @@ function UI() {
                             name: "Number of Tests"
                         },
                         "numPassed": {
-                            name: "Number Passed"
+                            name: "Number of Tests Passed"
                         }
                     }
                 }
@@ -708,7 +708,7 @@ function UI() {
             //Create the blockly workspace
             var workspace = Blockly.inject($("#modal-edit-steps-select-block-body")[0], {
                 media: 'blockly_media/',
-                toolbox: document.getElementById('blockly-application-toolbox'),
+                toolbox: document.getElementById('blockly-testing-toolbox'),
                 workspaceType: 'application-blockly',
                 trashcan: false,
                 scrollbars: false
@@ -721,6 +721,9 @@ function UI() {
             updateCount = 0;
             //Called when a block has been selected
             workspace.addChangeListener(function(e) {
+                //Make the toolbox wider to hide the default procedure blocks
+                $(workspace.toolbox_.HtmlDiv).find('.blocklyTreeRoot').width(160);
+
                 //Ignore the first update - thats default blocks
                 if(updateCount == 1) {
                     //Get the block type and send it back to the caller through the select event
@@ -732,8 +735,6 @@ function UI() {
                 }
 
                 updateCount++;
-                //Make the toolbox wider to hide the default procedure blocks
-                $(workspace.toolbox_.HtmlDiv).find('.blocklyTreeRoot').width(160);
             });
 
             //Make the toolbox at the front
