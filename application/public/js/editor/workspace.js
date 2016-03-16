@@ -28,7 +28,7 @@ function WorkSpaces() {
             panel = $(blocklyArea);
             space = $(blocklyDiv);
 
-            space.height(panel.height() - $(".panel-heading").outerHeight() + 1);
+            space.height(panel.height() - panel.find(".panel-heading").outerHeight() + 1);
             space.width(panel.width() + 1);
         }
         $(window).resize(onresize);

@@ -59,7 +59,11 @@
                 <div class="panel-container" id="application-panel">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <button class="btn btn-default btn-run" id="application-btn-run">Run</button>
+                            <div class="buttons">
+                                <button class="btn btn-default btn-run ui-switch-workspace">Switch Workspace</button>
+                                <button class="btn btn-default btn-run" id="application-btn-run">Run</button>
+                            </div>
+
                             <h3 class="panel-title">
                                 Application / <span id="application-current-name"></span>
                             </h3>
@@ -71,7 +75,10 @@
                 <div class="panel-container" id ="testing-panel">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <button class="btn btn-default btn-run" id="testing-btn-run-all">Run All</button>
+                            <div class="buttons">
+                                <button class="btn btn-default btn-run ui-switch-workspace">Switch Workspace</button>
+                                <button class="btn btn-default btn-run" id="testing-btn-run-all">Run All</button>
+                            </div>
 
                             <div class="dropdown">
                                 <h3 class="panel-title dropdown-toggle" id="testing-dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -93,8 +100,14 @@
                 <div class="panel-container" id="output-panel">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <button class="btn btn-default btn-run" id="output-btn-clear">Clear</button>
-                            <h3 class="panel-title">Output</h3>
+                            <div class="buttons">
+                                <button class="btn btn-default btn-run" id="output-btn-clear">Clear</button>
+                            </div>
+
+                            <h3 class="panel-title">
+                                <a id="output-panel-collapse-toggle" class="output-panel-collapse-toggle-open"></a>
+                                Output
+                            </h3>
                         </div>
                         <div class="panel-body" id="output">
 
@@ -373,6 +386,8 @@
                 </div>
             </div>
         </div>
+
+        <div id="mobile-detect"></div>
 
         <!-- Shared Blockly Toolbox -->
         <xml id="blockly-shared-toolbox" style="display: none">

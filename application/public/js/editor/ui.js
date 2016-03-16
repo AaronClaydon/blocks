@@ -8,6 +8,10 @@
 */
 
 function UI() {
+    this.isMobile = false;
+    this.visibleWorkspace = 'both';
+    this.outputExpanded = true;
+
     //Details about the step events
     var block_variables = {
         "type": {
@@ -895,7 +899,80 @@ function UI() {
                 //Force the blockly interface to update its size
                 window.dispatchEvent(new Event('resize'));
             });
+
+        //Once the workspaces have loaded, check if the device is a mobile
+        VisualBlocks.ui.mobileCheck();
+
+        //Output panel toggle button
+        $('#output-panel-collapse-toggle').click(function() {
+            VisualBlocks.ui.toggleCollapseOutputPanel();
+        });
     };
+
+    //Check if this is a mobile device
+    //Mobile devices only display one workspace at a time
+    this.mobileCheck = function() {
+        //Check using responsive CSS
+        if($('#mobile-detect').css('display')=='none') {
+            VisualBlocks.ui.isMobile = true;
+
+            this.mobileSetVisibileWorkspace('app');
+
+            //Switch workspace button
+            $(".ui-switch-workspace").css('display', 'inline-block');
+            $(".ui-switch-workspace").click(function() {
+                if(VisualBlocks.ui.visibleWorkspace === 'app') {
+                    VisualBlocks.ui.mobileSetVisibileWorkspace('test');
+                } else {
+                    VisualBlocks.ui.mobileSetVisibileWorkspace('app');
+                }
+            });
+        }
+    }
+
+    //This function allows you to select which workspace is visible
+    this.mobileSetVisibileWorkspace = function(workspace) {
+        VisualBlocks.ui.visibleWorkspace = workspace;
+
+        //Make the given workspace fullscreen and hide the other one
+        if(workspace === 'app') {
+            $("#application-panel").css("display", "block");
+            $("#application-panel").width("90%");
+            $("#testing-panel").css("display", "none");
+        } else {
+            $("#testing-panel").css("display", "block");
+            $("#testing-panel").width("90%");
+            $("#application-panel").css("display", "none");
+        }
+
+        //Force all dynamic sizing events to update
+        window.dispatchEvent(new Event('resize'));
+    }
+
+    //Toggles the collapse state of the output panel
+    this.toggleCollapseOutputPanel = function() {
+        var toggleButton = $('#output-panel-collapse-toggle');
+        var outputPanel = $(".output-panel");
+        var mainPanels = $(".main-panels");
+        toggleButton.removeClass();
+
+        if(this.outputExpanded) {
+            toggleButton.addClass('output-panel-collapse-toggle-closed');
+            outputPanel.height(outputPanel.find(".panel-heading").outerHeight());
+            outputPanel.find(".panel-body").css('display', 'none');
+            mainPanels.height("calc(100% - " + outputPanel.outerHeight() + "px)");
+        } else {
+            toggleButton.addClass('output-panel-collapse-toggle-open');
+            outputPanel.find(".panel-body").css('display', 'block');
+            outputPanel.height((localStorage.getItem('output_panel_height') || "15") + "%");
+            mainPanels.height((localStorage.getItem('main_panel_height') || "75") + "%");
+        }
+
+        //Force all dynamic sizing events to update
+        window.dispatchEvent(new Event('resize'));
+
+        this.outputExpanded = !this.outputExpanded;
+    }
 
     //Renders a given template with view data
     this.renderTemplate = function(templateName, view) {

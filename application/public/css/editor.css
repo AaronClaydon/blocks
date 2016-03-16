@@ -13,6 +13,12 @@ textarea {
     border-radius: 0;
     border: 0;
     background-color: #6685B5;
+    min-height:32px !important;
+}
+.navbar-nav > li > a, .navbar-brand {
+    padding-top:6px !important;
+    padding-bottom:0 !important;
+    height: 32px;
 }
 #nav-header-steps-btn, .nav-header-edit-puzzle {
     display: none;
@@ -28,12 +34,21 @@ textarea {
 .navbar-default .navbar-nav>li:hover {
     background-color: #2D4D80;
 }
+.navbar .navbar-toggle {
+    margin-top: 0;
+    margin-bottom: 0;
+    border: none;
+    background: none;
+}
+.navbar .navbar-toggle .icon-bar {
+    background: white;
+}
 
 .main {
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    padding: 60px 0 10px 10px;
+    padding: 42px 0 10px 10px;
 }
 
 #application-panel, #testing-panel {
@@ -43,6 +58,9 @@ textarea {
     box-sizing: border-box;
     width: 100%;
     height: 75%;
+}
+.main .panel-heading {
+    padding: 5px 15px;
 }
 .main .main-panels .panel-container {
     box-sizing: border-box;
@@ -75,19 +93,43 @@ textarea {
     overflow-y: scroll;
     padding: 5px;
 }
+#output-panel-collapse-toggle {
+    padding: 0;
+    margin-left: -8px;
+    font-size: 10px;
+}
+#output-panel-collapse-toggle:hover {
+    color: #E0E0E0;
+}
+.output-panel-collapse-toggle-open:after {
+    content: '\25bc';
+}
+.output-panel-collapse-toggle-closed:after {
+    content: '\25b6';
+}
+
 .panel-heading {
     position: relative;
 }
-.panel-heading .btn-run {
+.panel-heading .buttons {
     position: absolute;
     top: 0;
     right: 0;
+    height: 100%;
+}
+.panel-heading .btn-run {
     border: 0;
     height: 100%;
     border-radius: 0;
-    border-top-right-radius: 4px;
     background: #0788B8;
     color: white;
+    padding: 0 10px;
+}
+.ui-switch-workspace {
+    display: none;
+}
+.panel-heading .btn-run:last-child {
+    border-top-right-radius: 4px;
 }
 .panel-heading .btn:hover {
     background: #0A7EA9;
@@ -141,4 +183,8 @@ textarea {
     width: 12px;
     height: 22px;
     text-align: center;
+}
+
+@media only screen and (max-width: 1080px) {
+    #mobile-detect { display: none; }
 }
