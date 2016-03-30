@@ -207,6 +207,10 @@ function UI() {
                     }
                 }
             }
+        },
+        "branch_coverage": {
+            name: "All Branches Covered",
+            specific_workspace: false
         }
     };
 

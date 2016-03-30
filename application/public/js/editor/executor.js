@@ -251,6 +251,8 @@ function Executor() {
         VisualBlocks.executor.testExecution.jsInterpreter = jsInterpreter;
         jsInterpreter.run();
 
+        VisualBlocks.executor.testExecution.branchesHit = VisualBlocks.executor.testExecution.branchesHit.concat(jsInterpreter.branchesHit);
+
         //Set list of test execution final variable values
         VisualBlocks.executor.testExecution.results[id].variables = jsInterpreter.variableValues;
 
@@ -336,6 +338,26 @@ function Executor() {
             }
         }
 
+        //Compile the application code
+        var appCode = Blockly.JavaScript.workspaceToCode(VisualBlocks._workspaces.appWorkspace);
+        //Get branches from the application
+        var appParsed = acorn.parse(appCode);
+        var branches = this.acornRecursive(appParsed, 0, {});
+        //Check if app branches have been hit
+        var numBranchesHit = 0;
+        var numBranches = Object.keys(branches).length;
+        for (var i = 0; i < VisualBlocks.executor.testExecution.branchesHit.length; i++) {
+            branchID = VisualBlocks.executor.testExecution.branchesHit[i];
+
+            if(branches[branchID] !== undefined && !branches[branchID]) {
+                numBranchesHit++;
+                branches[branchID] = true;
+            }
+        }
+
+        //Update the branch_coverage step event
+        VisualBlocks.puzzlesManager.callEvent('branch_coverage', {numBranches: numBranches, numBranchesHit: numBranchesHit});
+
         //Update all the steps
         for (var stepID = 0; stepID < relevantSteps.length; stepID++) {
             step = relevantSteps[stepID];
@@ -343,11 +365,167 @@ function Executor() {
         }
     }
 
+    //Acorn interprter recursive data extraction - branch coverage
+    this.acornRecursive = function(node, padding, coverage) {
+        //debug: write to screen
+        function write(text, givenPadding) {
+            var paddingText = '';
+            var usedPadding = padding;
+
+            if(givenPadding !== undefined) {
+                usedPadding = givenPadding;
+            }
+
+            for (var i = 0; i < usedPadding; i++) {
+                paddingText += '&nbsp;&nbsp;&nbsp;';
+            }
+            $("#acorn-test-text").append(paddingText + text + '<br/>');
+        }
+
+        switch (node.type) {
+            case 'Program':
+                write('Entry');
+                break;
+            case 'Identifier':
+                write('UVar: ' + node.name);
+                break;
+            case 'Literal':
+                write('Literal: ' + node.value);
+                break;
+            case 'VariableDeclaration':
+                for (var i = 0; i < node.declarations.length; i++) {
+                    var declaration = node.declarations[i];
+                    write('DVar: ' + declaration.id.name);
+                }
+                break;
+            case 'FunctionDeclaration':
+                if(node.params !== undefined) {
+                    var params = '';
+                    for (var i_param = 0; i_param < node.params.length; i_param++) {
+                        param = node.params[i_param];
+                        params += param.name + ', ';
+                    }
+                }
+                write('DFunc: ' + node.id.name + ' (' + params.slice(0, -2) + ')');
+                if(node.body !== undefined) {
+                    for (var i_func = 0; i_func < node.body.body.length; i_func++) {
+                        this.acornRecursive(node.body.body[i_func], (padding + 1), coverage);
+                    }
+                }
+                break;
+            case 'ExpressionStatement':
+                this.acornRecursive(node.expression, padding, coverage);
+                break;
+            case 'BlockStatement':
+                if(node.body !== undefined) {
+                    for (var i_block = 0; i_block < node.body.length; i_block++) {
+                        this.acornRecursive(node.body[i_block], padding, coverage);
+                    }
+                }
+                break;
+            case 'AssignmentExpression':
+                write('AVar: ' + node.operator);
+                this.acornRecursive(node.left, (padding + 1), coverage);
+                this.acornRecursive(node.right, (padding + 1), coverage);
+                break;
+            case 'BinaryExpression':
+                write('BinaryExp: ' + node.operator);
+                this.acornRecursive(node.left, (padding + 1), coverage);
+                this.acornRecursive(node.right, (padding + 1), coverage);
+                break;
+            case 'CallExpression':
+                var funcName = '';
+                if(node.callee.type == 'MemberExpression') {
+                    if(node.callee.object.type === 'Identifier') {
+                        funcName = node.callee.object.name + '.' + node.callee.property.name;
+                    } else if(node.callee.object.type === 'ArrayExpression') {
+                        funcName = node.callee.property.name;
+                        this.acornRecursive(node.callee.object, padding, coverage);
+                    } else {
+                        funcName = 'UNKNOWN ' + node.callee.object.type;
+                    }
+                } else {
+                    funcName = node.callee.name;
+                }
+                if(funcName !== 'updatedVariable') { //ignore updaredVariable internal function call
+                    write('CFunc: ' + funcName);
+                    if(node.arguments) {
+                        for (var i_arg = 0; i_arg < node.arguments.length; i_arg++) {
+                            var arg = node.arguments[i_arg];
+                            this.acornRecursive(arg, (padding + 1), coverage);
+                        }
+                    }
+                }
+                break;
+            case 'ArrayExpression':
+                write('Array');
+                if(node.elements) {
+                    for (var i_el = 0; i_el < node.elements.length; i_el++) {
+                        var el = node.elements[i_el];
+                        this.acornRecursive(el, (padding + 1), coverage);
+                    }
+                }
+                break;
+            case 'UnaryExpression':
+                write('UnaryExpression: ' + node.operator);
+                this.acornRecursive(node.argument, (padding + 1), coverage);
+                break;
+            case 'ReturnStatement':
+                write('Return');
+                this.acornRecursive(node.argument, (padding + 1), coverage);
+                break;
+            case 'IfStatement':
+                write('If');
+
+                write('Equality', (padding + 1));
+                this.acornRecursive(node.test, (padding + 2), coverage);
+
+                if(node.consequent) {
+                    coverage[node.consequent.start + '-' + node.consequent.end] = false;
+                    write('Consequent', (padding + 1));
+                    this.acornRecursive(node.consequent, (padding + 2), coverage);
+                }
+
+                if(node.alternate) {
+                    coverage[node.alternate.start + '-' + node.alternate.end] = false;
+                    write('Alternate', (padding + 1));
+                    this.acornRecursive(node.alternate, (padding + 2), coverage);
+                }
+                break;
+            case 'WhileStatement':
+                write('While');
+
+                write('Equality', (padding + 1));
+                this.acornRecursive(node.test, (padding + 2), coverage);
+
+                write('Body', (padding + 1));
+                this.acornRecursive(node.body, (padding + 2), coverage);
+
+                break;
+            default:
+                write('unknown: ' + node.type);
+                console.log('unknown', node);
+        }
+
+        //recursively parse all the body nodes
+        if(node.body !== undefined) {
+            for (var i_node = 0; i_node < node.body.length; i_node++) {
+                var next = node.body[i_node];
+                this.acornRecursive(next, (padding + 1), coverage);
+            }
+        }
+
+        return coverage;
+    }
+
     //Set the default test results
     this.resetTestExecutionData = function() {
         VisualBlocks.executor.testExecution = [];
         VisualBlocks.executor.testExecution.currentTest = 'default';
         VisualBlocks.executor.testExecution.results = {};
+
+        //Branch coverage - branches hit
+        VisualBlocks.executor.testExecution.branchesHit = [];
 
         //Holds the current JavaScript interpreter
         VisualBlocks.executor.testExecution.jsInterpreter = null;

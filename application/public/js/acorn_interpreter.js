@@ -40,6 +40,7 @@ var Interpreter = function(code, opt_initFunc) {
   this.stateStack = [{node: this.ast, scope: scope, thisExpression: scope}];
 
   this.variableValues = {};
+  this.branchesHit = [];
 };
 
 /**
@@ -1771,6 +1772,9 @@ Interpreter.prototype['stepBreakStatement'] = function() {
 Interpreter.prototype['stepBlockStatement'] = function() {
   var state = this.stateStack[0];
   var node = state.node;
+
+  this.branchesHit.push(node.start + '-' + node.end);
+
   var n = state.n_ || 0;
   if (node.body[n]) {
     state.n_ = n + 1;
