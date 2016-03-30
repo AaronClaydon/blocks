@@ -403,6 +403,7 @@ function UI() {
         step = {
             title: $("#edit-puzzle-step-title").val(),
             description: $("#edit-puzzle-step-description").val(),
+            visibility: $("#edit-puzzle-step-visibility").val(),
             order: $("#edit-puzzle-step-order").val(),
             id: stepID
         };
@@ -1098,7 +1099,7 @@ function UI() {
         }
 
         //Calculate the progress
-        steps = VisualBlocks.currentPuzzle.steps;
+        steps = JSON.parse(JSON.stringify(VisualBlocks.currentPuzzle.steps)); //hacky copy method
         stepsTotal = 0;
         stepsCompleted = 0;
         orderedSteps = [];
@@ -1106,15 +1107,21 @@ function UI() {
         //Count how many steps completed and order them
         for (var stepID in steps) {
             step = steps[stepID];
-            if(step.successCondition !== undefined) {
-                step.hasSuccessCondition = true;
-                stepsTotal++;
-            }
-            if(step.completed) {
-                stepsCompleted++;
-            }
+            //we dont count hidden steps
+            if(step.visibility !== 'not_visible') {
+                if(step.successCondition !== undefined) {
+                    step.hasSuccessCondition = true;
+                    stepsTotal++;
+                }
+                if(step.completed) {
+                    stepsCompleted++;
+                }
 
-            orderedSteps[step.order] = step;
+                //hide step detils if step not complete and its a visible_on_success
+                step.display_details = !(step.visibility === 'visible_on_success' && !step.completed);
+
+                orderedSteps[step.order] = step;
+            }
         }
 
         stepsPercent = (stepsCompleted / stepsTotal) * 100;

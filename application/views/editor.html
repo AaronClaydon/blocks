@@ -790,8 +790,13 @@
                             {{/if}}
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">{{this.title}}</h4>
-                            {{this.description}}
+                            {{#if this.display_details}}
+                                <h4 class="media-heading">{{this.title}}</h4>
+                                {{this.description}}
+                            {{else}}
+                                <h4 class="media-heading"><i>???</i></h4>
+                                <i>Step must be completed before it is shown</i>
+                            {{/if}}
                         </div>
                     </div>
                 {{/each}}
@@ -956,6 +961,16 @@
                     <label for="edit-puzzle-step-description" class="col-sm-3 control-label">Description</label>
                     <div class="col-sm-9">
                         <textarea class="form-control" id="edit-puzzle-step-description">{{step.description}}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit-puzzle-step-description" class="col-sm-3 control-label">Visibility</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="edit-puzzle-step-visibility">
+                            <option value="visible" {{#if_eq step.visibility 'visible'}}selected{{/if_eq}}>Visible</option>
+                            <option value="visible_on_success" {{#if_eq step.visibility 'visible_on_success'}}selected{{/if_eq}}>Visible on success</option>
+                            <option value="not_visible" {{#if_eq step.visibility 'not_visible'}}selected{{/if_eq}}>Not Visible</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
