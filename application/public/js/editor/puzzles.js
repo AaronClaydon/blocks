@@ -198,8 +198,19 @@ function PuzzlesManager() {
         result = false;
 
         for (var varName in equality) {
-            //if the equality and event value for this variable match
-            varResult = (equality[varName] == eventData[varName]);
+            //if the equality is a range - (event value type of number and equality has a ' to ')
+            if(!isNaN(eventData[varName]) && equality[varName].indexOf(' to ') > 0) {
+                //extract the from and to
+                rangeSplit = equality[varName].split(' to ');
+                rangeFrom = rangeSplit[0];
+                rangeTo = rangeSplit[1];
+
+                //if the equality and event value for this variable are in range
+                varResult = (rangeFrom <= eventData[varName] && eventData[varName] <= rangeTo);
+            } else {
+                //if the equality and event value for this variable match
+                varResult = (equality[varName] == eventData[varName]);
+            }
 
             //Only update the result if the result hasnt been set or if changing to false
             if(!resultSet || (result && !varResult)) {
