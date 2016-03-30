@@ -39,6 +39,8 @@ function PuzzlesManager() {
         //$("#nav-header-edit-puzzle-steps-btn").click();
         //$("#modal-edit-steps-list .btn-edit")[2].click();
         //$("#modal-edit-steps-add-btn").click();
+        //$("#testing-btn-run-all").click();
+        VisualBlocks.executor.executeAllTests();
     }
 
     //Load a puzzle from a remote file
@@ -183,6 +185,11 @@ function PuzzlesManager() {
                     //Compare the step equality definiton against the event
                     if(successCondition.equality !== undefined) {
                         result = this.executeEventEquality(successCondition.equality, eventData);
+
+                        //Update the step with the new completed value
+                        VisualBlocks.puzzlesManager.updateStep(stepID, result);
+                    } else if(eventName === 'branch_coverage') {
+                        result = (eventData.numBranches === eventData.numBranchesHit);
 
                         //Update the step with the new completed value
                         VisualBlocks.puzzlesManager.updateStep(stepID, result);

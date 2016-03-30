@@ -501,6 +501,8 @@ function Executor() {
                 write('Body', (padding + 1));
                 this.acornRecursive(node.body, (padding + 2), coverage);
 
+                coverage[node.body.start + '-' + node.body.end] = false;
+
                 break;
             default:
                 write('unknown: ' + node.type);
