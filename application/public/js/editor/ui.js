@@ -595,6 +595,43 @@ function UI() {
             }
         });
 
+        //Puzzle list navigation button
+        $("#nav-header-puzzles-btn").click(function() {
+            $("#modal-puzzles").modal('show');
+
+            $.ajax({
+                url: '/puzzles_list.json'
+            }).done(function(data) {
+                puzzles = JSON.parse(data);
+                VisualBlocks.ui.puzzlesList = puzzles;
+
+                function drawList(puzzleID) {
+                    $("#modal-puzzles-body").html(VisualBlocks.ui.renderTemplate("modal-puzzles-body", {
+                        puzzles: puzzles,
+                        currentPuzzleID: puzzleID,
+                        currentPuzzle: puzzles[puzzleID]
+                    }));
+
+                    $("#modal-puzzles-body li").click(function() {
+                        key = $(this).attr("data-key");
+
+                        drawList(key);
+                    });
+                }
+
+                drawList(0);
+            });
+        });
+
+        //Load puzzle button
+        $("#modal-load-puzzle-btn").click(function() {
+            var puzzleID = $("#modal-puzzles-selected").val();
+            var puzzle = VisualBlocks.ui.puzzlesList[puzzleID];
+
+            VisualBlocks.puzzlesManager.loadPuzzleFromFile(puzzle.fileName);
+            $("#modal-puzzles").modal('hide');
+        });
+
         //Save puzzle remotely (publish) modal button
         $("#modal-save-publish-btn").click(function() {
             alert('Currently not implemented');

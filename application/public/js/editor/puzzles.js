@@ -40,7 +40,8 @@ function PuzzlesManager() {
         //$("#modal-edit-steps-list .btn-edit")[2].click();
         //$("#modal-edit-steps-add-btn").click();
         //$("#testing-btn-run-all").click();
-        VisualBlocks.executor.executeAllTests();
+        //VisualBlocks.executor.executeAllTests();
+        //$("#nav-header-puzzles-btn").click();
     }
 
     //Load a puzzle from a remote file

@@ -40,6 +40,7 @@
                         <li><a data-toggle="modal" data-target="#modal-new">New</a></li>
                         <li><a data-toggle="modal" data-target="#modal-save">Save</a></li>
                         <li><a data-toggle="modal" data-target="#modal-load">Load</a></li>
+                        <li id="nav-header-puzzles-btn"><a data-toggle="modal">Puzzles</a></li>
                         <li id="nav-header-steps-btn"><a data-toggle="modal" data-target="#modal-steps">Steps</a></li>
                     </ul>
 
@@ -56,7 +57,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">Acorn test</h4>
+                        <h4 class="modal-title">Acorn test</h4>
                     </div>
                     <div class="modal-body" id="acorn-test-text">
 
@@ -139,7 +140,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">New Puzzle</h4>
+                        <h4 class="modal-title">New Puzzle</h4>
                     </div>
                     <div class="modal-body">
                         Are you sure you want to create a new empty Workspace or create your own Puzzle, any unsaved changes to the current Workspace will be lost.
@@ -159,7 +160,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Save Puzzle</h4>
+                        <h4 class="modal-title">Save Puzzle</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal">
@@ -186,7 +187,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Load Puzzle</h4>
+                        <h4 class="modal-title">Load Puzzle</h4>
                     </div>
                     <div class="modal-body">
                         Puzzles can be loaded from your computer or you can browse the user published puzzles
@@ -200,13 +201,32 @@
             </div>
         </div>
 
+        <!-- Puzzles List Modal -->
+        <div class="modal fade" id="modal-puzzles" tabindex="-1" role="dialog" aria-labelledby="Puzzles">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Puzzles</h4>
+                    </div>
+                    <div class="modal-body" id="modal-puzzles-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-success" id="modal-load-puzzle-btn">Load Puzzle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Add new test Modal -->
         <div class="modal fade" id="modal-tests-new" tabindex="-1" role="dialog" aria-labelledby="Add Test">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Add Test</h4>
+                        <h4 class="modal-title">Add Test</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal">
@@ -232,7 +252,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Edit Tests</h4>
+                        <h4 class="modal-title">Edit Tests</h4>
                     </div>
                     <div class="modal-body" id="modal-tests-edit-tests-list">
 
@@ -250,7 +270,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Rename Test</h4>
+                        <h4 class="modal-title">Rename Test</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal">
@@ -277,7 +297,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Steps</h4>
+                        <h4 class="modal-title">Steps</h4>
                     </div>
                     <div class="modal-body" id="modal-steps-list">
 
@@ -295,7 +315,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Test Execution Inspect</h4>
+                        <h4 class="modal-title">Test Execution Inspect</h4>
                     </div>
                     <div class="modal-body" id="modal-test-execute-inspect-data">
 
@@ -313,7 +333,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Edit Puzzle</h4>
+                        <h4 class="modal-title">Edit Puzzle</h4>
                     </div>
                     <div class="modal-body" id="modal-edit-puzzle-data">
 
@@ -332,7 +352,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Edit Steps</h4>
+                        <h4 class="modal-title">Edit Steps</h4>
                     </div>
                     <div class="modal-body" id="modal-edit-steps-data">
 
@@ -351,7 +371,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Edit Step</h4>
+                        <h4 class="modal-title">Edit Step</h4>
                     </div>
                     <div class="modal-body" id="modal-edit-steps-edit-body">
 
@@ -370,7 +390,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Select Block</h4>
+                        <h4 class="modal-title">Select Block</h4>
                     </div>
                     <div class="modal-body">
                         <div id="modal-edit-steps-select-block-body" style="height: 520px; width: 100%;"></div>
@@ -388,7 +408,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Congratulations</h4>
+                        <h4 class="modal-title">Congratulations</h4>
                     </div>
                     <div class="modal-body" id="modal-edit-steps-edit-body">
                         You've completed this puzzle
@@ -704,6 +724,20 @@
         </xml>
 
         <!-- Templates -->
+        <script id="template-modal-puzzles-body" type="x-tmpl-mustache">
+            <ul class="list">
+                {{#each puzzles}}
+                    <li data-key="{{@key}}" {{#if_eq @key ../currentPuzzleID}}class="active"{{/if_eq}}><a>{{this.name}}</a></li>
+                {{/each}}
+            </ul>
+
+            <input type="hidden" id="modal-puzzles-selected" value="{{currentPuzzleID}}" />
+            <div class="puzzle-details-box">
+                <h4>{{currentPuzzle.name}}</h4>
+                {{currentPuzzle.description}}
+            </div>
+        </script>
+
         <script id="template-testing-select-menu" type="x-tmpl-mustache">
             <li class="dropdown-header">Your Tests</li>
             {{#each tests}}

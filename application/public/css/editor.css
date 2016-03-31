@@ -185,6 +185,43 @@ textarea {
     text-align: center;
 }
 
+ul.list {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    width: 200px;
+    float: left;
+    border: 1px solid rgb(247, 247, 247);
+    list-style: none;
+    padding: 0;
+}
+.list > li {
+    padding: 4px 10px;
+    border-top: 1px solid #e6e9ed;
+}
+.list > li.active , .list > li.active:hover{
+    background: #4fc1e9;
+}
+.list > li > a:link, .list > li > a:visited {
+    color: rgb(84, 82, 82);
+}
+.list > li.active > a:link, .list > li.active > a:visited {
+    color: white;
+}
+.list > li:hover {
+    background: rgb(234, 234, 234);
+    cursor: pointer;
+}
+
+.puzzle-details-box {
+    padding-left: 210px;
+}
+.puzzle-details-box h4 {
+    padding: 0;
+    margin: 0;
+}
+
 @media only screen and (max-width: 1080px) {
     #mobile-detect { display: none; }
 }
