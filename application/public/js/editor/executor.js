@@ -14,7 +14,7 @@ function Executor() {
         //Add an API function for the alert() block.
         interpreter.setProperty(scope, 'alert', interpreter.createNativeFunction(function(text) {
             text = text ? text.toString() : '';
-            return interpreter.createPrimitive(VisualBlocks.output.writeLine(text));
+            return interpreter.createPrimitive(applicationFunctionAlert(text));
         }));
 
         //Add an API function for the prompt() block.
@@ -89,6 +89,11 @@ function Executor() {
             type: 'print',
             value: text
         });
+    }
+    //Function that handles the alert block in applications
+    function applicationFunctionAlert(text) {
+        VisualBlocks.output.writeLine(text);
+        testFunctionAlert(text);
     }
     //Function that handles the prompt block in tests
     function testFunctionPrompt(text) {
@@ -192,12 +197,26 @@ function Executor() {
 
     //Executes the users application code
     this.executeApplication = function() {
-        //Compile to JavaScript
-        var appCode = Blockly.JavaScript.workspaceToCode(VisualBlocks._workspaces.appWorkspace);
+        //Hack that runs a blank test, this allows us to get the execution data
+        //Could probably be done better but this was easier
+        this.executeTest('___application');
 
-        //Run through JavaScript Interpreter with our API
-        var jsInterpreter = new Interpreter(appCode, interpreterApplicationJSAPI);
-        jsInterpreter.run();
+        //Get the relevant steps to compare against
+        relevantSteps = this.relevantSteps();
+        relevantStepsBeenSet = {};
+        relevantStepsResults = {};
+
+        //Get the result from the execution
+        testResult = VisualBlocks.executor.testExecution.results['___application'];
+
+        //Check the the result of relevant steps for this test execution
+        this.checkExeuctionSteps(testResult, relevantSteps, relevantStepsResults, relevantStepsBeenSet);
+
+        //Update all the steps
+        for (var stepID = 0; stepID < relevantSteps.length; stepID++) {
+            step = relevantSteps[stepID];
+            VisualBlocks.puzzlesManager.updateStep(step.id, relevantStepsResults[stepID]);
+        }
     }
 
     //Compile and interpret a given test
@@ -219,8 +238,20 @@ function Executor() {
         //Compile the application code
         var appCode = Blockly.JavaScript.workspaceToCode(VisualBlocks._workspaces.appWorkspace);
 
+        //Blank test xml code if not an actual test
+        //Set the javascript api
+        var testXMLCode = '';
+        var interpreterJSAPI;
+        if(test === undefined) {
+            testXMLCode = '<xml xmlns="http://www.w3.org/1999/xhtml"></xml>';
+            interpreterJSAPI = interpreterApplicationJSAPI;
+        } else {
+            testXMLCode = test.testCode;
+            interpreterJSAPI = interpreterTestJSAPI;
+        }
+
         //Compile the test code
-        var testDom = Blockly.Xml.textToDom(test.testCode);
+        var testDom = Blockly.Xml.textToDom(testXMLCode);
         var runningTestWorkspace = new Blockly.Workspace();
         Blockly.Xml.domToWorkspace(runningTestWorkspace, testDom);
         var testCode = Blockly.JavaScript.workspaceToCode(runningTestWorkspace);
@@ -247,7 +278,7 @@ function Executor() {
         VisualBlocks.executor.testExecution.runningTestWorkspace = runningTestWorkspace;
 
         //Run through JavaScript Interpreter with our API
-        var jsInterpreter = new Interpreter(mergedCode, interpreterTestJSAPI);
+        var jsInterpreter = new Interpreter(mergedCode, interpreterJSAPI);
         VisualBlocks.executor.testExecution.jsInterpreter = jsInterpreter;
         jsInterpreter.run();
 
@@ -284,21 +315,10 @@ function Executor() {
     //Execute all tests in the puzzle
     this.executeAllTests = function() {
         //Get the relevant steps to compare against
-        relevantSteps = [];
+        relevantSteps = this.relevantSteps();
         relevantStepsBeenSet = {};
         relevantStepsResults = {};
-        for (var i in VisualBlocks.currentPuzzle.steps) {
-            step = VisualBlocks.currentPuzzle.steps[i];
-            step.id = i;
-            successCondition = step.successCondition;
 
-            if(successCondition !== undefined) {
-                //Add to the list of relevant events for blocks
-                if($.inArray(successCondition.event, ['print_output', 'final_variable_value']) > -1) {
-                    relevantSteps.push(step);
-                }
-            }
-        }
 
         //Iterate through all the puzzle tests and execute them
         for (var testID in VisualBlocks.currentPuzzle.tests) {
@@ -306,36 +326,8 @@ function Executor() {
             VisualBlocks.executor.executeTest(testID);
             testResult = VisualBlocks.executor.testExecution.results[testID];
 
-            //Go through all the relevant steps
-            for (var stepID in relevantSteps) {
-                step = relevantSteps[stepID];
-                successCondition = step.successCondition;
-
-                //If it has already been set as true then we ignore the result of the results
-                if(!relevantStepsBeenSet[stepID]) {
-                    //Print output matching event
-                    if(successCondition.event === 'print_output') {
-                        //Check if the given output string was ever outputed
-                        stepResult = ($.inArray(successCondition.equality.string, testResult.alerts) > -1);
-                    //Final variable value matching event
-                    } else if(successCondition.event === 'final_variable_value') {
-                        stepResult = false;
-                        variable = testResult.variables[successCondition.equality.name];
-
-                        //Variable was never defined in the execution
-                        if(variable !== undefined) {
-                            //Check if the variable type and value are a match
-                            stepResult = (variable.type === successCondition.equality.variable_type && variable.data == successCondition.equality.value);
-                        }
-                    }
-
-                    //Record the value, if its become true then we dont care about this step anymore
-                    relevantStepsResults[stepID] = stepResult;
-                    if(stepResult) {
-                        relevantStepsBeenSet[stepID] = true;
-                    }
-                }
-            }
+            //Check the the result of relevant steps for this test execution
+            this.checkExeuctionSteps(testResult, relevantSteps, relevantStepsResults, relevantStepsBeenSet);
         }
 
         //Compile the application code
@@ -362,6 +354,60 @@ function Executor() {
         for (var stepID = 0; stepID < relevantSteps.length; stepID++) {
             step = relevantSteps[stepID];
             VisualBlocks.puzzlesManager.updateStep(step.id, relevantStepsResults[stepID]);
+        }
+    }
+
+    //Get the relevant steps to compare against during code execution
+    this.relevantSteps = function() {
+        var relevantSteps = [];
+
+        for (var i in VisualBlocks.currentPuzzle.steps) {
+            step = VisualBlocks.currentPuzzle.steps[i];
+            step.id = i;
+            successCondition = step.successCondition;
+
+            if(successCondition !== undefined) {
+                //Add to the list of relevant events for blocks
+                if($.inArray(successCondition.event, ['print_output', 'final_variable_value']) > -1) {
+                    relevantSteps.push(step);
+                }
+            }
+        }
+
+        return relevantSteps;
+    }
+
+    //Check the the result of relevant steps for a given execution
+    this.checkExeuctionSteps = function(testResult, relevantSteps, relevantStepsResults, relevantStepsBeenSet) {
+        //Go through all the relevant steps
+        for (var stepID in relevantSteps) {
+            step = relevantSteps[stepID];
+            successCondition = step.successCondition;
+
+            //If it has already been set as true then we ignore the result of the results
+            if(!relevantStepsBeenSet[stepID]) {
+                //Print output matching event
+                if(successCondition.event === 'print_output') {
+                    //Check if the given output string was ever outputed
+                    stepResult = ($.inArray(successCondition.equality.string, testResult.alerts) > -1);
+                //Final variable value matching event
+                } else if(successCondition.event === 'final_variable_value') {
+                    stepResult = false;
+                    variable = testResult.variables[successCondition.equality.name];
+
+                    //Variable was never defined in the execution
+                    if(variable !== undefined) {
+                        //Check if the variable type and value are a match
+                        stepResult = (variable.type === successCondition.equality.variable_type && variable.data == successCondition.equality.value);
+                    }
+                }
+
+                //Record the value, if its become true then we dont care about this step anymore
+                relevantStepsResults[stepID] = stepResult;
+                if(stepResult) {
+                    relevantStepsBeenSet[stepID] = true;
+                }
+            }
         }
     }
 

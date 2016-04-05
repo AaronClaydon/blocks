@@ -1,0 +1,96 @@
+{
+    "name": "Intro to Blocks",
+    "description": "Introduction to the basics of the block programing interface",
+    "isPuzzle": true,
+    "isPublished": false,
+    "steps": {
+        "z9tc]GoR5RYLx;GU^L9h": {
+            "title": "Create a variable with the name 'number'",
+            "description": "Under the Variable category in the editor, drag the 'set' block into the workspace. <br/><br/> To change the variable name click on the dropdown on the block and click on 'Create new'",
+            "visibility": "visible",
+            "order": "0",
+            "successCondition": {
+                "event": "contains_block",
+                "workspace": "application",
+                "equality": {
+                    "type": "variables_set"
+                }
+            }
+        },
+        "Bn3ALzkzT4NQ5{ES4`YA": {
+            "title": "Multiply two numbers together",
+            "description": "Under the Maths section drag the operator block into your workspace, click on the dropdown to change it to multiply",
+            "visibility": "visible",
+            "order": "1",
+            "successCondition": {
+                "event": "contains_block",
+                "workspace": "application",
+                "equality": {
+                    "type": "math_arithmetic",
+                    "mathArtithmeticOperator": "MULTIPLY"
+                }
+            }
+        },
+        "mH[38Bv!Ka?+6]c}[:#3": {
+            "title": "Variable value",
+            "description": "Attach the Multiply block to the Variable Set block, and make the variable have the value of '18'",
+            "visibility": "visible",
+            "order": "2",
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "number",
+                    "variable_type": "number",
+                    "value": "18"
+                },
+                "prerequisite": [
+                    "z9tc]GoR5RYLx;GU^L9h",
+                    "Bn3ALzkzT4NQ5{ES4`YA"
+                ]
+            }
+        },
+        "%]z}muEb4feWxUSvyx`E": {
+            "title": "Print the variable",
+            "description": "Under the Text category drag a Print block, and under the Variables section drag the Get Variable block for 'number', attach these together",
+            "visibility": "visible",
+            "order": "3",
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "application",
+                "parent": {
+                    "type": "text_print"
+                },
+                "input": {
+                    "type": "variables_get",
+                    "variable_name": "number"
+                }
+            }
+        },
+        "m/s|q6H22S)?k*w=UVB]": {
+            "title": "Correct output printed",
+            "description": "String of '18' is printed to the output",
+            "visibility": "visible",
+            "order": "4",
+            "successCondition": {
+                "event": "print_output",
+                "equality": {
+                    "string": "18"
+                }
+            }
+        }
+    },
+    "applicationCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"variables_set\" x=\"42\" y=\"21\"><field name=\"VAR\">number</field><value name=\"VALUE\"><block type=\"math_arithmetic\"><field name=\"OP\">MULTIPLY</field><value name=\"A\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"math_number\"><field name=\"NUM\">9</field></block></value><value name=\"B\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"math_number\"><field name=\"NUM\">2</field></block></value></block></value><next><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"variables_get\"><field name=\"VAR\">number</field></block></value></block></next></block></xml>",
+    "tests": {
+        "defaul1": {
+            "name": "Test 1",
+            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
+        }
+    },
+    "options": {
+        "applicationCodeVisible": true,
+        "applicationCodeEditable": true,
+        "testCodeVisible": false,
+        "testCodeEditable": false,
+        "testListEditable": false
+    }
+}
