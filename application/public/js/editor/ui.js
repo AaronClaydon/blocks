@@ -198,8 +198,12 @@ function UI() {
                         "name": {
                             name: "Name"
                         },
-                        "type": {
-                            name: "Type"
+                        "variable_type": {
+                            name: "Type",
+                            values: {
+                                "number": "Number",
+                                "string": "String"
+                            }
                         },
                         "value": {
                             name: "Value"
@@ -662,6 +666,7 @@ function UI() {
             VisualBlocks.currentPuzzle.options = {
                 applicationCodeVisible: $("#edit-puzzle-opt-applicationvisible").is(':checked'),
                 applicationCodeEditable: $("#edit-puzzle-opt-applicationeditable").is(':checked'),
+                testCodeVisible: $("#edit-puzzle-opt-testvisible").is(':checked'),
                 testCodeEditable: $("#edit-puzzle-opt-testcodeeditable").is(':checked'),
                 testListEditable: $("#edit-puzzle-opt-testlisteditable").is(':checked')
             };
@@ -958,22 +963,22 @@ function UI() {
         if($('#mobile-detect').css('display')=='none') {
             VisualBlocks.ui.isMobile = true;
 
-            this.mobileSetVisibileWorkspace('app');
+            this.setVisibleWorkspace('app');
 
             //Switch workspace button
             $(".ui-switch-workspace").css('display', 'inline-block');
             $(".ui-switch-workspace").click(function() {
                 if(VisualBlocks.ui.visibleWorkspace === 'app') {
-                    VisualBlocks.ui.mobileSetVisibileWorkspace('test');
+                    VisualBlocks.ui.setVisibleWorkspace('test');
                 } else {
-                    VisualBlocks.ui.mobileSetVisibileWorkspace('app');
+                    VisualBlocks.ui.setVisibleWorkspace('app');
                 }
             });
         }
     }
 
     //This function allows you to select which workspace is visible
-    this.mobileSetVisibileWorkspace = function(workspace) {
+    this.setVisibleWorkspace = function(workspace) {
         VisualBlocks.ui.visibleWorkspace = workspace;
 
         //Make the given workspace fullscreen and hide the other one
@@ -981,10 +986,14 @@ function UI() {
             $("#application-panel").css("display", "block");
             $("#application-panel").width("90%");
             $("#testing-panel").css("display", "none");
-        } else {
+        } else if(workspace === 'test') {
             $("#testing-panel").css("display", "block");
             $("#testing-panel").width("90%");
             $("#application-panel").css("display", "none");
+        } else if(workspace === 'both') {
+            $("#application-panel").css("display", "block");
+            $("#testing-panel").css("display", "block");
+            this.loadWorkspaceDimensions();
         }
 
         //Force all dynamic sizing events to update
@@ -1132,6 +1141,13 @@ function UI() {
             $("#nav-header-steps-btn").css('display', 'none');
         }
 
+        //Hide the save button if this is a puzzle
+        if(VisualBlocks.currentPuzzle.isPuzzle && VisualBlocks.currentPuzzle.isPublished) {
+            $("#nav-header-save").css('display', 'none');
+        } else {
+            $("#nav-header-save").css('display', 'block');
+        }
+
         //Display edit puzzle & steps button if this is a unpublished puzzle
         if(VisualBlocks.currentPuzzle.isPuzzle && !VisualBlocks.currentPuzzle.isPublished) {
             $(".nav-header-edit-puzzle").css('display', 'block');
@@ -1181,10 +1197,18 @@ function UI() {
 
     //Load the users dimension settings
     this.loadWorkspaceDimensions = function() {
-        $("#application-panel").width(localStorage.getItem('app_panel_width') + "%");
-        $("#testing-panel").width(localStorage.getItem('testing_panel_width') + "%");
-        $(".main-panels").height(localStorage.getItem('main_panel_height') + "%");
-        $(".output-panel").height(localStorage.getItem('output_panel_height') + "%");
+        if(localStorage.getItem('app_panel_width')) {
+            $("#application-panel").width(localStorage.getItem('app_panel_width') + "%");
+            $("#testing-panel").width(localStorage.getItem('testing_panel_width') + "%");
+            $(".main-panels").height(localStorage.getItem('main_panel_height') + "%");
+            $(".output-panel").height(localStorage.getItem('output_panel_height') + "%");
+        } else {
+            //Defaults
+            $("#application-panel").width("40%");
+            $("#testing-panel").width("40%");
+            $(".main-panels").height("74%");
+            $(".output-panel").height("16%");
+        }
     };
 
     //Reset the users resizing values

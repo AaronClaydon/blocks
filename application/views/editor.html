@@ -38,7 +38,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a data-toggle="modal" data-target="#modal-new">New</a></li>
-                        <li><a data-toggle="modal" data-target="#modal-save">Save</a></li>
+                        <li id="nav-header-save"><a data-toggle="modal" data-target="#modal-save">Save</a></li>
                         <li><a data-toggle="modal" data-target="#modal-load">Load</a></li>
                         <li id="nav-header-puzzles-btn"><a data-toggle="modal">Puzzles</a></li>
                         <li id="nav-header-steps-btn"><a data-toggle="modal" data-target="#modal-steps">Steps</a></li>
@@ -461,7 +461,7 @@
                 <block type="controls_forEach"></block>
                 <block type="controls_flow_statements"></block>
             </category>
-            <category name="Math" colour="230">
+            <category name="Maths" colour="230">
                 <block type="math_number" gap="32"></block>
                 <block type="math_arithmetic">
                     <value name="A">
@@ -839,7 +839,7 @@
                         <div class="media-body">
                             {{#if this.display_details}}
                                 <h4 class="media-heading">{{this.title}}</h4>
-                                {{this.description}}
+                                {{{this.description}}}
                             {{else}}
                                 <h4 class="media-heading"><i>???</i></h4>
                                 <i>Step must be completed before it is shown</i>
@@ -939,6 +939,12 @@
                             <label>
                                 <input type="checkbox" id="edit-puzzle-opt-applicationeditable" {{#if options.applicationCodeEditable}}checked{{/if}}>
                                 Application code editable
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="edit-puzzle-opt-testvisible" {{#if options.testCodeVisible}}checked{{/if}}>
+                                Test code visible
                             </label>
                         </div>
                         <div class="checkbox">

@@ -325,7 +325,7 @@ function Executor() {
                         //Variable was never defined in the execution
                         if(variable !== undefined) {
                             //Check if the variable type and value are a match
-                            stepResult = (variable.type === successCondition.equality.type && variable.data == successCondition.equality.value);
+                            stepResult = (variable.type === successCondition.equality.variable_type && variable.data == successCondition.equality.value);
                         }
                     }
 
@@ -414,7 +414,8 @@ function Executor() {
                 }
                 break;
             case 'ExpressionStatement':
-                this.acornRecursive(node.expression, padding, coverage);
+                write('Expression');
+                this.acornRecursive(node.expression, (padding + 1), coverage);
                 break;
             case 'BlockStatement':
                 if(node.body !== undefined) {

@@ -28,5 +28,5 @@ $(document).ready(function() {
     //Manages the current loaded puzzle
     VisualBlocks.puzzlesManager = new PuzzlesManager();
     VisualBlocks.puzzlesManager.newWorkspace(); //Load a default blank puzzle
-    //VisualBlocks.puzzlesManager.loadPuzzleFromFile('/puzzles/power_1.vbpuz'); //Load puzzle from file
+    //VisualBlocks.puzzlesManager.loadPuzzleFromFile('/puzzles/set/intro1.vbpuz'); //Load puzzle from file
 });

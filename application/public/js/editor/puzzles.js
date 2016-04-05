@@ -35,6 +35,13 @@ function PuzzlesManager() {
             numTests: Object.keys(VisualBlocks.currentPuzzle.tests).length
         });
 
+        //Display only the app worksapce if the test code is set not to be visible
+        if(!puzzle.options.testCodeVisible) {
+            VisualBlocks.ui.setVisibleWorkspace('app');
+        } else {
+            VisualBlocks.ui.setVisibleWorkspace('both');
+        }
+
         //delete me
         //$("#nav-header-edit-puzzle-steps-btn").click();
         //$("#modal-edit-steps-list .btn-edit")[2].click();
@@ -333,6 +340,7 @@ function Puzzle(content) {
             //All defaults are true
             applicationCodeVisible: opt.applicationCodeVisible !== false,
             applicationCodeEditable: opt.applicationCodeEditable !== false,
+            testCodeVisible: opt.testCodeVisible !== false,
             testCodeEditable: opt.testCodeEditable !== false,
             testListEditable: opt.testListEditable !== false
         };

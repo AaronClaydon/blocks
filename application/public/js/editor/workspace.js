@@ -62,7 +62,7 @@ function WorkSpaces() {
         this.appWorkspace = createWorkspace('application-panel', 'application-blockly', 'blockly-application-toolbox',
                                             options.applicationCodeVisible, options.applicationCodeEditable);
         this.testWorkspace = createWorkspace('testing-panel', 'testing-blockly', 'blockly-testing-toolbox',
-                                            true, options.testCodeEditable);
+                                            options.testCodeVisible, options.testCodeEditable);
 
         this.promptSimulatorDisabled = false;
 
@@ -205,7 +205,7 @@ function WorkSpaces() {
             || block.type == 'procedures_defnoreturn' || block.type == 'procedures_callnoreturn') {
             eventData.function_name = block.getFieldValue('NAME');
         } else if(block.type === 'variables_get' || block.type === 'variables_set') {
-            eventData.varaiable_name = block.getFieldValue('VAR');
+            eventData.variable_name = block.getFieldValue('VAR');
         } else if(block.type == 'math_number') {
             eventData.value = block.getFieldValue('NUM');
         } else if(block.type == 'text') {
