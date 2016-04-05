@@ -267,7 +267,8 @@ function UI() {
 
     function editPuzzleStepListUI() {
         //create an array of the steps ordered by their order value
-        orderedSteps = [];
+        var steps = VisualBlocks.currentPuzzle.steps;
+        var orderedSteps = [];
         for (var stepID in steps) {
             step = steps[stepID];
             step.id = stepID;
@@ -691,8 +692,6 @@ function UI() {
             stepID = $("#edit-puzzle-step-id").val();
 
             step = constructStepData();
-
-            console.log(step);
 
             //Save the step data to the current puzzle
             VisualBlocks.puzzlesManager.editStep(stepID, step);

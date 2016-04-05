@@ -1,0 +1,102 @@
+{
+    "name": "Intro to Testing",
+    "description": "Introduction to the basics of the testing interface",
+    "isPuzzle": true,
+    "isPublished": false,
+    "steps": {
+        "qE%k[WtPN}F~QICTH:0G": {
+            "title": "Call the 'addOne' function in a test",
+            "description": "The screen is split into two panes, the application code is on the left and the test code on the right \n<br/><br/>\nYou can call functions defined in the application in your tests. Under the Functions category drag the 'addOne' function into the workspace",
+            "visibility": "visible",
+            "order": "0",
+            "successCondition": {
+                "event": "contains_block",
+                "workspace": "test",
+                "equality": {
+                    "type": "procedures_callreturn",
+                    "function_name": "addOne"
+                }
+            }
+        },
+        "pcLQxx|M01SDv14u#b%1": {
+            "title": "Assertions",
+            "description": "The Assertion block allows the test to return if it was a success or a failure\n<br/><br/>\nThe Assertion block can be found under the Testing category, drag this into the workspace\n<br/><br/>\nPressing the 'Run All' button in the testing panel will execute all the tests. The results will be printed in the Output panel",
+            "visibility": "visible",
+            "order": "2",
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "assert"
+                },
+                "input": {
+                    "type": "procedures_callreturn",
+                    "function_name": "addOne"
+                }
+            }
+        },
+        "X~H?jeciKN69#F;fC^)]": {
+            "title": "Compare function output",
+            "description": "To test this function we will need to check if the output for the function is correct for a given output\n<br/><br/>\nA comparison block can be found under the Maths category, add this to the workspace and use it to compare the function output and a correct value.",
+            "visibility": "visible",
+            "order": "1",
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "logic_compare",
+                    "logicCompareOperator": "EQ"
+                },
+                "input": {
+                    "type": "procedures_callreturn",
+                    "function_name": "addOne"
+                }
+            }
+        },
+        "1OXlf24oZ74Ol$aH8(Yq": {
+            "title": "Multiple tests",
+            "description": "Multiple tests are required to correctly test a piece of code\n<br/><br/>\nYou can manage and add tests by clicking on the arrow next to the test name above the test code workspace",
+            "visibility": "visible",
+            "order": "3",
+            "successCondition": {
+                "event": "update_tests",
+                "equality": {
+                    "numTests": "2"
+                }
+            }
+        },
+        "Us1AbYZIR4):CC}cv|:W": {
+            "title": "Test success",
+            "description": "Add an assertion to this second test and test the 'addOne' function with a different value\n<br/><br/>\nRun all the tests to check the output",
+            "visibility": "visible",
+            "order": "4",
+            "successCondition": {
+                "event": "tests_result",
+                "equality": {
+                    "numTests": "2",
+                    "numPassed": "2"
+                },
+                "prerequisite": [
+                    "qE%k[WtPN}F~QICTH:0G",
+                    "pcLQxx|M01SDv14u#b%1",
+                    "X~H?jeciKN69#F;fC^)]",
+                    "1OXlf24oZ74Ol$aH8(Yq"
+                ]
+            }
+        }
+    },
+    "applicationCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"procedures_defreturn\" x=\"13\" y=\"7\"><mutation><arg name=\"x\"></arg></mutation><field name=\"NAME\">addOne</field><comment pinned=\"false\" h=\"80\" w=\"160\">Describe this function...</comment><statement name=\"STACK\"><block type=\"variables_set\"><field name=\"VAR\">newValue</field><value name=\"VALUE\"><block type=\"math_arithmetic\"><field name=\"OP\">ADD</field><value name=\"A\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value><value name=\"B\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"math_number\"><field name=\"NUM\">1</field></block></value></block></value></block></statement><value name=\"RETURN\"><block type=\"variables_get\"><field name=\"VAR\">newValue</field></block></value></block></xml>",
+    "tests": {
+        "defaul1": {
+            "name": "Test 1",
+            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
+        }
+    },
+    "options": {
+        "applicationCodeVisible": true,
+        "applicationCodeEditable": false,
+        "testCodeVisible": true,
+        "testCodeEditable": true,
+        "testListEditable": true
+    }
+}

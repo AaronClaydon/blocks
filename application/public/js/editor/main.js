@@ -13,6 +13,7 @@ $(document).ready(function() {
 
     //Blockly workspaces
     VisualBlocks._workspaces = new WorkSpaces();
+    VisualBlocks._workspaces.loadReservedWords();
 
     //Block compiler and interpreter
     VisualBlocks.executor = new Executor();
@@ -27,6 +28,6 @@ $(document).ready(function() {
 
     //Manages the current loaded puzzle
     VisualBlocks.puzzlesManager = new PuzzlesManager();
-    VisualBlocks.puzzlesManager.newWorkspace(); //Load a default blank puzzle
-    //VisualBlocks.puzzlesManager.loadPuzzleFromFile('/puzzles/set/intro1.vbpuz'); //Load puzzle from file
+    //VisualBlocks.puzzlesManager.newWorkspace(); //Load a default blank puzzle
+    VisualBlocks.puzzlesManager.loadPuzzleFromFile('/puzzles/set/introApp1.vbpuz'); //Load puzzle from file
 });

@@ -2,7 +2,7 @@
     "name": "Intro to Blocks",
     "description": "Introduction to the basics of the block programing interface",
     "isPuzzle": true,
-    "isPublished": true,
+    "isPublished": false,
     "steps": {
         "z9tc]GoR5RYLx;GU^L9h": {
             "title": "Create a variable with the name 'number'",
@@ -68,7 +68,7 @@
         },
         "m/s|q6H22S)?k*w=UVB]": {
             "title": "Correct output printed",
-            "description": "String of '18' is printed to the output",
+            "description": "String of '18' is printed to the output<br/><br/>You can run your code by pressing the 'Run' button above the application code workspace",
             "visibility": "visible",
             "order": "4",
             "successCondition": {

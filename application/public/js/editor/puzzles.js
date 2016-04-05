@@ -151,26 +151,27 @@ function PuzzlesManager() {
 
     //Moves a given step in one direction, updating the other steps as well
     this.moveStep = function(moveStepID, direction) {
-        moveStep = VisualBlocks.currentPuzzle.steps[moveStepID];
-        pivot = moveStep.order;
+        var moveStep = VisualBlocks.currentPuzzle.steps[moveStepID];
+        var pivot = moveStep.order;
 
         //Calculate the new order value for the given step
+        var newOrder;
         if(direction === 'up') {
-            newOrder = moveStep.order - 1;
+            newOrder = parseInt(moveStep.order) - 1;
         } else if(direction === 'down') {
-            newOrder = moveStep.order + 1;
+            newOrder = parseInt(moveStep.order) + 1;
         }
 
         //Go through all the steps and update the order value of the step being shifted by the given step
         for (var stepID in VisualBlocks.currentPuzzle.steps) {
-            step = VisualBlocks.currentPuzzle.steps[stepID];
+            var step = VisualBlocks.currentPuzzle.steps[stepID];
 
             if(direction === 'up') {
-                if(step.order === newOrder) {
+                if(step.order == newOrder) {
                     step.order++;
                 }
             } else if (direction === 'down') {
-                if(step.order === newOrder) {
+                if(step.order == newOrder) {
                     step.order--;
                 }
             }

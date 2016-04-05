@@ -2,7 +2,7 @@
     "name": "Intro to Blocks",
     "description": "Introduction to the basics of the block programing interface",
     "isPuzzle": true,
-    "isPublished": true,
+    "isPublished": false,
     "steps": {
         "z9tc]GoR5RYLx;GU^L9h": {
             "title": "Create a variable with the name 'number'",

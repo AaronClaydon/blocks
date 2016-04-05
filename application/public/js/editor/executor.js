@@ -9,6 +9,17 @@
 */
 
 function Executor() {
+    //Provides an API which allows both application and test code to interact with the editor
+    function interpreterSharedJSAPI(interpreter, scope) {
+        // Add an API function for highlighting blocks.
+        var wrapper = function(id) {
+            id = id ? id.toString() : '';
+            return interpreter.createPrimitive(sharedHighlightBlock(id));
+        };
+        interpreter.setProperty(scope, 'highlightBlock',
+        interpreter.createNativeFunction(wrapper));
+    }
+
     //Provides an API to allow compiled application block code to interact with the editor
     function interpreterApplicationJSAPI(interpreter, scope) {
         //Add an API function for the alert() block.
@@ -25,6 +36,8 @@ function Executor() {
 
         //Add an API function that ignores updatedVariable()
         interpreter.setProperty(scope, 'updatedVariable', interpreter.createNativeFunction(function(name) {}));
+
+        interpreterSharedJSAPI(interpreter, scope);
     }
 
     //Provides an API to allow compiled test block code to interact with the editor
@@ -75,6 +88,16 @@ function Executor() {
         interpreter.setProperty(scope, 'consolelog', interpreter.createNativeFunction(function(value) {
             return interpreter.createPrimitive(console.log("FROMTEST: " + value.data));
         }));
+
+        interpreterSharedJSAPI(interpreter, scope);
+    }
+
+    //Function that handles highlighting a block in the workspace
+    function sharedHighlightBlock(id) {
+        //Try and highlight the block in both workspaces
+        //Block ID should be unique so the wrong block won't be highlighted in the wrong worksapce
+        VisualBlocks._workspaces.appWorkspace.highlightBlock(id);
+        VisualBlocks._workspaces.testWorkspace.highlightBlock(id);
     }
 
     //Function that handles the alert block in tests

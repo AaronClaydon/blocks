@@ -48,6 +48,18 @@ function WorkSpaces() {
         VisualBlocks._workspaces.testWorkspace.updateToolbox(updatedToolbox[0].outerHTML);
     }
 
+    //Load the reserved names for variables and function
+    this.loadReservedWords = function() {
+        var reservedWords = ['highlightBlock', 'updatedVariable', 'assert', 'getNextOutput', 'getIfOutputsLeft', 'getIfPromptsMissed', 'ignoreNextOutput', 'updatedVariable'];
+
+        for (var i = 0; i < reservedWords.length; i++) {
+            Blockly.JavaScript.addReservedWords(reservedWords[i]);
+        }
+
+        //Alows us to highlight the currently being executed block
+        Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+    }
+
     //Generates toolboxes and creates the two workspaces
     this.init = function() {
         this.generateToolboxes();
