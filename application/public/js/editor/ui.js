@@ -169,6 +169,13 @@ function UI() {
                         },
                         "numPassed": {
                             name: "Number of Tests Passed"
+                        },
+                        "allPassed": {
+                            name: "All Tests Passed",
+                            values: {
+                                "TRUE": "True",
+                                "FALSE": "FALSE"
+                            }
                         }
                     }
                 }
@@ -1134,10 +1141,19 @@ function UI() {
             numPassed: numPassed
         }));
 
+        //Check if all tests have been passed
+        var allTestsPassed;
+        if(numTests > 0 && numTests === numPassed) {
+            allTestsPassed = "TRUE";
+        } else {
+            allTestsPassed = "FALSE";
+        }
+
         //Call test results event, with test results - shouldn't really be in ui
         VisualBlocks.puzzlesManager.callEvent("tests_result", {
             numTests: numTests,
-            numPassed: numPassed
+            numPassed: numPassed,
+            allPassed: allTestsPassed
         });
 
         //handle inspect link click
