@@ -1048,7 +1048,10 @@ function UI() {
     //Update the tests panel selection dropdown
     this.updateTestSelectionDropdown = function () {
         //Render dropdown template with current puzzle data
-        $("#testing-select-menu").html(this.renderTemplate("testing-select-menu", VisualBlocks.currentPuzzle));
+        $("#testing-select-menu").html(this.renderTemplate("testing-select-menu", {
+            puzzle: VisualBlocks.currentPuzzle,
+            testListEditable: VisualBlocks.currentPuzzle.options.testListEditable || !VisualBlocks.currentPuzzle.isPublished
+        }));
 
         //Bind click event on test list
         $(".testing-dropdown-test-name").click(function() {

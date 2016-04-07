@@ -70,11 +70,12 @@ function WorkSpaces() {
             this.testWorkspace.dispose();
         }
 
+        isPublished = VisualBlocks.currentPuzzle.isPublished;
         options = VisualBlocks.currentPuzzle.options;
         this.appWorkspace = createWorkspace('application-panel', 'application-blockly', 'blockly-application-toolbox',
-                                            options.applicationCodeVisible, options.applicationCodeEditable);
+                                            options.applicationCodeVisible || !isPublished, options.applicationCodeEditable || !isPublished);
         this.testWorkspace = createWorkspace('testing-panel', 'testing-blockly', 'blockly-testing-toolbox',
-                                            options.testCodeVisible, options.testCodeEditable);
+                                            options.testCodeVisible || !isPublished, options.testCodeEditable || !isPublished);
 
         this.promptSimulatorDisabled = false;
 

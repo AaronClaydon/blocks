@@ -55,7 +55,7 @@ function PuzzlesManager() {
     this.loadPuzzleFromFile = function(filename) {
         //Request the JSON object of the puzzle
         $.getJSON(filename, function(data) {
-            VisualBlocks.output.writeLine('Loaded remote puzzle ' + data.name + ' from ' + filename);
+            VisualBlocks.output.writeLine('Loaded puzzle ' + data.name);
             VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle(data));
         });
     }
