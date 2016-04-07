@@ -28,6 +28,13 @@ $(document).ready(function() {
 
     //Manages the current loaded puzzle
     VisualBlocks.puzzlesManager = new PuzzlesManager();
-    //VisualBlocks.puzzlesManager.newWorkspace(); //Load a default blank puzzle
-    VisualBlocks.puzzlesManager.loadPuzzleFromFile('/puzzles/set/introApp1.vbpuz'); //Load puzzle from file
+
+    var urlSplit = window.location.pathname.split('/');
+    if(urlSplit.length == 3 && urlSplit[2] !== "") {
+        //Load the requested published puzzle
+        VisualBlocks.puzzlesManager.loadPuzzleFromFile('/puzzles/user/' + urlSplit[2] + '.vbpuz');
+    } else {
+        VisualBlocks.puzzlesManager.newWorkspace(); //Load a default blank puzzle
+        //VisualBlocks.puzzlesManager.loadPuzzleFromFile('/puzzles/set/introTests2.vbpuz'); //DEBUG: Load puzzle from file
+    }
 });

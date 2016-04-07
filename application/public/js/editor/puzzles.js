@@ -13,6 +13,13 @@ function PuzzlesManager() {
         //Set it as current
         VisualBlocks.currentPuzzle = puzzle;
 
+        //Display only the app worksapce if the test code is set not to be visible
+        if(!puzzle.options.testCodeVisible) {
+            VisualBlocks.ui.setVisibleWorkspace('app');
+        } else {
+            VisualBlocks.ui.setVisibleWorkspace('both');
+        }
+
         //Init Blockly workspace
         VisualBlocks._workspaces.init();
 
@@ -35,13 +42,6 @@ function PuzzlesManager() {
             numTests: Object.keys(VisualBlocks.currentPuzzle.tests).length
         });
 
-        //Display only the app worksapce if the test code is set not to be visible
-        if(!puzzle.options.testCodeVisible) {
-            VisualBlocks.ui.setVisibleWorkspace('app');
-        } else {
-            VisualBlocks.ui.setVisibleWorkspace('both');
-        }
-
         //delete me
         //$("#nav-header-edit-puzzle-steps-btn").click();
         //$("#modal-edit-steps-list .btn-edit")[2].click();
@@ -49,6 +49,8 @@ function PuzzlesManager() {
         //$("#testing-btn-run-all").click();
         //VisualBlocks.executor.executeAllTests();
         //$("#nav-header-puzzles-btn").click();
+        //$("#modal-save").modal('show');
+        //$("#modal-save-publish-btn").click();
     }
 
     //Load a puzzle from a remote file

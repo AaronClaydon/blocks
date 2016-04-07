@@ -19,9 +19,10 @@
         },
         "Bn3ALzkzT4NQ5{ES4`YA": {
             "title": "Multiply two numbers together",
-            "description": "Under the Maths section drag the operator block into your workspace, click on the dropdown to change it to multiply",
+            "description": "Under the Maths section drag the Arithmetic block into your workspace, click on the dropdown to change it to multiply",
             "visibility": "visible",
             "order": "1",
+            "sticky": false,
             "successCondition": {
                 "event": "contains_block",
                 "workspace": "application",
@@ -33,9 +34,10 @@
         },
         "mH[38Bv!Ka?+6]c}[:#3": {
             "title": "Variable value",
-            "description": "Attach the Multiply block to the Variable Set block, and make the variable have the value of '18'",
+            "description": "Make the multiplication have a value of 18. Then by attaching this block the Variable Set one, make the variable 'number' have this value.",
             "visibility": "visible",
             "order": "2",
+            "sticky": false,
             "successCondition": {
                 "event": "final_variable_value",
                 "equality": {

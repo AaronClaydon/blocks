@@ -601,6 +601,36 @@ function UI() {
             }
         });
 
+        //Save puzzle remotely (publish) modal button
+        $("#modal-save-publish-btn").click(function() {
+            VisualBlocks.puzzlesManager.updateCurrentApplication();
+            VisualBlocks.puzzlesManager.updateCurrentTest();
+
+            var encodedPuzzle = VisualBlocks.puzzlesManager.encodedPuzzle();
+
+            //Send puzzle to server to be uploaded
+            $.ajax({
+                type: 'POST',
+                url: '/publish_puzzle',
+                data: {puzzle: encodedPuzzle},
+                success: function(reply) {
+                    //URL the editor is at
+                    baseUrl = window.location.href;
+
+                    //If the url doesn't end in / add on so the puzzle URL is correct
+                    if(window.location.href[window.location.href.length-1] !== '/') {
+                        baseUrl += '/';
+                    }
+
+                    //Display the published puzzle URL on the screen
+                    $("#modal-save-publish-url").html(VisualBlocks.ui.renderTemplate("modal-save-publish-url", {
+                        baseurl: baseUrl,
+                        id: reply
+                    }));
+                }
+            });
+        });
+
         //Puzzle list navigation button
         $("#nav-header-puzzles-btn").click(function() {
             $("#modal-puzzles").modal('show');
@@ -636,11 +666,6 @@ function UI() {
 
             VisualBlocks.puzzlesManager.loadPuzzleFromFile(puzzle.fileName);
             $("#modal-puzzles").modal('hide');
-        });
-
-        //Save puzzle remotely (publish) modal button
-        $("#modal-save-publish-btn").click(function() {
-            alert('Currently not implemented');
         });
 
         //Load puzzle locally modal button
@@ -713,11 +738,6 @@ function UI() {
 
         //Load puzzle remotely (published) modal button
         $("#modal-load-publish-btn").click(function() {
-            alert('Currently not implemented');
-        });
-
-        //Save puzzle remotely (publish) modal button
-        $("#modal-save-publish-btn").click(function() {
             alert('Currently not implemented');
         });
 
