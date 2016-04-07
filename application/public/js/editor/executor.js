@@ -342,7 +342,6 @@ function Executor() {
         relevantStepsBeenSet = {};
         relevantStepsResults = {};
 
-
         //Iterate through all the puzzle tests and execute them
         for (var testID in VisualBlocks.currentPuzzle.tests) {
             //Actually execute the test
@@ -377,6 +376,27 @@ function Executor() {
         for (var stepID = 0; stepID < relevantSteps.length; stepID++) {
             step = relevantSteps[stepID];
             VisualBlocks.puzzlesManager.updateStep(step.id, relevantStepsResults[stepID]);
+        }
+
+        //Fix code steps
+        for (var stepID in VisualBlocks.currentPuzzle.steps) {
+            var step = VisualBlocks.currentPuzzle.steps[stepID];
+
+            //Code evaluation step only
+            if(step.successCondition !== undefined && step.successCondition.event === 'code_evaluation') {
+                //Merge the app code and the step expression
+                var stepMergedCode = appCode + step.successCondition.equality.expression;
+
+                //Execute this code
+                var jsInterpreter = new Interpreter(stepMergedCode, interpreterApplicationJSAPI);
+                VisualBlocks.executor.testExecution.jsInterpreter = jsInterpreter;
+                jsInterpreter.run()
+
+                //Result of the executed expression
+                var result = jsInterpreter.value.data;
+
+                VisualBlocks.puzzlesManager.updateStep(stepID, result);
+            }
         }
     }
 

@@ -222,6 +222,20 @@ function UI() {
         "branch_coverage": {
             name: "All Branches Covered",
             specific_workspace: false
+        },
+        "code_evaluation": {
+            name: "Code Evaluation",
+            specific_workspace: false,
+            equalities: {
+                "equality": {
+                    name: "Evaluation",
+                    variables: {
+                        "expression": {
+                            name: "Expression"
+                        }
+                    }
+                }
+            }
         }
     };
 
