@@ -240,9 +240,14 @@ function PuzzlesManager() {
 
     //Update the step completed value
     this.updateStep = function(stepID, value) {
-        //Check all prerequisite steps have been completed
         step = VisualBlocks.currentPuzzle.steps[stepID];
 
+        //If the step is 'sticky', it cannot be set back to incomplete once it is completed
+        if(step.sticky && step.completed) {
+            return;
+        }
+
+        //Check all prerequisite steps have been completed
         if(step.successCondition.prerequisite !== undefined) {
             for (var i = 0; i < step.successCondition.prerequisite.length; i++) {
                 prereqstepid = step.successCondition.prerequisite[i];

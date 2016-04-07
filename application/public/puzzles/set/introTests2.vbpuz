@@ -1,0 +1,93 @@
+{
+    "name": "Handling Input/Output",
+    "description": "Introduction to the basics of handling input and output in a test",
+    "isPuzzle": true,
+    "isPublished": false,
+    "steps": {
+        "DE=ca*TYc3,[XbVJhUcj": {
+            "title": "Try the application",
+            "description": "Run the application and get it to print the value '6'",
+            "visibility": "visible",
+            "order": "0",
+            "sticky": true,
+            "successCondition": {
+                "event": "print_output",
+                "equality": {
+                    "string": "6"
+                }
+            }
+        },
+        "V[WUKbX3_McxPe_HZj!G": {
+            "title": "Simulate prompt",
+            "description": "To test applications with a Prompt, we need to simulate an input. The Prompt Simulator block takes a list of numbers or strings, and is sequentially read from.\n<br/><br/>\nThe Prompt Simulator block is found under testing, you can change the number of inputs by pressing the cog in the corner of the block",
+            "visibility": "visible",
+            "order": "1",
+            "successCondition": {
+                "event": "contains_block",
+                "workspace": "test",
+                "equality": {
+                    "type": "simulate_input"
+                }
+            }
+        },
+        "v/8OKojpgu+?4j+H~P!@": {
+            "title": "Get print output",
+            "description": "The outputs from a print statement can be retrieved using the Get Next Output block. Multiple instances of this block can be used if there are multiple print outputs",
+            "visibility": "visible",
+            "order": "2",
+            "successCondition": {
+                "event": "contains_block",
+                "workspace": "test",
+                "equality": {
+                    "type": "get_output"
+                }
+            }
+        },
+        "wi#tAova@eno9M]]4#VY": {
+            "title": "Assert of output",
+            "description": "Compare the application output with the expected output from the simuatled input, and use this to create an assertion",
+            "visibility": "visible",
+            "order": "3",
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "assert"
+                },
+                "input": {
+                    "type": "get_output"
+                }
+            }
+        },
+        "XQtE(g5nXr8iKi^W[1vp": {
+            "title": "Test Success",
+            "description": "Test on the application output asserts as a success",
+            "visibility": "visible",
+            "order": "4",
+            "successCondition": {
+                "event": "tests_result",
+                "equality": {
+                    "numTests": "1",
+                    "numPassed": "1"
+                },
+                "prerequisite": [
+                    "wi#tAova@eno9M]]4#VY"
+                ]
+            }
+        }
+    },
+    "applicationCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"procedures_defreturn\" x=\"13\" y=\"7\"><mutation><arg name=\"x\"></arg></mutation><field name=\"NAME\">addOne</field><comment pinned=\"false\" h=\"80\" w=\"160\">Describe this function...</comment><statement name=\"STACK\"><block type=\"variables_set\"><field name=\"VAR\">newValue</field><value name=\"VALUE\"><block type=\"math_arithmetic\"><field name=\"OP\">ADD</field><value name=\"A\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value><value name=\"B\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"math_number\"><field name=\"NUM\">1</field></block></value></block></value></block></statement><value name=\"RETURN\"><block type=\"variables_get\"><field name=\"VAR\">newValue</field></block></value></block><block type=\"variables_set\" x=\"12\" y=\"116\"><field name=\"VAR\">userNum</field><value name=\"VALUE\"><block type=\"text_prompt_ext\"><mutation type=\"NUMBER\"></mutation><field name=\"TYPE\">NUMBER</field><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">Give number</field></block></value></block></value><next><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"procedures_callreturn\"><mutation name=\"addOne\"><arg name=\"x\"></arg></mutation><value name=\"ARG0\"><block type=\"variables_get\"><field name=\"VAR\">userNum</field></block></value></block></value></block></next></block></xml>",
+    "tests": {
+        "defaul1": {
+            "name": "Test 1",
+            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
+        }
+    },
+    "options": {
+        "applicationCodeVisible": true,
+        "applicationCodeEditable": false,
+        "testCodeVisible": true,
+        "testCodeEditable": true,
+        "testListEditable": true
+    }
+}

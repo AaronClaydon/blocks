@@ -414,6 +414,7 @@ function UI() {
             description: $("#edit-puzzle-step-description").val(),
             visibility: $("#edit-puzzle-step-visibility").val(),
             order: $("#edit-puzzle-step-order").val(),
+            sticky: $("#edit-puzzle-step-sticky").is(':checked'),
             id: stepID
         };
 
