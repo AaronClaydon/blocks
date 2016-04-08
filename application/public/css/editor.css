@@ -203,15 +203,18 @@ ul.list {
 .list > li.active , .list > li.active:hover{
     background: #4fc1e9;
 }
-.list > li > a:link, .list > li > a:visited {
+.list > li > a {
     color: rgb(84, 82, 82);
 }
-.list > li.active > a:link, .list > li.active > a:visited {
+.list > li.active > a, .list > li.completed > a {
     color: white;
 }
 .list > li:hover {
     background: rgb(234, 234, 234);
     cursor: pointer;
+}
+.list > li.completed , .list > li.completed:hover{
+    background: #8cc152;
 }
 
 .puzzle-details-box {
@@ -220,6 +223,22 @@ ul.list {
 .puzzle-details-box h4 {
     padding: 0;
     margin: 0;
+}
+
+.notifications {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 300px;
+    margin-left: -150px;
+    z-index: 99999;
+}
+.notifications .notification {
+    padding: 5px;
+    text-align: center;
+    background: #3BAFDA;
+    color: white;
+    border: 1px solid #6685B5;
 }
 
 @media only screen and (max-width: 1080px) {

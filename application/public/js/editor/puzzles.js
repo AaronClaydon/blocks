@@ -263,7 +263,16 @@ function PuzzlesManager() {
             }
         }
 
-        console.log("STEP UPDATE", VisualBlocks.currentPuzzle.steps[stepID].title, value);
+        //Display notification if the step is now complete
+        if(!VisualBlocks.currentPuzzle.steps[stepID].completed && value) {
+            VisualBlocks.ui.displayNotification("'" + VisualBlocks.currentPuzzle.steps[stepID].title + "' complete");
+        }
+        //Display notification if the step is now incomplete
+        if(VisualBlocks.currentPuzzle.steps[stepID].completed && !value) {
+            VisualBlocks.ui.displayNotification("'" + VisualBlocks.currentPuzzle.steps[stepID].title + "' no longer complete");
+        }
+
+        //console.log("STEP UPDATE", VisualBlocks.currentPuzzle.steps[stepID].title, value);
         VisualBlocks.currentPuzzle.steps[stepID].completed = value;
         VisualBlocks.ui.updateStepsList();
 
@@ -289,6 +298,11 @@ function PuzzlesManager() {
             //Only display the puzzle complete alert if the puzzle previously wasnt complete
             if(!VisualBlocks.currentPuzzle.complete) {
                 VisualBlocks.ui.puzzleComplete();
+
+                //If puzzle is uniquely identifiable, set it as being complete in user storage
+                if(VisualBlocks.currentPuzzle.id) {
+                    localStorage.setItem('puzzle_complete_' + VisualBlocks.currentPuzzle.id, true);
+                }
             }
 
             VisualBlocks.currentPuzzle.complete = true;
@@ -328,6 +342,9 @@ function Puzzle(content) {
     if(content === undefined) {
         content = {};
         content.options = {};
+    }
+    if(content.id) {
+        this.id = content.id;
     }
     this.name = content.name || 'New Workspace';
     this.description = content.description || 'A new empty workspace';

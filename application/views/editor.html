@@ -53,6 +53,10 @@
             </div>
         </nav>
 
+        <div class="notifications" id="notifications">
+
+        </div>
+
         <!-- <div class="modal fade in" style="display: block;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -416,7 +420,7 @@
                         You've completed this puzzle
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -736,14 +740,21 @@
         <script id="template-modal-puzzles-body" type="x-tmpl-mustache">
             <ul class="list">
                 {{#each puzzles}}
-                    <li data-key="{{@key}}" {{#if_eq @key ../currentPuzzleID}}class="active"{{/if_eq}}><a>{{this.name}}</a></li>
+                    <li data-key="{{@key}}" class="{{#if_eq @key ../currentPuzzleID}}active{{else}}{{#if this.completed}}completed{{/if}}{{/if_eq}}"><a>{{this.name}}</a></li>
                 {{/each}}
             </ul>
 
             <input type="hidden" id="modal-puzzles-selected" value="{{currentPuzzleID}}" />
             <div class="puzzle-details-box">
-                <h4>{{currentPuzzle.name}}</h4>
+                <h4>
+                    {{currentPuzzle.name}}
+                </h4>
                 {{currentPuzzle.description}}
+
+                <br/><br/>
+                {{#if currentPuzzle.completed}}
+                    <span class="label label-success">COMPLETED</span>
+                {{/if}}
             </div>
         </script>
 

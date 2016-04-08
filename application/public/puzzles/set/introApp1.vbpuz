@@ -1,4 +1,5 @@
 {
+    "id": "introTests1",
     "name": "Intro to Blocks",
     "description": "Introduction to the basics of the block programing interface",
     "isPuzzle": true,

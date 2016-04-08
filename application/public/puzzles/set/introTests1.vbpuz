@@ -1,4 +1,5 @@
 {
+    "id": "introTests1",
     "name": "Intro to Testing",
     "description": "Introduction to the basics of the testing interface",
     "isPuzzle": true,

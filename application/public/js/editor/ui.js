@@ -662,6 +662,15 @@ function UI() {
                 puzzles = JSON.parse(data);
                 VisualBlocks.ui.puzzlesList = puzzles;
 
+                //Check if the puzzles have been completed by the user
+                for (var i = 0; i < puzzles.length; i++) {
+                    var puzzle = puzzles[i];
+
+                    if(puzzle.id && localStorage.getItem('puzzle_complete_' + puzzle.id)) {
+                        puzzle.completed = true;
+                    }
+                }
+
                 function drawList(puzzleID) {
                     $("#modal-puzzles-body").html(VisualBlocks.ui.renderTemplate("modal-puzzles-body", {
                         puzzles: puzzles,
@@ -1276,5 +1285,17 @@ function UI() {
     //Display a message to the user that they've completed the puzzle
     this.puzzleComplete = function() {
         $("#modal-puzzle-complete").modal('show');
+    }
+
+    //Display a notiifcation
+    this.displayNotification = function(text) {
+        //Create a notification div and append it to the notification area
+        var notification = $.parseHTML("<div class='notification'>" + text + "</div>");
+        $("#notifications").append(notification);
+
+        //Delete the notification after 6 seconds
+        setTimeout(function() {
+            $(notification).remove()
+        }, 6000);
     }
 }

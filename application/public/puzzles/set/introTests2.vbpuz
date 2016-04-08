@@ -1,4 +1,5 @@
 {
+    "id": "introTests2",
     "name": "Handling Input/Output",
     "description": "Introduction to the basics of handling input and output in a test",
     "isPuzzle": true,
