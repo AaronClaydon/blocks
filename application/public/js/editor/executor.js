@@ -503,7 +503,7 @@ function Executor() {
                 }
                 break;
             case 'ExpressionStatement':
-                write('Expression');
+                write('Expression: ');
                 this.acornRecursive(node.expression, (padding + 1), coverage);
                 break;
             case 'BlockStatement':
@@ -537,7 +537,7 @@ function Executor() {
                 } else {
                     funcName = node.callee.name;
                 }
-                if(funcName !== 'updatedVariable') { //ignore updaredVariable internal function call
+                if(funcName !== 'updatedVariable' && funcName !== 'highlightBlock') { //ignore updaredVariable internal function call
                     write('CFunc: ' + funcName);
                     if(node.arguments) {
                         for (var i_arg = 0; i_arg < node.arguments.length; i_arg++) {

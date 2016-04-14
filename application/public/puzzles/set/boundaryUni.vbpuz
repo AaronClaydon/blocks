@@ -1,0 +1,395 @@
+{
+    "name": "Boundary: University Grade",
+    "description": "Using boundary testing on a simple program that gives a degree classification for a given grade",
+    "isPuzzle": true,
+    "isPublished": false,
+    "steps": {
+        "39": {
+            "title": "-1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 5,
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "39"
+                }
+            }
+        },
+        "40": {
+            "title": "-1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 6,
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "40"
+                }
+            }
+        },
+        "41": {
+            "title": "-1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 7,
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "41"
+                }
+            }
+        },
+        "50": {
+            "title": "-1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 9,
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "50"
+                }
+            }
+        },
+        "51": {
+            "title": "-1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 10,
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "51"
+                }
+            }
+        },
+        "59": {
+            "title": "-1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 11,
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "59"
+                }
+            }
+        },
+        "60": {
+            "title": "-1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 12,
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "60"
+                }
+            }
+        },
+        "61": {
+            "title": "-1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 13,
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "61"
+                }
+            }
+        },
+        "69": {
+            "title": "-1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 14,
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "69"
+                }
+            }
+        },
+        "70": {
+            "title": "-1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 15,
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "70"
+                }
+            }
+        },
+        "71": {
+            "title": "-1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 16,
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "71"
+                }
+            }
+        },
+        "99": {
+            "title": "-1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 17,
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "99"
+                }
+            }
+        },
+        "100": {
+            "title": "100",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "18",
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "100"
+                }
+            }
+        },
+        "101": {
+            "title": "-1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 2,
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "101"
+                }
+            }
+        },
+        "3g^jtQ=oWRV*72jxJ]}e": {
+            "title": "Fixed application",
+            "description": "You fixed the bug in the implementation of the application",
+            "visibility": "visible_on_success",
+            "order": "19",
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "application",
+                "parent": {
+                    "type": "logic_compare",
+                    "logicCompareOperator": "LTE"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "100"
+                }
+            }
+        },
+        "3[()(Pwl#[I%i~d6OZvb": {
+            "title": "-1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 8,
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "49"
+                }
+            }
+        },
+        "3[()dsfsd16OZvb": {
+            "title": "0",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 3,
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "0"
+                }
+            }
+        },
+        "one": {
+            "title": "-1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 4,
+            "sticky": false,
+            "successCondition": {
+                "event": "block_has_input",
+                "workspace": "test",
+                "parent": {
+                    "type": "simulate_input"
+                },
+                "input": {
+                    "type": "math_number",
+                    "value": "1"
+                }
+            }
+        },
+        "w]o9]1;L|R{yBM~jjdne": {
+            "title": "Test all Boundaries",
+            "description": "",
+            "visibility": "visible",
+            "order": "0",
+            "sticky": true,
+            "successCondition": {
+                "event": "tests_result",
+                "equality": {
+                    "allPassed": "FALSE"
+                },
+                "prerequisite": [
+                    "39",
+                    "40",
+                    "41",
+                    "50",
+                    "51",
+                    "59",
+                    "60",
+                    "61",
+                    "69",
+                    "70",
+                    "71",
+                    "99",
+                    "100",
+                    "101",
+                    "3[()(Pwl#[I%i~d6OZvb",
+                    "3[()dsfsd16OZvb",
+                    "one"
+                ]
+            }
+        },
+        "wy+_7(_Mn)c]%I#S4oGv": {
+            "title": "Incorrect implementation",
+            "description": "One of the tests has failed for a correct value, find and fix the implementation bug in the application",
+            "visibility": "visible_on_success",
+            "order": "1",
+            "sticky": true,
+            "successCondition": {
+                "event": "tests_result",
+                "equality": {
+                    "allPassed": "FALSE"
+                },
+                "prerequisite": [
+                    "100"
+                ]
+            }
+        }
+    },
+    "applicationCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"variables_set\" x=\"16\" y=\"14\"><field name=\"VAR\">mark</field><value name=\"VALUE\"><block type=\"text_prompt_ext\"><mutation type=\"NUMBER\"></mutation><field name=\"TYPE\">NUMBER</field><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">Mark</field></block></value></block></value><next><block type=\"controls_if\"><mutation elseif=\"5\" else=\"1\"></mutation><value name=\"IF0\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">mark</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value></block></value><statement name=\"DO0\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">Mark must be above zero</field></block></value></block></statement><value name=\"IF1\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">mark</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">40</field></block></value></block></value><statement name=\"DO1\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">Failed</field></block></value></block></statement><value name=\"IF2\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">mark</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">50</field></block></value></block></value><statement name=\"DO2\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">Third</field></block></value></block></statement><value name=\"IF3\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">mark</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">60</field></block></value></block></value><statement name=\"DO3\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">2.2</field></block></value></block></statement><value name=\"IF4\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">mark</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">70</field></block></value></block></value><statement name=\"DO4\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">2.1</field></block></value></block></statement><value name=\"IF5\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">mark</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">100</field></block></value></block></value><statement name=\"DO5\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">First</field></block></value></block></statement><statement name=\"ELSE\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">Mark must be less than or equal to 100</field></block></value></block></statement></block></next></block></xml>",
+    "tests": {
+        "defaul1": {
+            "name": "Test 1",
+            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
+        }
+    },
+    "options": {
+        "applicationCodeVisible": true,
+        "applicationCodeEditable": true,
+        "testCodeVisible": true,
+        "testCodeEditable": true,
+        "testListEditable": true
+    }
+}

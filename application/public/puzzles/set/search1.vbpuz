@@ -1,0 +1,36 @@
+{
+    "name": "Searching a List 1",
+    "description": "Test a function that searches a list for a given value",
+    "isPuzzle": true,
+    "isPublished": false,
+    "steps": {
+        "XNK|_;9prHjF~M=lRJS=": {
+            "title": "Not working",
+            "description": "Create a test that proves that this application does not work as intended",
+            "visibility": "visible",
+            "order": "0",
+            "sticky": false,
+            "successCondition": {
+                "event": "tests_result",
+                "equality": {
+                    "numTests": "1",
+                    "numPassed": "0"
+                }
+            }
+        }
+    },
+    "applicationCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"procedures_defreturn\" x=\"11\" y=\"14\"><mutation><arg name=\"item\"></arg><arg name=\"list\"></arg></mutation><field name=\"NAME\">search</field><comment pinned=\"false\" h=\"80\" w=\"160\">Describe this function...</comment><statement name=\"STACK\"><block type=\"variables_set\"><field name=\"VAR\">found</field><value name=\"VALUE\"><block type=\"logic_boolean\"><field name=\"BOOL\">FALSE</field></block></value><next><block type=\"controls_forEach\"><field name=\"VAR\">i</field><value name=\"LIST\"><block type=\"variables_get\"><field name=\"VAR\">list</field></block></value><statement name=\"DO\"><block type=\"controls_if\"><mutation else=\"1\"></mutation><value name=\"IF0\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">i</field></block></value><value name=\"B\"><block type=\"variables_get\"><field name=\"VAR\">item</field></block></value></block></value><statement name=\"DO0\"><block type=\"variables_set\"><field name=\"VAR\">found</field><value name=\"VALUE\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value></block></statement><statement name=\"ELSE\"><block type=\"variables_set\"><field name=\"VAR\">found</field><value name=\"VALUE\"><block type=\"logic_boolean\"><field name=\"BOOL\">FALSE</field></block></value></block></statement></block></statement></block></next></block></statement><value name=\"RETURN\"><block type=\"variables_get\"><field name=\"VAR\">found</field></block></value></block></xml>",
+    "tests": {
+        "defaul1": {
+            "name": "Test 1",
+            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
+        }
+    },
+    "options": {
+        "applicationCodeVisible": true,
+        "applicationCodeEditable": false,
+        "testCodeVisible": true,
+        "testCodeEditable": true,
+        "testListEditable": true
+    }
+}

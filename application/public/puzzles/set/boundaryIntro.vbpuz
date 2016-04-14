@@ -1,0 +1,148 @@
+{
+    "name": "Boundary Testing: Intro",
+    "description": "Introduction to boundary testing with a basic password length example",
+    "isPuzzle": true,
+    "isPublished": true,
+    "steps": {
+        "MmYgwPuMDe9$}SMhzi0+": {
+            "title": "First boundary",
+            "description": "Testing all possible inputs for an application is usually not possible, instead you must be selective with what should be tested.\n<br/><br/>\nWith boundary testing you only check the value on and above and below the partitions of the input set.\n<br/><br/>\nThe first partition in this application is checking the password length being less than 5. Test the values 4, 5, 6",
+            "visibility": "visible",
+            "order": "0",
+            "sticky": false,
+            "successCondition": {
+                "event": "tests_result",
+                "equality": {
+                    "allPassed": "TRUE"
+                },
+                "prerequisite": [
+                    "Vhk078ZNdei8Bq7+2!V;",
+                    "Q5pj7C=h0!4S!hh*hJEW",
+                    "ABH.TR*P?Xt[yV6%kDWH"
+                ]
+            }
+        },
+        "OBE8]$:6Fd77I]pQi2)S": {
+            "title": "Second boundary",
+            "description": "Test the second boundary in the application",
+            "visibility": "visible",
+            "order": "1",
+            "sticky": false,
+            "successCondition": {
+                "event": "tests_result",
+                "equality": {
+                    "allPassed": "TRUE"
+                },
+                "prerequisite": [
+                    "IO,Le^%p]W|JKRD^jn$C",
+                    "P;,s}$[X1lPbvB4%Nl@{",
+                    "Jui:PXMTaN4GAb9ko/9|"
+                ]
+            }
+        },
+        "Vhk078ZNdei8Bq7+2!V;": {
+            "title": "4",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "2",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "length2",
+                    "variable_type": "number",
+                    "value": "4"
+                }
+            }
+        },
+        "Q5pj7C=h0!4S!hh*hJEW": {
+            "title": "5",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "3",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "length2",
+                    "variable_type": "number",
+                    "value": "5"
+                }
+            }
+        },
+        "ABH.TR*P?Xt[yV6%kDWH": {
+            "title": "6",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "4",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "length2",
+                    "variable_type": "number",
+                    "value": "6"
+                }
+            }
+        },
+        "IO,Le^%p]W|JKRD^jn$C": {
+            "title": "10",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "5",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "length2",
+                    "variable_type": "number",
+                    "value": "10"
+                }
+            }
+        },
+        "P;,s}$[X1lPbvB4%Nl@{": {
+            "title": "11",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "6",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "length2",
+                    "variable_type": "number",
+                    "value": "11"
+                }
+            }
+        },
+        "Jui:PXMTaN4GAb9ko/9|": {
+            "title": "12",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "7",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "length2",
+                    "variable_type": "number",
+                    "value": "12"
+                }
+            }
+        }
+    },
+    "applicationCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"procedures_defreturn\" x=\"1\" y=\"4\"><mutation><arg name=\"password\"></arg></mutation><field name=\"NAME\">passwordLength</field><comment pinned=\"false\" h=\"120\" w=\"312\">Checks if a given password's length matches the requirements of being between 6-10</comment><statement name=\"STACK\"><block type=\"variables_set\"><field name=\"VAR\">valid</field><value name=\"VALUE\"><block type=\"logic_boolean\"><field name=\"BOOL\">FALSE</field></block></value><next><block type=\"variables_set\"><field name=\"VAR\">length</field><value name=\"VALUE\"><block type=\"text_length\"><value name=\"VALUE\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"variables_get\"><field name=\"VAR\">password</field></block></value></block></value><next><block type=\"controls_if\"><value name=\"IF0\"><block type=\"logic_operation\"><field name=\"OP\">AND</field><value name=\"A\"><block type=\"logic_compare\"><field name=\"OP\">GT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">length</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">5</field></block></value></block></value><value name=\"B\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">length</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">11</field></block></value></block></value></block></value><statement name=\"DO0\"><block type=\"variables_set\"><field name=\"VAR\">valid</field><value name=\"VALUE\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value></block></statement></block></next></block></next></block></statement><value name=\"RETURN\"><block type=\"variables_get\"><field name=\"VAR\">valid</field></block></value></block></xml>",
+    "tests": {
+        "defaul1": {
+            "name": "Test 1",
+            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
+        }
+    },
+    "options": {
+        "applicationCodeVisible": true,
+        "applicationCodeEditable": false,
+        "testCodeVisible": true,
+        "testCodeEditable": true,
+        "testListEditable": true
+    }
+}

@@ -47,7 +47,7 @@ function PuzzlesManager() {
         //$("#modal-edit-steps-list .btn-edit")[2].click();
         //$("#modal-edit-steps-add-btn").click();
         //$("#testing-btn-run-all").click();
-        //VisualBlocks.executor.executeAllTests();
+        VisualBlocks.executor.executeAllTests();
         //$("#nav-header-puzzles-btn").click();
         //$("#modal-save").modal('show');
         //$("#modal-save-publish-btn").click();
@@ -263,13 +263,16 @@ function PuzzlesManager() {
             }
         }
 
-        //Display notification if the step is now complete
-        if(!VisualBlocks.currentPuzzle.steps[stepID].completed && value) {
-            VisualBlocks.ui.displayNotification("'" + VisualBlocks.currentPuzzle.steps[stepID].title + "' complete");
-        }
-        //Display notification if the step is now incomplete
-        if(VisualBlocks.currentPuzzle.steps[stepID].completed && !value) {
-            VisualBlocks.ui.displayNotification("'" + VisualBlocks.currentPuzzle.steps[stepID].title + "' no longer complete");
+        //Dont display a notifcation for hidden steps
+        if(VisualBlocks.currentPuzzle.steps[stepID].visibility !== 'not_visible') {
+            //Display notification if the step is now complete
+            if(!VisualBlocks.currentPuzzle.steps[stepID].completed && value) {
+                VisualBlocks.ui.displayNotification("'" + VisualBlocks.currentPuzzle.steps[stepID].title + "' complete");
+            }
+            //Display notification if the step is now incomplete
+            if(VisualBlocks.currentPuzzle.steps[stepID].completed && !value) {
+                VisualBlocks.ui.displayNotification("'" + VisualBlocks.currentPuzzle.steps[stepID].title + "' no longer complete");
+            }
         }
 
         //console.log("STEP UPDATE", VisualBlocks.currentPuzzle.steps[stepID].title, value);

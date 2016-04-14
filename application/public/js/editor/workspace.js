@@ -56,8 +56,8 @@ function WorkSpaces() {
             Blockly.JavaScript.addReservedWords(reservedWords[i]);
         }
 
-        //Alows us to highlight the currently being executed block
-        Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+        //Alows us to highlight the currently being executed block - doesn't seem to work
+        //Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
     }
 
     //Generates toolboxes and creates the two workspaces
