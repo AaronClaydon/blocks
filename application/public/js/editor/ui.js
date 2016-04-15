@@ -223,6 +223,20 @@ function UI() {
             name: "All Branches Covered",
             specific_workspace: false
         },
+        "branch_hit": {
+            name: "Specific Branch Hit",
+            specific_workspace: false,
+            equalities: {
+                "equality": {
+                    name: "Branch",
+                    variables: {
+                        "branchID": {
+                            name: "ID"
+                        }
+                    }
+                }
+            }
+        },
         "code_evaluation": {
             name: "Code Evaluation",
             specific_workspace: false,

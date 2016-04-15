@@ -364,8 +364,23 @@ function Executor() {
             branchID = VisualBlocks.executor.testExecution.branchesHit[i];
 
             if(branches[branchID] !== undefined && !branches[branchID]) {
+                console.log("branch", branchID);
                 numBranchesHit++;
                 branches[branchID] = true;
+            }
+        }
+
+        //Check branch hit events
+        for (var i in VisualBlocks.currentPuzzle.steps) {
+            step = VisualBlocks.currentPuzzle.steps[i];
+            successCondition = step.successCondition;
+
+            if(successCondition !== undefined) {
+                if(successCondition.event === 'branch_hit') {
+                    //Check if this events branch was ever hit
+                    var beenHit = ($.inArray(successCondition.equality.branchID, VisualBlocks.executor.testExecution.branchesHit) > -1);
+                    VisualBlocks.puzzlesManager.updateStep(step.id, beenHit);
+                }
             }
         }
 
