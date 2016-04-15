@@ -1,0 +1,356 @@
+{
+    "name": "Boundary: Ticket Pricing",
+    "description": "Using boundary testing on multiple numerical ranges",
+    "isPuzzle": true,
+    "isPublished": false,
+    "steps": {
+        "3dZ~k9a9@`}rS?A_QBq3": {
+            "title": "-1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "0",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "-1"
+                }
+            }
+        },
+        "b4VMr8/(t0~SyXks~B8i": {
+            "title": "0",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "1",
+            "sticky": true,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "0"
+                }
+            }
+        },
+        "P[,tJ:Z(IW]Gf-b+x*U;": {
+            "title": "1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "2",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "1"
+                }
+            }
+        },
+        "mm0a%[9/%[k{Dfg[+-+g": {
+            "title": "6",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "3",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "6"
+                }
+            }
+        },
+        "G3-+gU1pmz~Q[P]5Yczg": {
+            "title": "4",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "4",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "4"
+                }
+            }
+        },
+        "+kG2dH{{emR/}y#JnwdA": {
+            "title": "5",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "5",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "5"
+                }
+            }
+        },
+        "LrKa{0^hzuz3PNnk,+og": {
+            "title": "18",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "6",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "18"
+                }
+            }
+        },
+        "$4Fyd*X|mOG/Ihpz~GzQ": {
+            "title": "19",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "7",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "19"
+                }
+            }
+        },
+        "O6(@s2_AE.+ev}?bk(Yi": {
+            "title": "17",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "8",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "17"
+                }
+            }
+        },
+        "M$Cz/yN!x+WC#YA1~yYt": {
+            "title": "65",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "9",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "65"
+                }
+            }
+        },
+        "NcW~MOu:L`VV9hVu.3r9": {
+            "title": "66",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "10",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "66"
+                }
+            }
+        },
+        "`i_{T:8Tg0qRy4MUe;+7": {
+            "title": "64",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "11",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "64"
+                }
+            }
+        },
+        "2Krb1t_Fr^TOI6.#c|`y": {
+            "title": "Invalid age boundary",
+            "description": "Test values for the invalid age boundary",
+            "visibility": "visible",
+            "order": "12",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "0"
+                },
+                "prerequisite": [
+                    "3dZ~k9a9@`}rS?A_QBq3",
+                    "b4VMr8/(t0~SyXks~B8i",
+                    "P[,tJ:Z(IW]Gf-b+x*U;"
+                ]
+            }
+        },
+        "JP2K=Mt+yV2;Z8,BY^!(": {
+            "title": "Infant boundary",
+            "description": "Test the infant ticket boundary, age 0-5\n<br/><br/>\nWe must test on the boundary and one on either side of it, for both boundaries. This would involve testing -1, 0, 1, 4, 5, 6",
+            "visibility": "visible",
+            "order": "13",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "5"
+                },
+                "prerequisite": [
+                    "3dZ~k9a9@`}rS?A_QBq3",
+                    "b4VMr8/(t0~SyXks~B8i",
+                    "P[,tJ:Z(IW]Gf-b+x*U;",
+                    "mm0a%[9/%[k{Dfg[+-+g",
+                    "G3-+gU1pmz~Q[P]5Yczg",
+                    "+kG2dH{{emR/}y#JnwdA"
+                ]
+            }
+        },
+        "?%V9lv*e_~mb;z*5)}a7": {
+            "title": "Child boundary",
+            "description": "Test the child ticket boundary, age 6-17",
+            "visibility": "visible",
+            "order": "14",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "17"
+                },
+                "prerequisite": [
+                    "mm0a%[9/%[k{Dfg[+-+g",
+                    "+kG2dH{{emR/}y#JnwdA",
+                    "LrKa{0^hzuz3PNnk,+og",
+                    "O6(@s2_AE.+ev}?bk(Yi",
+                    "(9izfEg,.I^v7+PpW,yh",
+                    "s%JZEvw#ea=jE!JpZP1U"
+                ]
+            }
+        },
+        "=5T)H*vUu6P9wixVjtfF": {
+            "title": "Adult boundary",
+            "description": "Test the adult ticket boundary, age 18-64",
+            "visibility": "visible",
+            "order": "15",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "64"
+                },
+                "prerequisite": [
+                    "LrKa{0^hzuz3PNnk,+og",
+                    "$4Fyd*X|mOG/Ihpz~GzQ",
+                    "O6(@s2_AE.+ev}?bk(Yi",
+                    "M$Cz/yN!x+WC#YA1~yYt",
+                    "`i_{T:8Tg0qRy4MUe;+7",
+                    "j;1_14=Gs(hVfY4[cpB6"
+                ]
+            }
+        },
+        "jPr|1hA|aHs~cVTqjG}_": {
+            "title": "Senior boundary",
+            "description": "Test the senior ticket boundary, age 65+",
+            "visibility": "visible",
+            "order": "16",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "65"
+                },
+                "prerequisite": [
+                    "M$Cz/yN!x+WC#YA1~yYt",
+                    "NcW~MOu:L`VV9hVu.3r9",
+                    "`i_{T:8Tg0qRy4MUe;+7"
+                ]
+            }
+        },
+        "(9izfEg,.I^v7+PpW,yh": {
+            "title": "7",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "17",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "7"
+                }
+            }
+        },
+        "s%JZEvw#ea=jE!JpZP1U": {
+            "title": "16",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "18",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "16"
+                }
+            }
+        },
+        "j;1_14=Gs(hVfY4[cpB6": {
+            "title": "63",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "19",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "age",
+                    "variable_type": "number",
+                    "value": "63"
+                }
+            }
+        }
+    },
+    "applicationCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"variables_set\" x=\"6\" y=\"6\"><field name=\"VAR\">age</field><value name=\"VALUE\"><block type=\"text_prompt_ext\"><mutation type=\"NUMBER\"></mutation><field name=\"TYPE\">NUMBER</field><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">What is your age?</field></block></value></block></value><next><block type=\"controls_if\"><mutation elseif=\"3\" else=\"1\"></mutation><value name=\"IF0\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">age</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value></block></value><statement name=\"DO0\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">Invalid age</field></block></value></block></statement><value name=\"IF1\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">age</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">6</field></block></value></block></value><statement name=\"DO1\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">Infant - Free</field></block></value></block></statement><value name=\"IF2\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">age</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">18</field></block></value></block></value><statement name=\"DO2\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">Child - £2</field></block></value></block></statement><value name=\"IF3\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">age</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">65</field></block></value></block></value><statement name=\"DO3\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">Adult - £5</field></block></value></block></statement><statement name=\"ELSE\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">Senior - £2</field></block></value></block></statement></block></next></block></xml>",
+    "tests": {
+        "defaul1": {
+            "name": "Test 1",
+            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
+        }
+    },
+    "options": {
+        "applicationCodeVisible": true,
+        "applicationCodeEditable": false,
+        "testCodeVisible": true,
+        "testCodeEditable": true,
+        "testListEditable": true
+    }
+}
