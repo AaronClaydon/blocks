@@ -1,4 +1,5 @@
 {
+    "id": "boundaryUni",
     "name": "Boundary: University Grade",
     "description": "Using boundary testing on a simple program that gives a degree classification for a given grade",
     "isPuzzle": true,

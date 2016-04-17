@@ -1,4 +1,5 @@
 {
+    "id": "multipleComponents",
     "name": "Multiple components",
     "description": "There are many components in this application that need to be tested",
     "isPuzzle": true,

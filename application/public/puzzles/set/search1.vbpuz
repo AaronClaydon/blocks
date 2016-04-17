@@ -1,20 +1,21 @@
 {
+    "id": "search1",
     "name": "Searching a List 1",
     "description": "Test a function that searches a list for a given value",
     "isPuzzle": true,
     "isPublished": false,
+    "outroText": "Your test showed that this application doesn't work as intended, this shows how testing is important in identifying mistakes in code<br/><br/>In the next puzzle you will fix and fully verify this application",
     "steps": {
         "XNK|_;9prHjF~M=lRJS=": {
-            "title": "Not working",
-            "description": "Create a test that proves that this application does not work as intended",
+            "title": "Test this application",
+            "description": "Create a test for this application",
             "visibility": "visible",
             "order": "0",
             "sticky": false,
             "successCondition": {
                 "event": "tests_result",
                 "equality": {
-                    "numTests": "1",
-                    "numPassed": "0"
+                    "allPassed": "FALSE"
                 }
             }
         }

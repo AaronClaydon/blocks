@@ -1,4 +1,5 @@
 {
+    "id": "boundaryTicket",
     "name": "Boundary: Ticket Pricing",
     "description": "Using boundary testing on multiple numerical ranges",
     "isPuzzle": true,

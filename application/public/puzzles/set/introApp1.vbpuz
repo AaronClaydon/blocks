@@ -1,9 +1,10 @@
 {
-    "id": "introTests1",
+    "id": "introApp1",
     "name": "Intro to Blocks",
     "description": "Introduction to the basics of the block programing interface",
     "isPuzzle": true,
     "isPublished": false,
+    "outroText": "After completing this puzzle you should now have some understanding of the user interface and how you program with blocks.<br/><br/> If you're not completely confident in programming with blocks, try creating your own programs by clicking 'new' in the top navigation bar, then 'new workspace'. You can carry on with the puzzles later.",
     "steps": {
         "z9tc]GoR5RYLx;GU^L9h": {
             "title": "Create a variable with the name 'number'",
@@ -14,7 +15,8 @@
                 "event": "contains_block",
                 "workspace": "application",
                 "equality": {
-                    "type": "variables_set"
+                    "type": "variables_set",
+                    "variable_name": "number"
                 }
             }
         },

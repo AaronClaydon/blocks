@@ -349,6 +349,9 @@ function Puzzle(content) {
     if(content.id) {
         this.id = content.id;
     }
+    if(content.outroText) {
+        this.outroText = content.outroText;
+    }
     this.name = content.name || 'New Workspace';
     this.description = content.description || 'A new empty workspace';
     this.isPuzzle = content.isPuzzle || false;

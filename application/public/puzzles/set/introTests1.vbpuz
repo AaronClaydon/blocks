@@ -1,7 +1,7 @@
 {
     "id": "introTests1",
     "name": "Intro to Testing",
-    "description": "Introduction to the basics of the testing interface",
+    "description": "Introduction to the basics of the application testing and the user interface for testing in this environment",
     "isPuzzle": true,
     "isPublished": false,
     "steps": {
@@ -9,7 +9,7 @@
             "title": "Call the 'addOne' function in a test",
             "description": "The screen is split into two panes, the application code is on the left and the test code on the right \n<br/><br/>\nYou can call functions defined in the application in your tests. Under the Functions category drag the 'addOne' function into the workspace",
             "visibility": "visible",
-            "order": "0",
+            "order": 1,
             "successCondition": {
                 "event": "contains_block",
                 "workspace": "test",
@@ -21,9 +21,9 @@
         },
         "pcLQxx|M01SDv14u#b%1": {
             "title": "Assertions",
-            "description": "The Assertion block allows the test to return if it was a success or a failure\n<br/><br/>\nThe Assertion block can be found under the Testing category, drag this into the workspace\n<br/><br/>\nPressing the 'Run All' button in the testing panel will execute all the tests. The results will be printed in the Output panel",
+            "description": "The Assertion block allows the test to return if it was a success or a failure. You can have multiple assertions in a single test, but all must pass for the test to pass.<br/><br/>\nThe Assertion block can be found under the Testing category, drag this into the workspace\n<br/><br/>\nPressing the 'Run All' button in the testing panel will execute all the tests. The results will be printed in the Output panel",
             "visibility": "visible",
-            "order": "2",
+            "order": 3,
             "successCondition": {
                 "event": "block_has_input",
                 "workspace": "test",
@@ -40,7 +40,7 @@
             "title": "Compare function output",
             "description": "To test this function we will need to check if the output for the function is correct for a given output\n<br/><br/>\nA comparison block can be found under the Maths category, add this to the workspace and use it to compare the function output and a correct value.",
             "visibility": "visible",
-            "order": "1",
+            "order": 2,
             "successCondition": {
                 "event": "block_has_input",
                 "workspace": "test",
@@ -58,7 +58,7 @@
             "title": "Multiple tests",
             "description": "Multiple tests are required to correctly test a piece of code\n<br/><br/>\nYou can manage and add tests by clicking on the arrow next to the test name above the test code workspace",
             "visibility": "visible",
-            "order": "3",
+            "order": 4,
             "successCondition": {
                 "event": "update_tests",
                 "equality": {
@@ -70,7 +70,7 @@
             "title": "Test success",
             "description": "Add an assertion to this second test and test the 'addOne' function with a different value\n<br/><br/>\nRun all the tests to check the output",
             "visibility": "visible",
-            "order": "4",
+            "order": 5,
             "successCondition": {
                 "event": "tests_result",
                 "equality": {
@@ -84,6 +84,13 @@
                     "1OXlf24oZ74Ol$aH8(Yq"
                 ]
             }
+        },
+        "mAA(b,cnmp3G;M19bI/_": {
+            "title": "Testing",
+            "description": "Software testing allows you to identify code that does not function as intended and is an important and necessary step when writing code.\n<br/><br/>\nThese bugs could be from simple typos, logical errors, or a misunderstanding of the requirements. These bugs might not be easily identifiable from just reading the code, which is why with software testing you execute code and compare the output to what you expected",
+            "visibility": "visible",
+            "order": 0,
+            "sticky": false
         }
     },
     "applicationCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"procedures_defreturn\" x=\"13\" y=\"7\"><mutation><arg name=\"x\"></arg></mutation><field name=\"NAME\">addOne</field><comment pinned=\"false\" h=\"80\" w=\"160\">Describe this function...</comment><statement name=\"STACK\"><block type=\"variables_set\"><field name=\"VAR\">newValue</field><value name=\"VALUE\"><block type=\"math_arithmetic\"><field name=\"OP\">ADD</field><value name=\"A\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value><value name=\"B\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"math_number\"><field name=\"NUM\">1</field></block></value></block></value></block></statement><value name=\"RETURN\"><block type=\"variables_get\"><field name=\"VAR\">newValue</field></block></value></block></xml>",

@@ -1,4 +1,5 @@
 {
+    "id": "search2",
     "name": "Searching a List 2",
     "description": "Test a function that searches a list for a given value",
     "isPuzzle": true,

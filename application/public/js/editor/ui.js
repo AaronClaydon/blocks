@@ -174,7 +174,7 @@ function UI() {
                             name: "All Tests Passed",
                             values: {
                                 "TRUE": "True",
-                                "FALSE": "FALSE"
+                                "FALSE": "False"
                             }
                         }
                     }
@@ -1298,6 +1298,13 @@ function UI() {
 
     //Display a message to the user that they've completed the puzzle
     this.puzzleComplete = function() {
+        //Display outro text
+        if(VisualBlocks.currentPuzzle.outroText) {
+            $("#modal-puzzle-complete-message").html(VisualBlocks.currentPuzzle.outroText);
+        } else {
+            $("#modal-puzzle-complete-message").html("");
+        }
+
         $("#modal-puzzle-complete").modal('show');
     }
 

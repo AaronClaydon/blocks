@@ -1,4 +1,5 @@
 {
+    "id": "branchIntro",
     "name": "Branch Coverage: Intro",
     "description": "Introduction to branch coverage",
     "isPuzzle": true,
@@ -6,9 +7,9 @@
     "steps": {
         "={pF(oui92d+c;lNZW[0": {
             "title": "First Branch",
-            "description": "In Branch Coverage Testing, each branch in an if-statement or while loop must be executed and tested.\n<br/><br/>\nIn this example there are two branches, when the if-statement is true, and the else when it is false.\n<br/><br/>\nTest a value of 'x' for this function that executes the first branch.",
+            "description": "Test a value of 'x' for this function that executes the first branch.",
             "visibility": "visible",
-            "order": "0",
+            "order": 1,
             "sticky": false,
             "successCondition": {
                 "event": "branch_hit",
@@ -21,7 +22,7 @@
             "title": "Second branch",
             "description": "Now test a value of 'x' that executes the second branch in the program",
             "visibility": "visible",
-            "order": "1",
+            "order": 2,
             "sticky": false,
             "successCondition": {
                 "event": "branch_hit",
@@ -34,7 +35,7 @@
             "title": "Test success",
             "description": "Have two tests that successfully cover all branches",
             "visibility": "visible",
-            "order": "2",
+            "order": 3,
             "sticky": false,
             "successCondition": {
                 "event": "tests_result",
@@ -47,6 +48,13 @@
                     "ZRozmfBsN%axv.y(Fj(G"
                 ]
             }
+        },
+        "-G*2BnnIXZ7BIT|uscjm": {
+            "title": "Branch Coverage",
+            "description": "If-statement's and while loops create branches in the code, where certain blocks of code are only executed under certain conditions.\n<br/></br>\nIn Branch Coverage Testing, the goal is to create the minimum number of tests that as a set will cover and execute all branches in the code.\n<br/><br/>\nIn this example there are two branches, when the if-statement is true, and the else when it is false.",
+            "visibility": "visible",
+            "order": 0,
+            "sticky": false
         }
     },
     "applicationCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"procedures_defreturn\" x=\"12\" y=\"11\"><mutation><arg name=\"x\"></arg></mutation><field name=\"NAME\">isNegative</field><comment pinned=\"false\" h=\"80\" w=\"160\">If a number is negative</comment><statement name=\"STACK\"><block type=\"controls_if\"><mutation else=\"1\"></mutation><value name=\"IF0\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value></block></value><statement name=\"DO0\"><block type=\"variables_set\"><field name=\"VAR\">ret</field><value name=\"VALUE\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value></block></statement><statement name=\"ELSE\"><block type=\"variables_set\"><field name=\"VAR\">ret</field><value name=\"VALUE\"><block type=\"logic_boolean\"><field name=\"BOOL\">FALSE</field></block></value></block></statement></block></statement><value name=\"RETURN\"><block type=\"variables_get\"><field name=\"VAR\">ret</field></block></value></block></xml>",
