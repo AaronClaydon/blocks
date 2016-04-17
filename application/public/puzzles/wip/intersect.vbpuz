@@ -1,0 +1,23 @@
+{
+    "id": "intersect",
+    "name": "intersect",
+    "description": "A new empty puzzle",
+    "isPuzzle": true,
+    "isPublished": false,
+    "steps": {},
+    "hiddenImplementation": "<h4>Rectable Intersection</h4>The block code for this puzzle has been hidden. Instead you must create tests based of the specification of how this program will work.<br/><br/>The function <i>intersects</i> checks and returns true if the given dimensions of two rectangles intersect.<h5>Parameters</h5><i>x1</i> - X Coordinate of the first rectangle<br/><i>y1</i> - Y Coordinate of the first rectangle<br/><i>w1</i> - Width of the first rectangle<br/><i>h1</i> - Height of the first rectangle<br/><i>x2</i> - X Coordinate of the second rectangle<br/><i>y2</i> - Y Coordinate of the second rectangle<br/><i>w2</i> - Width of the second rectangle<br/><i>h2</i> - Height of the second rectangle<br/>",
+    "applicationCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"procedures_defreturn\" x=\"-10\" y=\"6\"><mutation><arg name=\"x1\"></arg><arg name=\"y1\"></arg><arg name=\"w1\"></arg><arg name=\"h1\"></arg><arg name=\"x2\"></arg><arg name=\"y2\"></arg><arg name=\"w2\"></arg><arg name=\"h2\"></arg></mutation><field name=\"NAME\">intersects</field><comment pinned=\"false\" h=\"80\" w=\"160\">Describe this function...</comment><statement name=\"STACK\"><block type=\"variables_set\"><field name=\"VAR\">doesIntersect</field><value name=\"VALUE\"><block type=\"logic_negate\"><value name=\"BOOL\"><block type=\"logic_operation\"><field name=\"OP\">OR</field><value name=\"A\"><block type=\"logic_operation\"><field name=\"OP\">OR</field><value name=\"A\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"math_arithmetic\"><field name=\"OP\">ADD</field><value name=\"A\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"variables_get\"><field name=\"VAR\">x1</field></block></value><value name=\"B\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"variables_get\"><field name=\"VAR\">w1</field></block></value></block></value><value name=\"B\"><block type=\"variables_get\"><field name=\"VAR\">x2</field></block></value></block></value><value name=\"B\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"math_arithmetic\"><field name=\"OP\">ADD</field><value name=\"A\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"variables_get\"><field name=\"VAR\">x2</field></block></value><value name=\"B\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"variables_get\"><field name=\"VAR\">w2</field></block></value></block></value><value name=\"B\"><block type=\"variables_get\"><field name=\"VAR\">x1</field></block></value></block></value></block></value><value name=\"B\"><block type=\"logic_operation\"><field name=\"OP\">OR</field><value name=\"A\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"math_arithmetic\"><field name=\"OP\">ADD</field><value name=\"A\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"variables_get\"><field name=\"VAR\">y1</field></block></value><value name=\"B\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"variables_get\"><field name=\"VAR\">h1</field></block></value></block></value><value name=\"B\"><block type=\"variables_get\"><field name=\"VAR\">y2</field></block></value></block></value><value name=\"B\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"math_arithmetic\"><field name=\"OP\">ADD</field><value name=\"A\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"variables_get\"><field name=\"VAR\">y2</field></block></value><value name=\"B\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"variables_get\"><field name=\"VAR\">h2</field></block></value></block></value><value name=\"B\"><block type=\"variables_get\"><field name=\"VAR\">y1</field></block></value></block></value></block></value></block></value></block></value></block></statement><value name=\"RETURN\"><block type=\"variables_get\"><field name=\"VAR\">doesIntersect</field></block></value></block></xml>",
+    "tests": {
+        "defaul1": {
+            "name": "Test 1",
+            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
+        }
+    },
+    "options": {
+        "applicationCodeVisible": false,
+        "applicationCodeEditable": false,
+        "testCodeVisible": true,
+        "testCodeEditable": true,
+        "testListEditable": true
+    }
+}

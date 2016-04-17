@@ -62,6 +62,8 @@ function WorkSpaces() {
 
     //Generates toolboxes and creates the two workspaces
     this.init = function() {
+        //Empty any hidden implementation text
+        $("#application-blockly").html("");
         this.generateToolboxes();
 
         //Dispose of old workspaces if reloading

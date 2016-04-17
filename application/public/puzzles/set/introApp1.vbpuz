@@ -37,7 +37,7 @@
         },
         "mH[38Bv!Ka?+6]c}[:#3": {
             "title": "Variable value",
-            "description": "Make the multiplication have a value of 18. Then by attaching this block the Variable Set one, make the variable 'number' have this value.",
+            "description": "Make the multiplication have a value of 18. Then by attaching this block the Variable Set block, make the variable 'number' have this value.",
             "visibility": "visible",
             "order": "2",
             "sticky": false,

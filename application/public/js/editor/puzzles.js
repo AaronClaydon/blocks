@@ -42,6 +42,10 @@ function PuzzlesManager() {
             numTests: Object.keys(VisualBlocks.currentPuzzle.tests).length
         });
 
+        if(VisualBlocks.currentPuzzle.isPublished && !VisualBlocks.currentPuzzle.options.applicationCodeVisible) {
+            $("#application-blockly").html(VisualBlocks.currentPuzzle.hiddenImplementation);
+        }
+
         //delete me
         //$("#nav-header-edit-puzzle-steps-btn").click();
         //$("#modal-edit-steps-list .btn-edit")[2].click();
@@ -351,6 +355,9 @@ function Puzzle(content) {
     }
     if(content.outroText) {
         this.outroText = content.outroText;
+    }
+    if(content.hiddenImplementation) {
+        this.hiddenImplementation = content.hiddenImplementation;
     }
     this.name = content.name || 'New Workspace';
     this.description = content.description || 'A new empty workspace';

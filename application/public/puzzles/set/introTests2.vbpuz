@@ -46,7 +46,7 @@
         },
         "wi#tAova@eno9M]]4#VY": {
             "title": "Assert of output",
-            "description": "Compare the application output with the expected output from the simuatled input, and use this to create an assertion",
+            "description": "Compare the application output with the expected output from the simulated input, and use this to create an assertion.<br/><br/>Even though the output will be a number, it will be printed as a string. You need to compare the output with a text block and not a number block",
             "visibility": "visible",
             "order": "3",
             "successCondition": {
