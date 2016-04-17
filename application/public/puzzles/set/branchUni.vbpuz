@@ -1,0 +1,32 @@
+{
+    "name": "Branch: University Grade",
+    "description": "Using branch coverage testing on a simple program that gives a degree classification for a given grade",
+    "isPuzzle": true,
+    "isPublished": false,
+    "steps": {
+        "e{%B`)A?*Z$=Ox*8mVbE": {
+            "title": "Cover all branches",
+            "description": "This is the same program used in boundary testing. Create the minimum number of tests to cover all the branches.",
+            "visibility": "visible",
+            "order": "0",
+            "sticky": false,
+            "successCondition": {
+                "event": "branch_coverage"
+            }
+        }
+    },
+    "applicationCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"variables_set\" x=\"16\" y=\"14\"><field name=\"VAR\">mark</field><value name=\"VALUE\"><block type=\"text_prompt_ext\"><mutation type=\"NUMBER\"></mutation><field name=\"TYPE\">NUMBER</field><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">Mark</field></block></value></block></value><next><block type=\"controls_if\"><mutation elseif=\"5\" else=\"1\"></mutation><value name=\"IF0\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">mark</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value></block></value><statement name=\"DO0\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">Mark must be above zero</field></block></value></block></statement><value name=\"IF1\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">mark</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">40</field></block></value></block></value><statement name=\"DO1\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">Failed</field></block></value></block></statement><value name=\"IF2\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">mark</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">50</field></block></value></block></value><statement name=\"DO2\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">Third</field></block></value></block></statement><value name=\"IF3\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">mark</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">60</field></block></value></block></value><statement name=\"DO3\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">2.2</field></block></value></block></statement><value name=\"IF4\"><block type=\"logic_compare\"><field name=\"OP\">LT</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">mark</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">70</field></block></value></block></value><statement name=\"DO4\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">2.1</field></block></value></block></statement><value name=\"IF5\"><block type=\"logic_compare\"><field name=\"OP\">LTE</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">mark</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">100</field></block></value></block></value><statement name=\"DO5\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">First</field></block></value></block></statement><statement name=\"ELSE\"><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">Mark must be less than or equal to 100</field></block></value></block></statement></block></next></block></xml>",
+    "tests": {
+        "defaul1": {
+            "name": "Test 1",
+            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
+        }
+    },
+    "options": {
+        "applicationCodeVisible": true,
+        "applicationCodeEditable": false,
+        "testCodeVisible": true,
+        "testCodeEditable": true,
+        "testListEditable": true
+    }
+}

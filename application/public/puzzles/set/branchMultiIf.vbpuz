@@ -1,5 +1,5 @@
 {
-    "name": "Branches: Multiple If's",
+    "name": "Branch: Multiple If's",
     "description": "How to test all branches in an application with 2 if-statements",
     "isPuzzle": true,
     "isPublished": false,
