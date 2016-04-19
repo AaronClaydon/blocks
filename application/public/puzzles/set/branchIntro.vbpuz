@@ -3,7 +3,7 @@
     "name": "Branch Coverage: Intro",
     "description": "Introduction to branch coverage",
     "isPuzzle": true,
-    "isPublished": false,
+    "isPublished": true,
     "steps": {
         "={pF(oui92d+c;lNZW[0": {
             "title": "First Branch",

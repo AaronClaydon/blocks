@@ -3,7 +3,7 @@
     "name": "Tic Tac Toe",
     "description": "Use multiple testing techniques on the framework of a Tic Tac Toe game",
     "isPuzzle": true,
-    "isPublished": false,
+    "isPublished": true,
     "steps": {
         "C]{)}W-y?@B7[O-zEAgn": {
             "title": "initGame",

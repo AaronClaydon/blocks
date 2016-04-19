@@ -3,7 +3,7 @@
     "name": "Intro to Blocks",
     "description": "Introduction to the basics of the block programing interface",
     "isPuzzle": true,
-    "isPublished": false,
+    "isPublished": true,
     "outroText": "After completing this puzzle you should now have some understanding of the user interface and how you program with blocks.<br/><br/> If you're not completely confident in programming with blocks, try creating your own programs by clicking 'new' in the top navigation bar, then 'new workspace'. You can carry on with the puzzles later.",
     "steps": {
         "z9tc]GoR5RYLx;GU^L9h": {

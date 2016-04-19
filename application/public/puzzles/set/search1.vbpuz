@@ -3,7 +3,7 @@
     "name": "Searching a List 1",
     "description": "Test a function that searches a list for a given value",
     "isPuzzle": true,
-    "isPublished": false,
+    "isPublished": true,
     "outroText": "Your test showed that this application doesn't work as intended, this shows how testing is important in identifying mistakes in code<br/><br/>In the next puzzle you will fix and fully verify this application",
     "steps": {
         "XNK|_;9prHjF~M=lRJS=": {

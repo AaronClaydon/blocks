@@ -3,7 +3,7 @@
     "name": "Handling Input/Output",
     "description": "Introduction to the basics of handling input and output in a test",
     "isPuzzle": true,
-    "isPublished": false,
+    "isPublished": true,
     "steps": {
         "DE=ca*TYc3,[XbVJhUcj": {
             "title": "Try the application",

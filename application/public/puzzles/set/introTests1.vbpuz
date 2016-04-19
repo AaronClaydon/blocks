@@ -3,7 +3,7 @@
     "name": "Intro to Testing",
     "description": "Introduction to the basics of the application testing and the user interface for testing in this environment",
     "isPuzzle": true,
-    "isPublished": false,
+    "isPublished": true,
     "steps": {
         "qE%k[WtPN}F~QICTH:0G": {
             "title": "Call the 'addOne' function in a test",

@@ -3,7 +3,8 @@
     "name": "Branch: University Grade",
     "description": "Using branch coverage testing on a simple program that gives a degree classification for a given grade",
     "isPuzzle": true,
-    "isPublished": false,
+    "isPublished": true,
+    "outroText": "Using branch coverage testing on this puzzle should end up with less tests than using boundary testing, as only one test is needed for each branch, instead of the three in boundary testing.",
     "steps": {
         "e{%B`)A?*Z$=Ox*8mVbE": {
             "title": "Cover all branches",

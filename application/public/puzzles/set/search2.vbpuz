@@ -3,7 +3,7 @@
     "name": "Searching a List 2",
     "description": "Test a function that searches a list for a given value",
     "isPuzzle": true,
-    "isPublished": false,
+    "isPublished": true,
     "steps": {
         "rI09*ZkLZ:GJ{K3KYsnd": {
             "title": "Fix the application",

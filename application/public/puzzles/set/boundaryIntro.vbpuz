@@ -3,7 +3,7 @@
     "name": "Boundary Testing: Intro",
     "description": "Introduction to boundary testing with a basic password length example",
     "isPuzzle": true,
-    "isPublished": false,
+    "isPublished": true,
     "steps": {
         "MmYgwPuMDe9$}SMhzi0+": {
             "title": "First boundary",

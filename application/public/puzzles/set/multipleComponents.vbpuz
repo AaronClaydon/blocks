@@ -3,7 +3,7 @@
     "name": "Multiple components",
     "description": "There are many components in this application that need to be tested",
     "isPuzzle": true,
-    "isPublished": false,
+    "isPublished": true,
     "steps": {
         "`_dAI(by?TOAHc_KT`RO": {
             "title": "test_double",

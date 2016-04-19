@@ -4,7 +4,7 @@
     "name": "Rectangle Intersection Specification",
     "description": "Create a set of tests against the specification of a program that checks if two rectangles intersect",
     "isPuzzle": true,
-    "isPublished": false,
+    "isPublished": true,
     "steps": {
         "X1V+#B.N^eClV$`TT/Qq": {
             "title": "Test application",
