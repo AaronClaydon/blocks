@@ -1,0 +1,396 @@
+{
+    "id": "ticTacToe",
+    "name": "Tic Tac Toe",
+    "description": "Use multiple testing techniques on the framework of a Tic Tac Toe game",
+    "isPuzzle": true,
+    "isPublished": false,
+    "steps": {
+        "C]{)}W-y?@B7[O-zEAgn": {
+            "title": "initGame",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "0",
+            "sticky": false,
+            "successCondition": {
+                "event": "contains_block",
+                "workspace": "test",
+                "equality": {
+                    "type": "procedures_callnoreturn",
+                    "function_name": "initGame"
+                }
+            }
+        },
+        "73,gBb3p8)2_U/8Rt)=^": {
+            "title": "getCurrentPlayer",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "1",
+            "sticky": false,
+            "successCondition": {
+                "event": "contains_block",
+                "workspace": "test",
+                "equality": {
+                    "type": "procedures_callreturn",
+                    "function_name": "getCurrentPlayer"
+                }
+            }
+        },
+        "+bh]d=BV@4dU)IL=;/xR": {
+            "title": "printBoard",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "2",
+            "sticky": false,
+            "successCondition": {
+                "event": "contains_block",
+                "workspace": "test",
+                "equality": {
+                    "type": "procedures_callnoreturn",
+                    "function_name": "printBoard"
+                }
+            }
+        },
+        "qWEJ7hq8uf!()[dtAP0/": {
+            "title": "makeMove",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "3",
+            "sticky": false,
+            "successCondition": {
+                "event": "contains_block",
+                "workspace": "test",
+                "equality": {
+                    "type": "procedures_callreturn",
+                    "function_name": "makeMove"
+                }
+            }
+        },
+        "*MAhdu(1_XDpxD.lI6))": {
+            "title": "changePlayer",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "4",
+            "sticky": false,
+            "successCondition": {
+                "event": "contains_block",
+                "workspace": "test",
+                "equality": {
+                    "type": "procedures_callnoreturn",
+                    "function_name": "changePlayer"
+                }
+            }
+        },
+        "L!RQCC@].QG,-rlRZZVJ": {
+            "title": "getState",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "5",
+            "sticky": false,
+            "successCondition": {
+                "event": "contains_block",
+                "workspace": "test",
+                "equality": {
+                    "type": "procedures_callreturn",
+                    "function_name": "getState"
+                }
+            }
+        },
+        "E24Uq+czxJcq,E#{:Y8Z": {
+            "title": "getCell",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "6",
+            "sticky": false,
+            "successCondition": {
+                "event": "contains_block",
+                "workspace": "test",
+                "equality": {
+                    "type": "procedures_callreturn",
+                    "function_name": "getCell"
+                }
+            }
+        },
+        "-farff:S!v7Deb,hku:y": {
+            "title": "state - in progress",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "7",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "state",
+                    "variable_type": "string",
+                    "value": "in progress"
+                }
+            }
+        },
+        "`3)w^@xVj/oU_BEMy^m#": {
+            "title": "state - draw",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "8",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "state",
+                    "variable_type": "string",
+                    "value": "draw"
+                }
+            }
+        },
+        "s8|O[^hVSM}Fx2lSjZU9": {
+            "title": "state - X wins",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "9",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "state",
+                    "variable_type": "string",
+                    "value": "X wins"
+                }
+            }
+        },
+        "gbZ?-M7Gv|7~uK[MJ~!M": {
+            "title": "state - O wins",
+            "description": "",
+            "visibility": "not_visible",
+            "order": "10",
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "state",
+                    "variable_type": "string",
+                    "value": "O wins"
+                }
+            }
+        },
+        "zkziR#I*6Q+Tf0l;PUB-": {
+            "title": "Branches",
+            "description": "All branches in the program have been covered at least once",
+            "visibility": "visible",
+            "order": "20",
+            "sticky": false,
+            "successCondition": {
+                "event": "branch_coverage"
+            }
+        },
+        "@);|4.)ob(|vW}n:k24^": {
+            "title": "win - y:1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 11,
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "winReason",
+                    "variable_type": "string",
+                    "value": "y:1"
+                }
+            }
+        },
+        ";(Ag:{jr^~LCp!m^1,L9": {
+            "title": "win - y:2",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 12,
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "winReason",
+                    "variable_type": "string",
+                    "value": "y:2"
+                }
+            }
+        },
+        "|S9|^*5JN3!*ZSR1B/ye": {
+            "title": "win - y:3",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 13,
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "winReason",
+                    "variable_type": "string",
+                    "value": "y:3"
+                }
+            }
+        },
+        "|tThu^)ZLI43}c/5O)[!": {
+            "title": "win - x:1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 14,
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "winReason",
+                    "variable_type": "string",
+                    "value": "x:1"
+                }
+            }
+        },
+        "|us[}w,E*wdow6s`=gAC": {
+            "title": "win - x:2",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 15,
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "winReason",
+                    "variable_type": "string",
+                    "value": "x:2"
+                }
+            }
+        },
+        "}$IQ?R18.idLv`JbfmU1": {
+            "title": "win - x:3",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 16,
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "winReason",
+                    "variable_type": "string",
+                    "value": "x:3"
+                }
+            }
+        },
+        "E%#6#$h[j#3E}JAa*nUE": {
+            "title": "win - diag:1",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 17,
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "winReason",
+                    "variable_type": "string",
+                    "value": "diag:1"
+                }
+            }
+        },
+        "ODC|LK6o5.K!;RoJ?-6Y": {
+            "title": "win - diag:2",
+            "description": "",
+            "visibility": "not_visible",
+            "order": 18,
+            "sticky": false,
+            "successCondition": {
+                "event": "final_variable_value",
+                "equality": {
+                    "name": "winReason",
+                    "variable_type": "string",
+                    "value": "diag:2"
+                }
+            }
+        },
+        "0^-e//5`ZeHL)dCCk*u:": {
+            "title": "Functions",
+            "description": "Have at least one test for each function",
+            "visibility": "visible",
+            "order": "19",
+            "sticky": false,
+            "successCondition": {
+                "event": "code_evaluation",
+                "equality": {
+                    "expression": "true==true"
+                },
+                "prerequisite": [
+                    "C]{)}W-y?@B7[O-zEAgn",
+                    "73,gBb3p8)2_U/8Rt)=^",
+                    "+bh]d=BV@4dU)IL=;/xR",
+                    "qWEJ7hq8uf!()[dtAP0/",
+                    "*MAhdu(1_XDpxD.lI6))",
+                    "L!RQCC@].QG,-rlRZZVJ",
+                    "E24Uq+czxJcq,E#{:Y8Z"
+                ]
+            }
+        },
+        "A6J0sIBmKPD=r/8nJiju": {
+            "title": "Game states",
+            "description": "All possible game states have been tested at least once.<br/><br/>\nThese states are: in progress, drawing, x/o wins",
+            "visibility": "visible",
+            "order": "21",
+            "sticky": false,
+            "successCondition": {
+                "event": "code_evaluation",
+                "equality": {
+                    "expression": "true==true"
+                },
+                "prerequisite": [
+                    "-farff:S!v7Deb,hku:y",
+                    "`3)w^@xVj/oU_BEMy^m#",
+                    "s8|O[^hVSM}Fx2lSjZU9",
+                    "gbZ?-M7Gv|7~uK[MJ~!M"
+                ]
+            }
+        },
+        "Q|:C?,SxkG)V45`6r;La": {
+            "title": "Winning moves",
+            "description": "All possible winning moves have been tested.<br/><br/>\n\nEg: horizontal at the top of the board, diagonal, vertical in middle of the board",
+            "visibility": "visible",
+            "order": "22",
+            "sticky": false,
+            "successCondition": {
+                "event": "code_evaluation",
+                "equality": {
+                    "expression": "true==true"
+                },
+                "prerequisite": [
+                    "@);|4.)ob(|vW}n:k24^",
+                    ";(Ag:{jr^~LCp!m^1,L9",
+                    "|S9|^*5JN3!*ZSR1B/ye",
+                    "|tThu^)ZLI43}c/5O)[!",
+                    "|us[}w,E*wdow6s`=gAC",
+                    "}$IQ?R18.idLv`JbfmU1",
+                    "E%#6#$h[j#3E}JAa*nUE",
+                    "ODC|LK6o5.K!;RoJ?-6Y"
+                ]
+            }
+        },
+        "xTdUKjST$-%D~0`Z]_rt": {
+            "title": "Passing tests",
+            "description": "Have at least 20 passing tests",
+            "visibility": "visible",
+            "order": "23",
+            "sticky": false,
+            "successCondition": {
+                "event": "tests_result",
+                "equality": {
+                    "numTests": "20-999999",
+                    "allPassed": "TRUE"
+                }
+            }
+        }
+    },
+    "applicationCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"procedures_defnoreturn\" x=\"8\" y=\"-65\"><field name=\"NAME\">initGame</field><comment pinned=\"false\" h=\"83\" w=\"252\">create an empty game board and set the current player to X</comment><statement name=\"STACK\"><block type=\"variables_set\"><field name=\"VAR\">board</field><value name=\"VALUE\"><block type=\"lists_create_with\"><mutation items=\"3\"></mutation><value name=\"ADD0\"><block type=\"lists_create_with\"><mutation items=\"3\"></mutation><value name=\"ADD0\"><block type=\"text\"><field name=\"TEXT\">□</field></block></value><value name=\"ADD1\"><block type=\"text\"><field name=\"TEXT\">□</field></block></value><value name=\"ADD2\"><block type=\"text\"><field name=\"TEXT\">□</field></block></value></block></value><value name=\"ADD1\"><block type=\"lists_create_with\"><mutation items=\"3\"></mutation><value name=\"ADD0\"><block type=\"text\"><field name=\"TEXT\">□</field></block></value><value name=\"ADD1\"><block type=\"text\"><field name=\"TEXT\">□</field></block></value><value name=\"ADD2\"><block type=\"text\"><field name=\"TEXT\">□</field></block></value></block></value><value name=\"ADD2\"><block type=\"lists_create_with\"><mutation items=\"3\"></mutation><value name=\"ADD0\"><block type=\"text\"><field name=\"TEXT\">□</field></block></value><value name=\"ADD1\"><block type=\"text\"><field name=\"TEXT\">□</field></block></value><value name=\"ADD2\"><block type=\"text\"><field name=\"TEXT\">□</field></block></value></block></value></block></value><next><block type=\"variables_set\"><field name=\"VAR\">currentPlayer</field><value name=\"VALUE\"><block type=\"text\"><field name=\"TEXT\">X</field></block></value></block></next></block></statement></block><block type=\"procedures_defreturn\" x=\"9\" y=\"244\"><field name=\"NAME\">getCurrentPlayer</field><comment pinned=\"false\" h=\"78\" w=\"210\">get the current player</comment><value name=\"RETURN\"><block type=\"variables_get\"><field name=\"VAR\">currentPlayer</field></block></value></block><block type=\"procedures_defnoreturn\" x=\"11\" y=\"336\"><field name=\"NAME\">printBoard</field><comment pinned=\"false\" h=\"80\" w=\"160\">print the board</comment><statement name=\"STACK\"><block type=\"controls_forEach\"><field name=\"VAR\">x</field><value name=\"LIST\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><statement name=\"DO\"><block type=\"variables_set\"><field name=\"VAR\">printLine</field><value name=\"VALUE\"><block type=\"text\"><field name=\"TEXT\"></field></block></value><next><block type=\"controls_forEach\"><field name=\"VAR\">y</field><value name=\"LIST\"><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value><statement name=\"DO\"><block type=\"text_append\"><field name=\"VAR\">printLine</field><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\"></field></shadow><block type=\"variables_get\"><field name=\"VAR\">y</field></block></value><next><block type=\"text_append\"><field name=\"VAR\">printLine</field><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\"></field></shadow><block type=\"text\"><field name=\"TEXT\"> </field></block></value></block></next></block></statement><next><block type=\"text_print\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"variables_get\"><field name=\"VAR\">printLine</field></block></value></block></next></block></next></block></statement></block></statement></block><block type=\"procedures_defreturn\" x=\"13\" y=\"576\"><mutation><arg name=\"x\"></arg><arg name=\"y\"></arg></mutation><field name=\"NAME\">makeMove</field><comment pinned=\"false\" h=\"140\" w=\"448\">make a move as the current player. X and Y are values between 1-3. Top left is the origin.\n\nReturns true is the move was a success. Automatically changes player if it was a success.</comment><statement name=\"STACK\"><block type=\"variables_set\"><field name=\"VAR\">success</field><value name=\"VALUE\"><block type=\"logic_boolean\"><field name=\"BOOL\">FALSE</field></block></value><next><block type=\"controls_if\"><value name=\"IF0\"><block type=\"logic_operation\"><field name=\"OP\">AND</field><value name=\"A\"><block type=\"logic_operation\"><field name=\"OP\">AND</field><value name=\"A\"><block type=\"logic_compare\"><field name=\"OP\">GTE</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">y</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">1</field></block></value></block></value><value name=\"B\"><block type=\"logic_compare\"><field name=\"OP\">LTE</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">y</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">3</field></block></value></block></value></block></value><value name=\"B\"><block type=\"logic_operation\"><field name=\"OP\">AND</field><value name=\"A\"><block type=\"logic_compare\"><field name=\"OP\">GTE</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">1</field></block></value></block></value><value name=\"B\"><block type=\"logic_compare\"><field name=\"OP\">LTE</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">3</field></block></value></block></value></block></value></block></value><statement name=\"DO0\"><block type=\"controls_if\"><value name=\"IF0\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"text\"><field name=\"TEXT\">□</field></block></value><value name=\"B\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><value name=\"AT\"><block type=\"variables_get\"><field name=\"VAR\">y</field></block></value></block></value><value name=\"AT\"><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value></block></value></block></value><statement name=\"DO0\"><block type=\"lists_setIndex\"><mutation at=\"true\"></mutation><field name=\"MODE\">SET</field><field name=\"WHERE\">FROM_START</field><value name=\"LIST\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><value name=\"AT\"><block type=\"variables_get\"><field name=\"VAR\">y</field></block></value></block></value><value name=\"AT\"><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value><value name=\"TO\"><block type=\"variables_get\"><field name=\"VAR\">currentPlayer</field></block></value><next><block type=\"variables_set\"><field name=\"VAR\">success</field><value name=\"VALUE\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value><next><block type=\"procedures_callnoreturn\"><mutation name=\"changePlayer\"></mutation></block></next></block></next></block></statement></block></statement></block></next></block></statement><value name=\"RETURN\"><block type=\"variables_get\"><field name=\"VAR\">success</field></block></value></block><block type=\"procedures_defnoreturn\" x=\"16\" y=\"912\"><field name=\"NAME\">changePlayer</field><comment pinned=\"false\" h=\"54\" w=\"219\">change to the next player</comment><statement name=\"STACK\"><block type=\"controls_if\"><mutation else=\"1\"></mutation><value name=\"IF0\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">currentPlayer</field></block></value><value name=\"B\"><block type=\"text\"><field name=\"TEXT\">X</field></block></value></block></value><statement name=\"DO0\"><block type=\"variables_set\"><field name=\"VAR\">currentPlayer</field><value name=\"VALUE\"><block type=\"text\"><field name=\"TEXT\">O</field></block></value></block></statement><statement name=\"ELSE\"><block type=\"variables_set\"><field name=\"VAR\">currentPlayer</field><value name=\"VALUE\"><block type=\"text\"><field name=\"TEXT\">X</field></block></value></block></statement></block></statement></block><block type=\"procedures_defreturn\" x=\"18\" y=\"1086\"><field name=\"NAME\">getState</field><comment pinned=\"false\" h=\"62\" w=\"410\">get the game state - in progress, X wins, Y wins, draw</comment><statement name=\"STACK\"><block type=\"variables_set\"><field name=\"VAR\">state</field><value name=\"VALUE\"><block type=\"text\"><field name=\"TEXT\">in progress</field></block></value><next><block type=\"variables_set\"><field name=\"VAR\">seenBlank</field><value name=\"VALUE\"><block type=\"logic_boolean\"><field name=\"BOOL\">FALSE</field></block></value><next><block type=\"controls_for\"><field name=\"VAR\">x</field><value name=\"FROM\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"math_number\"><field name=\"NUM\">1</field></block></value><value name=\"TO\"><shadow type=\"math_number\"><field name=\"NUM\">10</field></shadow><block type=\"math_number\"><field name=\"NUM\">3</field></block></value><value name=\"BY\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"math_number\"><field name=\"NUM\">1</field></block></value><statement name=\"DO\"><block type=\"controls_for\"><field name=\"VAR\">y</field><value name=\"FROM\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"math_number\"><field name=\"NUM\">1</field></block></value><value name=\"TO\"><shadow type=\"math_number\"><field name=\"NUM\">10</field></shadow><block type=\"math_number\"><field name=\"NUM\">3</field></block></value><value name=\"BY\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"math_number\"><field name=\"NUM\">1</field></block></value><statement name=\"DO\"><block type=\"controls_if\"><value name=\"IF0\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"text\"><field name=\"TEXT\">□</field></block></value><value name=\"B\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><value name=\"AT\"><block type=\"variables_get\"><field name=\"VAR\">y</field></block></value></block></value><value name=\"AT\"><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value></block></value></block></value><statement name=\"DO0\"><block type=\"variables_set\"><field name=\"VAR\">seenBlank</field><value name=\"VALUE\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value></block></statement></block></statement></block></statement><next><block type=\"controls_if\"><value name=\"IF0\"><block type=\"logic_negate\"><value name=\"BOOL\"><block type=\"variables_get\"><field name=\"VAR\">seenBlank</field></block></value></block></value><statement name=\"DO0\"><block type=\"variables_set\"><field name=\"VAR\">state</field><value name=\"VALUE\"><block type=\"text\"><field name=\"TEXT\">draw</field></block></value></block></statement><next><block type=\"controls_for\"><field name=\"VAR\">x</field><value name=\"FROM\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"math_number\"><field name=\"NUM\">1</field></block></value><value name=\"TO\"><shadow type=\"math_number\"><field name=\"NUM\">10</field></shadow><block type=\"math_number\"><field name=\"NUM\">3</field></block></value><value name=\"BY\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"math_number\"><field name=\"NUM\">1</field></block></value><statement name=\"DO\"><block type=\"variables_set\"><field name=\"VAR\">x1</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">1</field></block></value></block></value><value name=\"AT\"><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value></block></value><next><block type=\"variables_set\"><field name=\"VAR\">x2</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">2</field></block></value></block></value><value name=\"AT\"><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value></block></value><next><block type=\"variables_set\"><field name=\"VAR\">x3</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">3</field></block></value></block></value><value name=\"AT\"><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value></block></value><next><block type=\"controls_if\"><value name=\"IF0\"><block type=\"logic_operation\"><field name=\"OP\">AND</field><value name=\"A\"><block type=\"logic_compare\"><field name=\"OP\">NEQ</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">x1</field></block></value><value name=\"B\"><block type=\"text\"><field name=\"TEXT\">□</field></block></value></block></value><value name=\"B\"><block type=\"logic_operation\"><field name=\"OP\">AND</field><value name=\"A\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">x1</field></block></value><value name=\"B\"><block type=\"variables_get\"><field name=\"VAR\">x2</field></block></value></block></value><value name=\"B\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">x3</field></block></value><value name=\"B\"><block type=\"variables_get\"><field name=\"VAR\">x2</field></block></value></block></value></block></value></block></value><statement name=\"DO0\"><block type=\"variables_set\"><field name=\"VAR\">state</field><value name=\"VALUE\"><block type=\"text_join\"><mutation items=\"2\"></mutation><value name=\"ADD0\"><block type=\"variables_get\"><field name=\"VAR\">x1</field></block></value><value name=\"ADD1\"><block type=\"text\"><field name=\"TEXT\"> wins</field></block></value></block></value><next><block type=\"variables_set\"><field name=\"VAR\">winReason</field><value name=\"VALUE\"><block type=\"text_join\"><mutation items=\"2\"></mutation><value name=\"ADD0\"><block type=\"text\"><field name=\"TEXT\">x:</field></block></value><value name=\"ADD1\"><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value></block></value></block></next></block></statement></block></next></block></next></block></next></block></statement><next><block type=\"controls_for\"><field name=\"VAR\">y</field><value name=\"FROM\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"math_number\"><field name=\"NUM\">1</field></block></value><value name=\"TO\"><shadow type=\"math_number\"><field name=\"NUM\">10</field></shadow><block type=\"math_number\"><field name=\"NUM\">3</field></block></value><value name=\"BY\"><shadow type=\"math_number\"><field name=\"NUM\">1</field></shadow><block type=\"math_number\"><field name=\"NUM\">1</field></block></value><statement name=\"DO\"><block type=\"variables_set\"><field name=\"VAR\">y1</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><value name=\"AT\"><block type=\"variables_get\"><field name=\"VAR\">y</field></block></value></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">1</field></block></value></block></value><next><block type=\"variables_set\"><field name=\"VAR\">y2</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><value name=\"AT\"><block type=\"variables_get\"><field name=\"VAR\">y</field></block></value></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">2</field></block></value></block></value><next><block type=\"variables_set\"><field name=\"VAR\">y3</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><value name=\"AT\"><block type=\"variables_get\"><field name=\"VAR\">y</field></block></value></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">3</field></block></value></block></value><next><block type=\"controls_if\"><value name=\"IF0\"><block type=\"logic_operation\"><field name=\"OP\">AND</field><value name=\"A\"><block type=\"logic_compare\"><field name=\"OP\">NEQ</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">y1</field></block></value><value name=\"B\"><block type=\"text\"><field name=\"TEXT\">□</field></block></value></block></value><value name=\"B\"><block type=\"logic_operation\"><field name=\"OP\">AND</field><value name=\"A\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">y1</field></block></value><value name=\"B\"><block type=\"variables_get\"><field name=\"VAR\">y2</field></block></value></block></value><value name=\"B\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">y3</field></block></value><value name=\"B\"><block type=\"variables_get\"><field name=\"VAR\">y2</field></block></value></block></value></block></value></block></value><statement name=\"DO0\"><block type=\"variables_set\"><field name=\"VAR\">state</field><value name=\"VALUE\"><block type=\"text_join\"><mutation items=\"2\"></mutation><value name=\"ADD0\"><block type=\"variables_get\"><field name=\"VAR\">y1</field></block></value><value name=\"ADD1\"><block type=\"text\"><field name=\"TEXT\"> wins</field></block></value></block></value><next><block type=\"variables_set\"><field name=\"VAR\">winReason</field><value name=\"VALUE\"><block type=\"text_join\"><mutation items=\"2\"></mutation><value name=\"ADD0\"><block type=\"text\"><field name=\"TEXT\">y:</field></block></value><value name=\"ADD1\"><block type=\"variables_get\"><field name=\"VAR\">y</field></block></value></block></value></block></next></block></statement></block></next></block></next></block></next></block></statement><next><block type=\"variables_set\"><field name=\"VAR\">diag1_1</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">1</field></block></value></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">1</field></block></value></block></value><next><block type=\"variables_set\"><field name=\"VAR\">diag1_2</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">2</field></block></value></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">2</field></block></value></block></value><next><block type=\"variables_set\"><field name=\"VAR\">diag1_3</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">3</field></block></value></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">3</field></block></value></block></value><next><block type=\"controls_if\"><value name=\"IF0\"><block type=\"logic_operation\"><field name=\"OP\">AND</field><value name=\"A\"><block type=\"logic_compare\"><field name=\"OP\">NEQ</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">diag1_1</field></block></value><value name=\"B\"><block type=\"text\"><field name=\"TEXT\">□</field></block></value></block></value><value name=\"B\"><block type=\"logic_operation\"><field name=\"OP\">AND</field><value name=\"A\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">diag1_1</field></block></value><value name=\"B\"><block type=\"variables_get\"><field name=\"VAR\">diag1_2</field></block></value></block></value><value name=\"B\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">diag1_3</field></block></value><value name=\"B\"><block type=\"variables_get\"><field name=\"VAR\">diag1_2</field></block></value></block></value></block></value></block></value><statement name=\"DO0\"><block type=\"variables_set\"><field name=\"VAR\">state</field><value name=\"VALUE\"><block type=\"text_join\"><mutation items=\"2\"></mutation><value name=\"ADD0\"><block type=\"variables_get\"><field name=\"VAR\">diag1_1</field></block></value><value name=\"ADD1\"><block type=\"text\"><field name=\"TEXT\"> wins</field></block></value></block></value><next><block type=\"variables_set\"><field name=\"VAR\">winReason</field><value name=\"VALUE\"><block type=\"text\"><field name=\"TEXT\">diag:1</field></block></value></block></next></block></statement><next><block type=\"variables_set\"><field name=\"VAR\">diag2_1</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">1</field></block></value></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">3</field></block></value></block></value><next><block type=\"variables_set\"><field name=\"VAR\">diag2_2</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">2</field></block></value></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">2</field></block></value></block></value><next><block type=\"variables_set\"><field name=\"VAR\">diag2_3</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">3</field></block></value></block></value><value name=\"AT\"><block type=\"math_number\"><field name=\"NUM\">1</field></block></value></block></value><next><block type=\"controls_if\"><value name=\"IF0\"><block type=\"logic_operation\"><field name=\"OP\">AND</field><value name=\"A\"><block type=\"logic_compare\"><field name=\"OP\">NEQ</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">diag2_1</field></block></value><value name=\"B\"><block type=\"text\"><field name=\"TEXT\">□</field></block></value></block></value><value name=\"B\"><block type=\"logic_operation\"><field name=\"OP\">AND</field><value name=\"A\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">diag2_1</field></block></value><value name=\"B\"><block type=\"variables_get\"><field name=\"VAR\">diag2_2</field></block></value></block></value><value name=\"B\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">diag2_3</field></block></value><value name=\"B\"><block type=\"variables_get\"><field name=\"VAR\">diag2_2</field></block></value></block></value></block></value></block></value><statement name=\"DO0\"><block type=\"variables_set\"><field name=\"VAR\">state</field><value name=\"VALUE\"><block type=\"text_join\"><mutation items=\"2\"></mutation><value name=\"ADD0\"><block type=\"variables_get\"><field name=\"VAR\">diag2_1</field></block></value><value name=\"ADD1\"><block type=\"text\"><field name=\"TEXT\"> wins</field></block></value></block></value><next><block type=\"variables_set\"><field name=\"VAR\">winReason</field><value name=\"VALUE\"><block type=\"text\"><field name=\"TEXT\">diag:2</field></block></value></block></next></block></statement></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></statement><value name=\"RETURN\"><block type=\"variables_get\"><field name=\"VAR\">state</field></block></value></block><block type=\"procedures_defreturn\" x=\"18\" y=\"2800\"><mutation><arg name=\"x\"></arg><arg name=\"y\"></arg></mutation><field name=\"NAME\">getCell</field><comment pinned=\"false\" h=\"81\" w=\"292\">gets the state of a given cell.\n\nreturns false if out of range</comment><statement name=\"STACK\"><block type=\"controls_if\"><mutation else=\"1\"></mutation><value name=\"IF0\"><block type=\"logic_operation\"><field name=\"OP\">AND</field><value name=\"A\"><block type=\"logic_operation\"><field name=\"OP\">AND</field><value name=\"A\"><block type=\"logic_compare\"><field name=\"OP\">GTE</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">y</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">1</field></block></value></block></value><value name=\"B\"><block type=\"logic_compare\"><field name=\"OP\">LTE</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">y</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">3</field></block></value></block></value></block></value><value name=\"B\"><block type=\"logic_operation\"><field name=\"OP\">AND</field><value name=\"A\"><block type=\"logic_compare\"><field name=\"OP\">GTE</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">1</field></block></value></block></value><value name=\"B\"><block type=\"logic_compare\"><field name=\"OP\">LTE</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">3</field></block></value></block></value></block></value></block></value><statement name=\"DO0\"><block type=\"variables_set\"><field name=\"VAR\">cell</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"lists_getIndex\"><mutation statement=\"false\" at=\"true\"></mutation><field name=\"MODE\">GET</field><field name=\"WHERE\">FROM_START</field><value name=\"VALUE\"><block type=\"variables_get\"><field name=\"VAR\">board</field></block></value><value name=\"AT\"><block type=\"variables_get\"><field name=\"VAR\">y</field></block></value></block></value><value name=\"AT\"><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value></block></value></block></statement><statement name=\"ELSE\"><block type=\"variables_set\"><field name=\"VAR\">cell</field><value name=\"VALUE\"><block type=\"logic_boolean\"><field name=\"BOOL\">FALSE</field></block></value></block></statement></block></statement><value name=\"RETURN\"><block type=\"variables_get\"><field name=\"VAR\">cell</field></block></value></block></xml>",
+    "tests": {
+        "defaul1": {
+            "name": "Test 1",
+            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
+        }
+    },
+    "options": {
+        "applicationCodeVisible": true,
+        "applicationCodeEditable": true,
+        "testCodeVisible": true,
+        "testCodeEditable": true,
+        "testListEditable": true
+    }
+}
