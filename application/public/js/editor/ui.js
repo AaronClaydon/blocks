@@ -1012,7 +1012,7 @@ function UI() {
             });
 
         //Once the workspaces have loaded, check if the device is a mobile
-        VisualBlocks.ui.mobileCheck();
+        //VisualBlocks.ui.mobileCheck(); DOES NOT WORK CORRECTLY - CURRENTLY DISABLED
 
         //Output panel toggle button
         $('#output-panel-collapse-toggle').click(function() {

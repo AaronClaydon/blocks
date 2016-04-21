@@ -14,7 +14,7 @@
             "successCondition": {
                 "event": "branch_hit",
                 "equality": {
-                    "branchID": "84-128"
+                    "branchID": "82-126"
                 }
             }
         },
@@ -27,7 +27,7 @@
             "successCondition": {
                 "event": "branch_hit",
                 "equality": {
-                    "branchID": "134-179"
+                    "branchID": "132-177"
                 }
             }
         },
