@@ -163,9 +163,29 @@ function WorkSpaces() {
             }
         }
 
-        //Go through all the blocks in the workspace
         if(relevantSteps.length > 0) {
-            allBlocks = workspace.getAllBlocks();
+            var allBlocks = workspace.getAllBlocks();
+            var varSetBlocks = {};
+
+            //Get all variable set blocks
+            for (var blockID = 0; blockID < allBlocks.length; blockID++) {
+                var block = allBlocks[blockID];
+
+                //Only interested in variable set blocks
+                if(block.type === 'variables_set') {
+                    var varName = block.getFieldValue('VAR');
+
+                    //Add this variable name to the list of variable set blocks
+                    if(varSetBlocks[varName] === undefined) {
+                        varSetBlocks[varName] = [];
+                    }
+
+                    //Push this var set block to the list for this variable name
+                    varSetBlocks[varName].push(block);
+                }
+            }
+
+            //Go through all the blocks in the workspace
             for (var blockID = 0; blockID < allBlocks.length; blockID++) {
                 block = allBlocks[blockID];
 
@@ -190,7 +210,7 @@ function WorkSpaces() {
                             parentEqualityResult = VisualBlocks.puzzlesManager.executeEventEquality(step.successCondition.parent, eventData);
 
                             if(parentEqualityResult) {
-                                inputEqualityResult = this.recursiveBlockInputCheck(block, step.successCondition.input);
+                                inputEqualityResult = this.recursiveBlockInputCheck(block, step.successCondition.input, varSetBlocks);
 
                                 relevantStepsResults[stepID] = inputEqualityResult;
                                 if(inputEqualityResult) {
@@ -249,29 +269,47 @@ function WorkSpaces() {
     }
 
     //Check if any of the blocks inputs, and the inputs for the input, match a certain equality
-    this.recursiveBlockInputCheck = function(block, equality) {
-        //Get all inputs for this block
-        for (var inputID in block.inputList) {
-            inputBlockConnection = block.inputList[inputID].connection
+    this.recursiveBlockInputCheck = function(block, equality, varSetBlocks) {
+        if(block.type === 'variables_get') {
+            //Check the variable_set value for this block
+            var varName = block.getFieldValue('VAR');
+            var namedVarSetBlocks = varSetBlocks[varName];
 
-            //If this input references another block
-            if(inputBlockConnection !== null) {
-                inputBlock = inputBlockConnection.targetBlock();
-                if(inputBlock !== null) {
-                    eventData = this.getBlockEventData(inputBlock);
+            //check all set blocks for this get
+            for (var i = 0; i < namedVarSetBlocks.length; i++) {
+                var setBlock = namedVarSetBlocks[i];
 
-                    //Check if equality matches the input
-                    inputEqualityResult = VisualBlocks.puzzlesManager.executeEventEquality(equality, eventData);
+                //check if child input is successful and end the search
+                recur_success = this.recursiveBlockInputCheck(setBlock, equality, varSetBlocks);
 
-                    //Return true if matches, else recursively check again
-                    if(inputEqualityResult) {
-                        return true;
-                    } else {
-                        //check if child input is successful and end the search
-                        recur_success = this.recursiveBlockInputCheck(inputBlock, equality);
+                if(recur_success) {
+                    return true;
+                }
+            }
+        } else {
+            //Get all inputs for this block
+            for (var inputID in block.inputList) {
+                inputBlockConnection = block.inputList[inputID].connection
 
-                        if(recur_success) {
+                //If this input references another block
+                if(inputBlockConnection !== null) {
+                    inputBlock = inputBlockConnection.targetBlock();
+                    if(inputBlock !== null) {
+                        eventData = this.getBlockEventData(inputBlock);
+
+                        //Check if equality matches the input
+                        inputEqualityResult = VisualBlocks.puzzlesManager.executeEventEquality(equality, eventData);
+
+                        //Return true if matches, else recursively check again
+                        if(inputEqualityResult) {
                             return true;
+                        } else {
+                            //check if child input is successful and end the search
+                            recur_success = this.recursiveBlockInputCheck(inputBlock, equality, varSetBlocks);
+
+                            if(recur_success) {
+                                return true;
+                            }
                         }
                     }
                 }
