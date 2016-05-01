@@ -7,7 +7,7 @@
     "steps": {
         "MmYgwPuMDe9$}SMhzi0+": {
             "title": "First boundary",
-            "description": "The first boundary in this application is checking if the password length is greater than or equal to 6.\n<br/><br/>\nTo perform boundary testing on this boundary, you must test the values 5, 6, and 7.",
+            "description": "The first boundary in this application is checking if the password length is greater than or equal to 6.\n<br/><br/>\nTo perform boundary testing on this boundary, you must test the values 5 and 6.",
             "visibility": "visible",
             "order": "1",
             "sticky": false,
@@ -17,7 +17,6 @@
                     "allPassed": "TRUE"
                 },
                 "prerequisite": [
-                    "Vhk078ZNdei8Bq7+2!V;",
                     "Q5pj7C=h0!4S!hh*hJEW",
                     "ABH.TR*P?Xt[yV6%kDWH"
                 ]
@@ -36,8 +35,7 @@
                 },
                 "prerequisite": [
                     "IO,Le^%p]W|JKRD^jn$C",
-                    "P;,s}$[X1lPbvB4%Nl@{",
-                    "Jui:PXMTaN4GAb9ko/9|"
+                    "P;,s}$[X1lPbvB4%Nl@{"
                 ]
             }
         },
@@ -133,7 +131,7 @@
         },
         "=RLsn[ac$1MDqm)2[H+k": {
             "title": "Boundary Testing",
-            "description": "The number of possible inputs for any program is usually incredibly large, so testing all these is not possible, instead you must be selective with what values you chose to test with.\n<br/><br/>\nYou use boundary testing when there are ranges of acceptable numerical input in your code. You only check the value on, above, and below the boundary of the input set, this is where bugs are more likely to be present.",
+            "description": "The number of possible inputs for any program is usually incredibly large, so testing all these is not possible, instead you must be selective with what values you chose to test with.\n<br/><br/>\nYou use boundary testing when there are ranges of acceptable numerical input in your code. You only check the value above and below the boundary of the input set, this is where bugs are more likely to be present.",
             "visibility": "visible",
             "order": "0",
             "sticky": false

@@ -35,21 +35,6 @@
                 }
             }
         },
-        "P[,tJ:Z(IW]Gf-b+x*U;": {
-            "title": "1",
-            "description": "",
-            "visibility": "not_visible",
-            "order": "2",
-            "sticky": false,
-            "successCondition": {
-                "event": "final_variable_value",
-                "equality": {
-                    "name": "age",
-                    "variable_type": "number",
-                    "value": "1"
-                }
-            }
-        },
         "mm0a%[9/%[k{Dfg[+-+g": {
             "title": "6",
             "description": "",
@@ -62,21 +47,6 @@
                     "name": "age",
                     "variable_type": "number",
                     "value": "6"
-                }
-            }
-        },
-        "G3-+gU1pmz~Q[P]5Yczg": {
-            "title": "4",
-            "description": "",
-            "visibility": "not_visible",
-            "order": "4",
-            "sticky": false,
-            "successCondition": {
-                "event": "final_variable_value",
-                "equality": {
-                    "name": "age",
-                    "variable_type": "number",
-                    "value": "4"
                 }
             }
         },
@@ -187,7 +157,7 @@
         },
         "2Krb1t_Fr^TOI6.#c|`y": {
             "title": "Invalid age boundary",
-            "description": "Test values for the invalid age boundary",
+            "description": "Test values for the invalid age boundary. This would involve testing -1 and 0.",
             "visibility": "visible",
             "order": "12",
             "sticky": false,
@@ -200,14 +170,13 @@
                 },
                 "prerequisite": [
                     "3dZ~k9a9@`}rS?A_QBq3",
-                    "b4VMr8/(t0~SyXks~B8i",
-                    "P[,tJ:Z(IW]Gf-b+x*U;"
+                    "b4VMr8/(t0~SyXks~B8i"
                 ]
             }
         },
         "JP2K=Mt+yV2;Z8,BY^!(": {
             "title": "Infant boundary",
-            "description": "Test the infant ticket boundary, age 0-5\n<br/><br/>\nWe must test on the boundary and one on either side of it, for both boundaries. This would involve testing -1, 0, 1, 4, 5, 6",
+            "description": "Test the infant ticket boundary, age 0-5\n<br/><br/>\nWe must test around the boundary, this involves testing the values either side of it, for both boundaries. This would involve testing -1, 0, 5, 6",
             "visibility": "visible",
             "order": "13",
             "sticky": false,
@@ -221,9 +190,7 @@
                 "prerequisite": [
                     "3dZ~k9a9@`}rS?A_QBq3",
                     "b4VMr8/(t0~SyXks~B8i",
-                    "P[,tJ:Z(IW]Gf-b+x*U;",
                     "mm0a%[9/%[k{Dfg[+-+g",
-                    "G3-+gU1pmz~Q[P]5Yczg",
                     "+kG2dH{{emR/}y#JnwdA"
                 ]
             }
@@ -245,9 +212,7 @@
                     "mm0a%[9/%[k{Dfg[+-+g",
                     "+kG2dH{{emR/}y#JnwdA",
                     "LrKa{0^hzuz3PNnk,+og",
-                    "O6(@s2_AE.+ev}?bk(Yi",
-                    "(9izfEg,.I^v7+PpW,yh",
-                    "s%JZEvw#ea=jE!JpZP1U"
+                    "O6(@s2_AE.+ev}?bk(Yi"
                 ]
             }
         },
@@ -266,11 +231,9 @@
                 },
                 "prerequisite": [
                     "LrKa{0^hzuz3PNnk,+og",
-                    "$4Fyd*X|mOG/Ihpz~GzQ",
                     "O6(@s2_AE.+ev}?bk(Yi",
                     "M$Cz/yN!x+WC#YA1~yYt",
-                    "`i_{T:8Tg0qRy4MUe;+7",
-                    "j;1_14=Gs(hVfY4[cpB6"
+                    "`i_{T:8Tg0qRy4MUe;+7"
                 ]
             }
         },
@@ -289,7 +252,6 @@
                 },
                 "prerequisite": [
                     "M$Cz/yN!x+WC#YA1~yYt",
-                    "NcW~MOu:L`VV9hVu.3r9",
                     "`i_{T:8Tg0qRy4MUe;+7"
                 ]
             }
