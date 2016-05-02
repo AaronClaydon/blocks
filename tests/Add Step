@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:3000/" />
+<title>Manage Steps</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Manage Steps</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/editor/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=New</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=modal-new-puzzle-btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Edit Steps</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=modal-edit-steps-add-btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=edit-puzzle-step-title</td>
+	<td>Step Name</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=edit-puzzle-step-description</td>
+	<td>Description of the step</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=modal-edit-steps-edit-save-btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='modal-edit-steps-data']/table/tbody/tr/td[2]</td>
+	<td>Step Name</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#modal-edit-steps-list &gt; div.modal-dialog &gt; div.modal-content &gt; div.modal-footer &gt; button.btn.btn-default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Steps</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='modal-steps-list']/div/div/div[2]/h4</td>
+	<td>Step Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='modal-steps-list']/div/div/div[2]</td>
+	<td>Step Name Description of the step</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#modal-steps &gt; div.modal-dialog &gt; div.modal-content &gt; div.modal-footer &gt; button.btn.btn-default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Edit Steps</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[35]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//div[@id='modal-edit-steps-data']/table/tbody/tr/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#modal-edit-steps-list &gt; div.modal-dialog &gt; div.modal-content &gt; div.modal-footer &gt; button.btn.btn-default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Steps</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//div[@id='modal-steps-list']/div/div/div[2]</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

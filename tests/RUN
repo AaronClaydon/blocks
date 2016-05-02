@@ -1,1 +1,0 @@
-run selenium tests using: ./node_modules/.bin/wdio wdio.conf.js
