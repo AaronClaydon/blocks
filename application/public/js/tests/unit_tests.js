@@ -1,3 +1,4 @@
+//Puzzle Manager component
 QUnit.module("Puzzles Manager");
 QUnit.test("newWorkspaceNotPuzzle", function(assert) {
     VisualBlocks.puzzlesManager.newWorkspace();
@@ -178,18 +179,163 @@ QUnit.test("executeEventEquality", function(assert) {
     assert.notOk(falseEquality, "false");
 });
 
-//
-// QUnit.test( "hello test", function( assert ) {
-//     assert.ok( 1 == "1", "Passed!" );
-// });
-//
-//
-// QUnit.module("Executor");
-//
-// QUnit.module("Workspaces");
-//
-// QUnit.module("UI");
+//Executor component
+QUnit.module("Executor");
+QUnit.test("resetTestExecutionData", function(assert) {
+    VisualBlocks.executor.resetTestExecutionData();
 
+    assert.equal(VisualBlocks.executor.testExecution.currentTest, "defaul1", "default test running");
+    assert.equal(Object.keys(VisualBlocks.executor.testExecution.results).length, 0, "empty results");
+});
+QUnit.test("executeApplication", function(assert) {
+    VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle({
+        id: "someID",
+        name: "someName",
+        description: "someDescription",
+        isPuzzle: true,
+        isPublished: true,
+        applicationCode: "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"text_print\" x=\"12\" y=\"7\"><value name=\"TEXT\"><shadow type=\"text\"><field name=\"TEXT\">abc</field></shadow><block type=\"text\"><field name=\"TEXT\">test print output</field></block></value></block></xml>",
+        steps: {
+        },
+        tests: {
+            "sometest": {
+                name: "someTestName",
+                testCode: "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
+            }
+        },
+        options: {
+            applicationCodeVisible: true,
+            applicationCodeEditable: true,
+            testCodeVisible: true,
+            testCodeEditable: true,
+            testListEditable: true
+        }
+    }));
+
+    VisualBlocks.executor.executeApplication();
+
+    assert.equal(VisualBlocks.executor.testExecution.alerts.output[0], "test print output");
+});
+QUnit.test("executeAllTests", function(assert) {
+    VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle({
+        id: "someID",
+        name: "someName",
+        description: "someDescription",
+        isPuzzle: true,
+        isPublished: true,
+        applicationCode: "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"procedures_defreturn\" x=\"20\" y=\"13\"><mutation><arg name=\"x\"></arg></mutation><field name=\"NAME\">someTestFunction</field><comment pinned=\"false\" h=\"80\" w=\"160\">Describe this function...</comment><statement name=\"STACK\"><block type=\"controls_if\"><mutation else=\"1\"></mutation><value name=\"IF0\"><block type=\"logic_compare\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"variables_get\"><field name=\"VAR\">x</field></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">20</field></block></value></block></value><statement name=\"DO0\"><block type=\"variables_set\"><field name=\"VAR\">returnValue</field><value name=\"VALUE\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value></block></statement><statement name=\"ELSE\"><block type=\"variables_set\"><field name=\"VAR\">returnValue</field><value name=\"VALUE\"><block type=\"logic_boolean\"><field name=\"BOOL\">FALSE</field></block></value></block></statement></block></statement><value name=\"RETURN\"><block type=\"variables_get\"><field name=\"VAR\">returnValue</field></block></value></block></xml>",
+        steps: {
+        },
+        tests: {
+            "test1": {
+                name: "test1",
+                testCode: "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"assert\" x=\"9\" y=\"13\"><value name=\"ASSERT_SUCCESS_VALUE\"><block type=\"procedures_callreturn\"><mutation name=\"someTestFunction\"><arg name=\"x\"></arg></mutation><value name=\"ARG0\"><block type=\"math_number\"><field name=\"NUM\">20</field></block></value></block></value><value name=\"ASSERT_SUCCESS_IF\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value></block></xml>"
+            },
+            "test2": {
+                name: "test2",
+                testCode: "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"assert\" x=\"9\" y=\"13\"><value name=\"ASSERT_SUCCESS_VALUE\"><block type=\"procedures_callreturn\"><mutation name=\"someTestFunction\"><arg name=\"x\"></arg></mutation><value name=\"ARG0\"><block type=\"math_number\"><field name=\"NUM\">20</field></block></value></block></value><value name=\"ASSERT_SUCCESS_IF\"><block type=\"logic_boolean\"><field name=\"BOOL\">FALSE</field></block></value></block></xml>"
+            },
+            "test3": {
+                name: "test3",
+                testCode: "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"assert\" x=\"9\" y=\"13\"><value name=\"ASSERT_SUCCESS_VALUE\"><block type=\"procedures_callreturn\"><mutation name=\"someTestFunction\"><arg name=\"x\"></arg></mutation><value name=\"ARG0\"><block type=\"math_number\"><field name=\"NUM\">19</field></block></value></block></value><value name=\"ASSERT_SUCCESS_IF\"><block type=\"logic_boolean\"><field name=\"BOOL\">FALSE</field></block></value></block></xml>"
+            }
+        },
+        options: {
+            applicationCodeVisible: true,
+            applicationCodeEditable: true,
+            testCodeVisible: true,
+            testCodeEditable: true,
+            testListEditable: true
+        }
+    }));
+
+    VisualBlocks.executor.executeAllTests();
+
+    assert.ok(VisualBlocks.executor.testExecution.results["test1"].success, "test1");
+    assert.notOk(VisualBlocks.executor.testExecution.results["test2"].success, "test2");
+    assert.ok(VisualBlocks.executor.testExecution.results["test3"].success, "test3");
+
+    assert.ok(VisualBlocks.executor.testExecution.results["test1"].variables["returnValue2"].data, "test1 returnValue");
+    assert.ok(VisualBlocks.executor.testExecution.results["test2"].variables["returnValue2"].data, "test2 returnValue");
+    assert.notOk(VisualBlocks.executor.testExecution.results["test3"].variables["returnValue2"].data, "test3 returnValue");
+
+    assert.ok($.inArray("101-163", VisualBlocks.executor.testExecution.branchesHit), "branch 1 hit");
+    assert.ok($.inArray("169-232", VisualBlocks.executor.testExecution.branchesHit), "branch 2 hit");
+});
+
+//Workspaces component
+QUnit.module("Workspaces");
+
+//UI component
+QUnit.module("UI");
+QUnit.test("outputExpanded", function(assert) {
+    assert.ok(VisualBlocks.ui.outputExpanded, "inital open");
+
+    VisualBlocks.ui.toggleCollapseOutputPanel();
+    assert.notOk(VisualBlocks.ui.outputExpanded, "closed");
+
+    VisualBlocks.ui.toggleCollapseOutputPanel();
+    assert.ok(VisualBlocks.ui.outputExpanded, "open");
+});
+QUnit.test("puzzleName", function(assert) {
+    VisualBlocks.puzzlesManager.newPuzzle();
+    VisualBlocks.currentPuzzle.name = "changed name";
+    VisualBlocks.ui.updatePuzzleName();
+
+    assert.equal($("#application-current-name").text(), "changed name");
+});
+QUnit.test("renderTemplate", function(assert) {
+    assert.equal(VisualBlocks.ui.renderTemplate("test-formatted-output", {
+        assertion: false,
+        success: false,
+        unhandledPrompt: false
+    }).trim(), "<span class=\"bg-danger\">FAILED - NO ASSERT</span>", "test output - no assert");
+
+    assert.equal(VisualBlocks.ui.renderTemplate("test-formatted-output", {
+        assertion: true,
+        success: true,
+        unhandledPrompt: false
+    }).trim(), "<span class=\"bg-success\">SUCCESS</span>", "test output - success");
+
+    assert.ok(VisualBlocks.ui.renderTemplate("test-formatted-output", {
+        assertion: true,
+        success: false,
+        unhandledPrompt: false
+    }).indexOf("FAILED") > -1, "test output - failed");
+
+    assert.ok(VisualBlocks.ui.renderTemplate("test-formatted-output", {
+        assertion: true,
+        success: false,
+        unhandledPrompt: true
+    }).indexOf("- UNHANDLED PROMPT") > -1, "test output - failed unhandled prompt");
+});
+QUnit.test("formatTestResult", function(assert) {
+    VisualBlocks.puzzlesManager.newPuzzle();
+    VisualBlocks.executor.testExecution.results["defaul1"] = {};
+
+    assert.equal(VisualBlocks.ui.formatTestResult("defaul1").trim(), "<span class=\"bg-danger\">FAILED - NO ASSERT</span>", "test output - no assert");
+
+    VisualBlocks.executor.testExecution.results["defaul1"].assertion = true;
+    VisualBlocks.executor.testExecution.results["defaul1"].success = true;
+    VisualBlocks.executor.testExecution.results["defaul1"].unhandledPrompt = false;
+    assert.equal(VisualBlocks.ui.formatTestResult("defaul1").trim(), "<span class=\"bg-success\">SUCCESS</span>", "test output - success");
+
+    VisualBlocks.executor.testExecution.results["defaul1"].success = false;
+    assert.ok(VisualBlocks.ui.renderTemplate("test-formatted-output", {
+        assertion: true,
+        success: false,
+        unhandledPrompt: false
+    }).indexOf("FAILED") > -1, "test output - failed");
+
+    VisualBlocks.executor.testExecution.results["defaul1"].unhandledPrompt = true;
+    assert.ok(VisualBlocks.ui.renderTemplate("test-formatted-output", {
+        assertion: true,
+        success: false,
+        unhandledPrompt: true
+    }).indexOf("- UNHANDLED PROMPT") > -1, "test output - failed unhandled prompt");
+});
+
+//Output component
 QUnit.module("Output");
 QUnit.test("initialEmpty", function(assert) {
     VisualBlocks.output.clear(); //reset

@@ -628,7 +628,7 @@ function Executor() {
     //Set the default test results
     this.resetTestExecutionData = function() {
         VisualBlocks.executor.testExecution = [];
-        VisualBlocks.executor.testExecution.currentTest = 'default';
+        VisualBlocks.executor.testExecution.currentTest = 'defaul1';
         VisualBlocks.executor.testExecution.results = {};
 
         //Branch coverage - branches hit
