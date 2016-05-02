@@ -58,11 +58,16 @@ function PuzzlesManager() {
     }
 
     //Load a puzzle from a remote file
-    this.loadPuzzleFromFile = function(filename) {
+    this.loadPuzzleFromFile = function(filename, callback) {
         //Request the JSON object of the puzzle
         $.getJSON(filename, function(data) {
             VisualBlocks.output.writeLine('Loaded puzzle ' + data.name);
             VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle(data));
+
+            //Optional callback for when the puzzle has been loaded
+            if(callback !== undefined) {
+                callback();
+            }
         });
     }
 
