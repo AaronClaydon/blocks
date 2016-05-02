@@ -265,6 +265,44 @@ QUnit.test("executeAllTests", function(assert) {
 
 //Workspaces component
 QUnit.module("Workspaces");
+QUnit.test("blocklyWorkspaceOptions", function(assert) {
+    VisualBlocks.puzzlesManager.loadPuzzle(new Puzzle({
+        id: "someID",
+        name: "someName",
+        description: "someDescription",
+        isPuzzle: true,
+        isPublished: true,
+        steps: {
+            "mAA(b,cnmp3G;M19bI/_": {
+                "title": "Testing",
+                "description": "Software testing allows you to identify code that does not function as intended and is an important and necessary step when writing code.\n<br/><br/>\nThese bugs could be from simple typos, logical errors, or a misunderstanding of the requirements. These bugs might not be easily identifiable from just reading the code, which is why with software testing you execute code and compare the output to what you expected",
+                "visibility": "visible",
+                "order": 0,
+                "sticky": false
+            }
+        },
+        tests: {
+            "sometest": {
+                name: "someTestName",
+                testCode: "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
+            },
+            "anothertest": {
+                name: "otherTestName",
+                testCode: "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
+            }
+        },
+        options: {
+            applicationCodeVisible: false,
+            applicationCodeEditable: false,
+            testCodeVisible: false,
+            testCodeEditable: false,
+            testListEditable: false
+        }
+    }));
+
+    assert.ok(VisualBlocks._workspaces.appWorkspace.options.readOnly, "app readonly");
+    assert.ok(VisualBlocks._workspaces.testWorkspace.options.readOnly, "test readonly");
+});
 
 //UI component
 QUnit.module("UI");
