@@ -42,19 +42,15 @@ function PuzzlesManager() {
             numTests: Object.keys(VisualBlocks.currentPuzzle.tests).length
         });
 
+        //Show hidden implementation text in the app code pane
         if(VisualBlocks.currentPuzzle.isPublished && !VisualBlocks.currentPuzzle.options.applicationCodeVisible) {
             $("#application-blockly").html(VisualBlocks.currentPuzzle.hiddenImplementation);
         }
 
-        //delete me
-        //$("#nav-header-edit-puzzle-steps-btn").click();
-        //$("#modal-edit-steps-list .btn-edit")[2].click();
-        //$("#modal-edit-steps-add-btn").click();
-        //$("#testing-btn-run-all").click();
-        //VisualBlocks.executor.executeAllTests();
-        //$("#nav-header-puzzles-btn").click();
-        //$("#modal-save").modal('show');
-        //$("#modal-save-publish-btn").click();
+        //Show the step list automatically on load
+        if(VisualBlocks.currentPuzzle.isPublished && VisualBlocks.currentPuzzle.isPuzzle) {
+            $("#modal-steps").modal("show");
+        }
     }
 
     //Load a puzzle from a remote file

@@ -1,0 +1,14 @@
+body {
+    background: rgb(241, 242, 246);
+}
+
+.container {
+    width: 600px;
+    margin-top: 50px;
+}
+
+h1 {
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 28px;
+}
