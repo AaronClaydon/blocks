@@ -403,7 +403,7 @@ function Executor() {
                 var stepMergedCode = appCode + step.successCondition.equality.expression;
 
                 //Execute this code
-                var jsInterpreter = new Interpreter(stepMergedCode, interpreterApplicationJSAPI);
+                var jsInterpreter = new Interpreter(stepMergedCode, interpreterTestJSAPI);
                 VisualBlocks.executor.testExecution.jsInterpreter = jsInterpreter;
                 jsInterpreter.run()
 

@@ -232,21 +232,7 @@
                 "event": "code_evaluation",
                 "equality": {
                     "expression": "true==true"
-                },
-                "prerequisite": [
-                    "0",
-                    "39",
-                    "40",
-                    "49",
-                    "50",
-                    "59",
-                    "60",
-                    "69",
-                    "70",
-                    "100",
-                    "101",
-                    "-1"
-                ]
+                }
             }
         },
         "wy+_7(_Mn)c]%I#S4oGv": {
@@ -288,7 +274,7 @@
     "tests": {
         "defaul1": {
             "name": "Test 1",
-            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"simulate_input\" x=\"6\" y=\"17\"><mutation items=\"3\"></mutation><value name=\"ADD0\"><block type=\"math_number\"><field name=\"NUM\">-1</field></block></value></block></xml>"
+            "testCode": "<xml xmlns=\"http://www.w3.org/1999/xhtml\"></xml>"
         }
     },
     "options": {
