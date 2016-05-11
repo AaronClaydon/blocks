@@ -69,11 +69,6 @@ function Executor() {
             return interpreter.createPrimitive(testGetIfOutputsLeft());
         }));
 
-        //Add an API function for checking if any prompts left
-        interpreter.setProperty(scope, 'getIfPromptsMissed', interpreter.createNativeFunction(function() {
-            return interpreter.createPrimitive(testGetIfPromptsMissed());
-        }));
-
         //Add an API function for ignoring and deleting the next output
         interpreter.setProperty(scope, 'ignoreNextOutput', interpreter.createNativeFunction(function() {
             interpreter.createPrimitive(testIgnoreNextOutput());
@@ -82,11 +77,6 @@ function Executor() {
         //Add an API function for notifying variable update
         interpreter.setProperty(scope, 'updatedVariable', interpreter.createNativeFunction(function(name) {
             interpreter.createPrimitive(testUpdatedVariable(name));
-        }));
-
-        //TESTING: CONSOLELOG
-        interpreter.setProperty(scope, 'consolelog', interpreter.createNativeFunction(function(value) {
-            return interpreter.createPrimitive(console.log("FROMTEST: " + value.data));
         }));
 
         interpreterSharedJSAPI(interpreter, scope);
@@ -171,11 +161,6 @@ function Executor() {
     //Function that handles checks if there are any outputs left
     function testGetIfOutputsLeft() {
         return (VisualBlocks.executor.testExecution.alerts.output.length > 0);
-    }
-
-    //Function that handles checks if any prompts were missed and not handled
-    function testGetIfPromptsMissed() {
-        console.log('NI: testGetIfPromptsMissed');
     }
 
     //Function that handles ignoring and deleting the next output
